@@ -11,28 +11,25 @@ import {
 } from '@nozbe/watermelondb/decorators';
 import dayjs from 'dayjs';
 import { flatten, times } from 'lodash';
-import {
-  BillCallPrintLog,
-  BillItemModifier,
-  BillItemPrintLog,
-  Discount,
-  Item,
-  ItemPrice,
-  Modifier,
-  ModifierItem,
-  ModifierItemPrice,
-  PaymentType,
-  PriceGroup,
-  tableNames,
-} from '.';
 import { BillCallLog } from './BillCallLog';
+import { BillCallPrintLog } from './BillCallPrintLog';
 import { BillDiscount } from './BillDiscount';
 import { BillItem } from './BillItem';
+import { BillItemModifier } from './BillItemModifier';
 import { BillItemModifierItem } from './BillItemModifierItem';
-import { PrintStatus } from './BillItemPrintLog';
+import { BillItemPrintLog, PrintStatus } from './BillItemPrintLog';
 import { BillPayment } from './BillPayment';
 import { BillPeriod } from './BillPeriod';
+import { Discount } from './Discount';
+import { Item } from './Item';
+import { ItemPrice } from './ItemPrice';
+import { Modifier } from './Modifier';
+import { ModifierItem } from './ModifierItem';
+import { ModifierItemPrice } from './ModifierItemPrice';
+import { PaymentType } from './PaymentType';
+import { PriceGroup } from './PriceGroup';
 import { ASSOCIATION_TYPES } from './constants';
+import { tableNames } from './tableNames';
 
 export const billSchema = tableSchema({
   name: 'bills',
@@ -90,7 +87,7 @@ export class Bill extends Model {
 
   @lazy _billModifierItems = () => this.collections
     .get<BillItemModifierItem>('bill_item_modifier_items')
-    .query(Q.on('bill_items', 'bill_id', this.id)) as Query<BillItemModifierItem>;
+    .query(Q.on('bill_items', 'bill_id', this.id));
 
   @lazy assignedPriceGroups = () => this.collections
     .get<PriceGroup>(tableNames.priceGroups)

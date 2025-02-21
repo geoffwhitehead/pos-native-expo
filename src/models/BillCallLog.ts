@@ -1,6 +1,6 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
 import { action, date, field, immutableRelation, nochange, readonly } from '@nozbe/watermelondb/decorators';
-import { Bill } from './Bill';
+import type { Bill } from './Bill';
 import { ASSOCIATION_TYPES } from './constants';
 
 export const billCallLogSchema = tableSchema({
