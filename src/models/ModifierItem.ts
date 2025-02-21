@@ -1,8 +1,10 @@
 import { Model, Query, Relation, tableSchema } from '@nozbe/watermelondb';
 import { action, children, field, relation } from '@nozbe/watermelondb/decorators';
-import { Modifier } from './Modifier';
-import { ModifierItemPrice } from './ModifierItemPrice';
 import { ASSOCIATION_TYPES } from './constants';
+import { tableNames } from './tableNames';
+
+import type { Modifier } from './Modifier';
+import type { ModifierItemPrice } from './ModifierItemPrice';
 
 type UpdateItemAndPricesValues = {
   name: string;
@@ -11,7 +13,7 @@ type UpdateItemAndPricesValues = {
 };
 
 export class ModifierItem extends Model {
-  static table = 'modifier_items';
+  static table = tableNames.modifierItems;
 
   static associations = {
     modifier_item_prices: { type: ASSOCIATION_TYPES.HAS_MANY, foreignKey: 'modifier_item_id' },

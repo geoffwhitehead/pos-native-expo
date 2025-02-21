@@ -1,8 +1,10 @@
 import { Model, Q, Query, tableSchema } from '@nozbe/watermelondb';
 import { action, children, field, lazy } from '@nozbe/watermelondb/decorators';
-import { ModifierItemPrice, tableNames } from '.';
-import { ModifierItem } from './ModifierItem';
 import { ASSOCIATION_TYPES } from './constants';
+import { tableNames } from './tableNames';
+
+import type { ModifierItem } from './ModifierItem';
+import type { ModifierItemPrice } from './ModifierItemPrice';
 
 type UpdateValues = {
   name: string;
@@ -11,17 +13,17 @@ type UpdateValues = {
 };
 
 export class Modifier extends Model {
-  static table = 'modifiers';
-
-  @field('name') name!: string;
-  @field('min_items') minItems!: number;
-  @field('max_items') maxItems!: number;
+  static table = tableNames.modifiers;
 
   static associations = {
     item_modifiers: { type: ASSOCIATION_TYPES.HAS_MANY, foreignKey: 'modifier_id' },
     modifier_items: { type: ASSOCIATION_TYPES.HAS_MANY, foreignKey: 'modifier_id' },
     items: { type: ASSOCIATION_TYPES.BELONGS_TO, key: 'modifier_id' },
   };
+
+  @field('name') name!: string;
+  @field('min_items') minItems!: number;
+  @field('max_items') maxItems!: number;
 
   @children('modifier_items') modifierItems!: Query<ModifierItem>;
   @children('item_modifiers') itemModifiers!: Query<ModifierItem>; // pivot table - items assigned to this printer
@@ -44,7 +46,7 @@ export class Modifier extends Model {
 }
 
 export const modifierSchema = tableSchema({
-  name: 'modifiers',
+  name: tableNames.modifiers,
   columns: [
     { name: 'name', type: 'string' },
     { name: 'min_items', type: 'number' },

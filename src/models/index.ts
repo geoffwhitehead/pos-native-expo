@@ -1,5 +1,7 @@
-import { Model, TableSchema } from '@nozbe/watermelondb';
-import { Bill, billSchema } from './Bill';
+import { Database } from '@nozbe/watermelondb';
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
+import { schema } from '@nozbe/watermelondb';
+
 import { BillCallLog, billCallLogSchema } from './BillCallLog';
 import { BillCallPrintLog, billCallPrintLogSchema } from './BillCallPrintLog';
 import { BillDiscount, billDiscountSchema } from './BillDiscount';
@@ -9,12 +11,12 @@ import { BillItemModifierItem, billItemModifierItemSchema } from './BillItemModi
 import { BillItemPrintLog, billItemPrintLogSchema } from './BillItemPrintLog';
 import { BillPayment, billPaymentSchema } from './BillPayment';
 import { BillPeriod, billPeriodSchema } from './BillPeriod';
+import { Bill, billSchema } from './Bill';
 import { Category, categorySchema } from './Category';
 import { Discount, discountSchema } from './Discount';
 import { Item, itemSchema } from './Item';
 import { ItemModifier, itemModifierSchema } from './ItemModifier';
 import { ItemPrice, itemPriceSchema } from './ItemPrice';
-// import { itemPrinterSchema, ItemPrinter } from './ItemPrinter';
 import { Modifier, modifierSchema } from './Modifier';
 import { ModifierItem, modifierItemSchema } from './ModifierItem';
 import { ModifierItemPrice, modifierItemPriceSchema } from './ModifierItemPrice';
@@ -22,77 +24,52 @@ import { Organization, organizationSchema } from './Organization';
 import { PaymentType, paymentTypeSchema } from './PaymentType';
 import { PriceGroup, priceGroupSchema } from './PriceGroup';
 import { PrintCategory, printCategorySchema } from './PrintCategory';
-import { Printer, printerSchema } from './Printer';
-import { PrinterGroup, printerGroupSchema } from './PrinterGroup';
 import { PrinterGroupPrinter, printerGroupPrinterSchema } from './PrinterGroupPrinter';
+import { PrinterGroup, printerGroupSchema } from './PrinterGroup';
+import { Printer, printerSchema } from './Printer';
 import { TablePlanElement, tablePlanElementSchema } from './TablePlanElement';
+import { tableNames } from './tableNames';
 
-type TableNames = {
-  paymentTypes: string;
-  discounts: string;
-  organizations: string;
-  categories: string;
-  items: string;
-  itemPrices: string;
-  itemModifiers: string;
-  modifiers: string;
-  modifierItems: string;
-  modifierItemPrices: string;
-  priceGroups: string;
-  printers: string;
-  printerGroups: string;
-  printerGroupsPrinters: string;
-  // itemPrinters: itemPrinterSchema.name,
-  billPayments: string;
-  bills: string;
-  billDiscounts: string;
-  billPeriods: string;
-  billItems: string;
-  billItemModifiers: string;
-  billItemModifierItems: string;
-  billItemPrintLogs: string;
-  billCallLogs: string;
-  billCallPrintLogs: string;
-  tablePlanElements: string;
-  printCategories: string;
+export { tableNames };
+
+export {
+  Bill,
+  BillCallLog,
+  BillCallPrintLog,
+  BillDiscount,
+  BillItem,
+  BillItemModifier,
+  BillItemModifierItem,
+  BillItemPrintLog,
+  BillPayment,
+  BillPeriod,
+  Category,
+  Discount,
+  Item,
+  ItemModifier,
+  ItemPrice,
+  Modifier,
+  ModifierItem,
+  ModifierItemPrice,
+  Organization,
+  PaymentType,
+  PriceGroup,
+  PrintCategory,
+  Printer,
+  PrinterGroup,
+  PrinterGroupPrinter,
+  TablePlanElement,
 };
 
-export const tableNames: TableNames = {
-  paymentTypes: paymentTypeSchema.name,
-  discounts: discountSchema.name,
-  organizations: organizationSchema.name,
-  categories: categorySchema.name,
-  items: itemSchema.name,
-  itemPrices: itemPriceSchema.name,
-  itemModifiers: itemModifierSchema.name,
-  modifiers: modifierSchema.name,
-  modifierItems: modifierItemSchema.name,
-  modifierItemPrices: modifierItemPriceSchema.name,
-  priceGroups: priceGroupSchema.name,
-  printers: printerSchema.name,
-  printerGroups: printerGroupSchema.name,
-  printerGroupsPrinters: printerGroupPrinterSchema.name,
-  // itemPrinters: itemPrinterSchema.name,
-  billPayments: billPaymentSchema.name,
-  bills: billSchema.name,
-  billDiscounts: billDiscountSchema.name,
-  billPeriods: billPeriodSchema.name,
-  billItems: billItemSchema.name,
-  billItemModifiers: billItemModifierSchema.name,
-  billItemModifierItems: billItemModifierItemSchema.name,
-  billItemPrintLogs: billItemPrintLogSchema.name,
-  billCallLogs: billCallLogSchema.name,
-  billCallPrintLogs: billCallPrintLogSchema.name,
-  tablePlanElements: tablePlanElementSchema.name,
-  printCategories: printCategorySchema.name,
-};
-
-export const schemas: Record<string, TableSchema> = {
+const databaseSchemas = [
   billSchema,
+  billCallLogSchema,
+  billCallPrintLogSchema,
   billDiscountSchema,
   billItemSchema,
   billItemModifierSchema,
   billItemModifierItemSchema,
+  billItemPrintLogSchema,
   billPaymentSchema,
   billPeriodSchema,
   categorySchema,
@@ -100,79 +77,59 @@ export const schemas: Record<string, TableSchema> = {
   itemSchema,
   itemModifierSchema,
   itemPriceSchema,
-  // itemPrinterSchema,
   modifierSchema,
   modifierItemSchema,
   modifierItemPriceSchema,
   organizationSchema,
   paymentTypeSchema,
   priceGroupSchema,
+  printCategorySchema,
   printerSchema,
-  billItemPrintLogSchema,
   printerGroupSchema,
   printerGroupPrinterSchema,
-  billCallLogSchema,
-  billCallPrintLogSchema,
   tablePlanElementSchema,
-  printCategorySchema,
-};
+];
 
-export const models: Record<string, typeof Model> = {
-  Item,
-  ItemModifier,
-  ModifierItem,
-  // ItemPrinter,
-  Category,
-  Printer,
-  Modifier,
-  PriceGroup,
-  ItemPrice,
-  ModifierItemPrice,
-  PaymentType,
-  Discount,
-  Organization,
-  Bill,
-  BillDiscount,
-  BillItem,
-  BillPayment,
-  BillPeriod,
-  BillItemModifierItem,
-  BillItemModifier,
-  BillItemPrintLog,
-  PrinterGroup,
-  PrinterGroupPrinter,
-  BillCallLog,
-  BillCallPrintLog,
-  TablePlanElement,
-  PrintCategory,
-};
+const schemaVersion = 1;
 
-export {
-  Item,
-  ItemModifier,
-  ModifierItem,
-  // ItemPrinter,
-  Category,
-  Printer,
-  Modifier,
-  PriceGroup,
-  ItemPrice,
-  ModifierItemPrice,
-  PaymentType,
-  Discount,
-  Organization,
-  Bill,
-  BillDiscount,
-  BillItem,
-  BillPayment,
-  BillPeriod,
-  BillItemModifierItem,
-  BillItemModifier,
-  BillItemPrintLog,
-  PrinterGroup,
-  PrinterGroupPrinter,
-  BillCallLog,
-  BillCallPrintLog,
-  TablePlanElement,
-  PrintCategory,
-};
+const dbSchema = schema({
+  version: schemaVersion,
+  tables: databaseSchemas,
+});
+
+const adapter = new SQLiteAdapter({
+  schema: dbSchema,
+  jsi: true,
+});
+
+export const database = new Database({
+  adapter,
+  modelClasses: [
+    Bill,
+    BillCallLog,
+    BillCallPrintLog,
+    BillDiscount,
+    BillItem,
+    BillItemModifier,
+    BillItemModifierItem,
+    BillItemPrintLog,
+    BillPayment,
+    BillPeriod,
+    Category,
+    Discount,
+    Item,
+    ItemModifier,
+    ItemPrice,
+    Modifier,
+    ModifierItem,
+    ModifierItemPrice,
+    Organization,
+    PaymentType,
+    PriceGroup,
+    PrintCategory,
+    Printer,
+    PrinterGroup,
+    PrinterGroupPrinter,
+    TablePlanElement,
+  ],
+});
