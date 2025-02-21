@@ -1,7 +1,10 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, field, relation } from '@nozbe/watermelondb/decorators';
-import { BillPeriod, PriceGroup, Printer, tableNames } from '.';
+import { action, field, relation, writer } from '@nozbe/watermelondb/decorators';
 import { ASSOCIATION_TYPES } from './constants';
+import type { BillPeriod } from './BillPeriod';
+import { tableNames } from './tableNames';
+import type { Printer } from './Printer';
+import type { PriceGroup } from './PriceGroup';
 
 export type OrganizationProps = {
   name: string;
@@ -110,7 +113,7 @@ export class Organization extends Model {
   @relation('printers', 'receipt_printer_id') receiptPrinter!: Relation<Printer>;
   @relation('bill_periods', 'current_bill_period_id') currentBillPeriod!: Relation<BillPeriod>;
 
-  @action async createNewBillPeriod() {
+  @writer async createNewBillPeriod() {
     const billPeriodsCollection = this.collections.get<BillPeriod>(tableNames.billPeriods);
     const billPeriod = await billPeriodsCollection.create(billPeriod => {
       // billPeriod.organization.set(this);

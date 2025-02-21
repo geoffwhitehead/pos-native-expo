@@ -1,5 +1,5 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, date, field, immutableRelation, nochange, readonly } from '@nozbe/watermelondb/decorators';
+import { date, field, immutableRelation, nochange, readonly, writer } from '@nozbe/watermelondb/decorators';
 import type { Bill } from './Bill';
 import { ASSOCIATION_TYPES } from './constants';
 
@@ -28,7 +28,7 @@ export class BillCallLog extends Model {
     bill_call_print_logs: { type: ASSOCIATION_TYPES.HAS_MANY, foreignKey: 'bill_call_log_id' },
   };
 
- @action async void() {
+ @writer async void() {
    await this.destroyPermanently();
  }
 }

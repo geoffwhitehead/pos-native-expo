@@ -1,11 +1,10 @@
 import { Model, Q, Query, tableSchema } from '@nozbe/watermelondb';
-import { action, children, date, lazy, readonly } from '@nozbe/watermelondb/decorators';
+import { action, children, date, lazy, readonly, writer } from '@nozbe/watermelondb/decorators';
 import dayjs from 'dayjs';
-import { BillDiscount, Organization, tableNames } from '.';
-import { Bill } from './Bill';
-import { BillItem } from './BillItem';
-import { BillPayment } from './BillPayment';
+import type { Bill } from './Bill';
 import { ASSOCIATION_TYPES } from './constants';
+import type { Organization } from './Organization';
+import { tableNames } from './tableNames';
 
 export const billPeriodSchema = tableSchema({
   name: 'bill_periods',
@@ -49,7 +48,7 @@ export class BillPeriod extends Model {
     .query(Q.on('bills', 'bill_period_id', this.id));
   @lazy periodPayments = this.collections.get('bill_payments').query(Q.on('bills', 'bill_period_id', this.id))
 
-  @action async createBill(params: { reference: number }): Promise<Bill> {
+  @writer async createBill(params: { reference: number }): Promise<Bill> {
     const bill = await this.collections.get<Bill>(tableNames.bills).create(bill => {
       bill.billPeriod.set(this);
       bill.reference = params.reference;
@@ -57,7 +56,7 @@ export class BillPeriod extends Model {
     return bill;
   }
 
-  @action async closePeriod(organization: Organization) {
+  @writer async closePeriod(organization: Organization) {
     await this.update(record => {
       record.closedAt = new Date();
     });

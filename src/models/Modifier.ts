@@ -1,5 +1,5 @@
 import { Model, Q, Query, tableSchema } from '@nozbe/watermelondb';
-import { action, children, field, lazy } from '@nozbe/watermelondb/decorators';
+import { action, children, field, lazy, writer } from '@nozbe/watermelondb/decorators';
 import { ASSOCIATION_TYPES } from './constants';
 import { tableNames } from './tableNames';
 
@@ -32,11 +32,11 @@ export class Modifier extends Model {
     .get<ModifierItemPrice>(tableNames.modifierItemPrices)
     .query(Q.on(tableNames.modifierItems, 'modifier_id', this.id)) as Query<ModifierItemPrice>;
 
-  @action async updateItem(values: UpdateValues) {
+  @writer async updateItem(values: UpdateValues) {
     await this.update(record => Object.assign(record, values));
   }
 
-  @action async remove() {
+  @writer async remove() {
     const [modifierItems, itemModifiers] = await Promise.all([this.modifierItems.fetch(), this.itemModifiers.fetch()]);
     const modifierItemsToDelete = modifierItems.map(modifierItem => modifierItem.prepareMarkAsDeleted());
     const itemModifiersToDelete = itemModifiers.map(itemModifier => itemModifier.prepareMarkAsDeleted());

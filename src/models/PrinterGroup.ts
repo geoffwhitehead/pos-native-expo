@@ -1,8 +1,10 @@
 import { Model, Q, Query, tableSchema } from '@nozbe/watermelondb';
-import { action, children, field, lazy } from '@nozbe/watermelondb/decorators';
-import { Item, Printer, tableNames } from '.';
-import { PrinterGroupPrinter } from './PrinterGroupPrinter';
+import { action, children, field, lazy, writer } from '@nozbe/watermelondb/decorators';
+import type { PrinterGroupPrinter } from './PrinterGroupPrinter';
 import { ASSOCIATION_TYPES } from './constants';
+import { tableNames } from './tableNames';
+import type { Printer } from './Printer';
+import type { Item } from './Item';
 
 export class PrinterGroup extends Model {
   static table = 'printer_groups';
@@ -21,7 +23,7 @@ export class PrinterGroup extends Model {
     .get('printers')
     .query(Q.on('printer_groups_printers', 'printer_group_id', this.id));
 
-  @action async updateGroup({ name, printers }: { name: string; printers: Printer[] }) {
+  @writer async updateGroup({ name, printers }: { name: string; printers: Printer[] }) {
     const printerGroupsPrintersCollection = this.database.collections.get<PrinterGroupPrinter>(
       tableNames.printerGroupsPrinters,
     );
@@ -47,7 +49,7 @@ export class PrinterGroup extends Model {
     await this.database.action(() => this.database.batch(...batched));
   }
 
-  @action async remove() {
+  @writer async remove() {
     const [printerGroupLinks, items] = await Promise.all([this.printerGroupsPrinters.fetch(), this.items.fetch()]);
     const printerGroupPrintersToDelete = printerGroupLinks.map(pGP => pGP.prepareMarkAsDeleted());
     const itemsToUpdate = items.map(item =>

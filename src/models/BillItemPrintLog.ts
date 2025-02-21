@@ -1,20 +1,9 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
 import { date, field, immutableRelation, readonly } from '@nozbe/watermelondb/decorators';
-import { Bill, BillItem, Printer } from '.';
-import { ASSOCIATION_TYPES } from './constants';
-
-export enum PrintStatus {
-  errored = 'errored',
-  succeeded = 'succeeded',
-  pending = 'pending',
-  processing = 'processing',
-  cancelled = 'cancelled',
-}
-
-export enum PrintType {
-  std = 'std',
-  void = 'void',
-}
+import type { Bill } from './Bill';
+import type { BillItem } from './BillItem';
+import type { Printer } from './Printer';
+import { ASSOCIATION_TYPES, PrintStatus, PrintType } from './constants';
 
 export class BillItemPrintLog extends Model {
   static table = 'bill_item_print_logs';

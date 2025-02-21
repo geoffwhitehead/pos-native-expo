@@ -1,6 +1,5 @@
 import { Model, Q, Query, Relation, tableSchema } from '@nozbe/watermelondb';
 import {
-  action,
   children,
   date,
   field,
@@ -8,27 +7,28 @@ import {
   lazy,
   nochange,
   readonly,
+  writer,
 } from '@nozbe/watermelondb/decorators';
 import dayjs from 'dayjs';
 import { flatten, times } from 'lodash';
-import { BillCallLog } from './BillCallLog';
-import { BillCallPrintLog } from './BillCallPrintLog';
-import { BillDiscount } from './BillDiscount';
-import { BillItem } from './BillItem';
-import { BillItemModifier } from './BillItemModifier';
-import { BillItemModifierItem } from './BillItemModifierItem';
-import { BillItemPrintLog, PrintStatus } from './BillItemPrintLog';
-import { BillPayment } from './BillPayment';
-import { BillPeriod } from './BillPeriod';
-import { Discount } from './Discount';
-import { Item } from './Item';
-import { ItemPrice } from './ItemPrice';
-import { Modifier } from './Modifier';
-import { ModifierItem } from './ModifierItem';
-import { ModifierItemPrice } from './ModifierItemPrice';
-import { PaymentType } from './PaymentType';
-import { PriceGroup } from './PriceGroup';
-import { ASSOCIATION_TYPES } from './constants';
+import type { BillCallLog } from './BillCallLog';
+import type { BillCallPrintLog } from './BillCallPrintLog';
+import type { BillDiscount } from './BillDiscount';
+import type { BillItem } from './BillItem';
+import type { BillItemModifier } from './BillItemModifier';
+import type { BillItemModifierItem } from './BillItemModifierItem';
+import type { BillItemPrintLog } from './BillItemPrintLog';
+import type { BillPayment } from './BillPayment';
+import type { BillPeriod } from './BillPeriod';
+import type { Discount } from './Discount';
+import type { Item } from './Item';
+import type { ItemPrice } from './ItemPrice';
+import type { Modifier } from './Modifier';
+import type { ModifierItem } from './ModifierItem';
+import type { ModifierItemPrice } from './ModifierItemPrice';
+import type { PaymentType } from './PaymentType';
+import type { PriceGroup } from './PriceGroup';
+import { ASSOCIATION_TYPES, PrintStatus } from './constants';
 import { tableNames } from './tableNames';
 
 export const billSchema = tableSchema({
@@ -190,7 +190,7 @@ export class Bill extends Model {
     Q.and(Q.where('is_comp', Q.eq(true)), Q.where('is_voided', Q.notEq(true))),
   );
 
-  @action
+  @writer
   async addPayment(
     p: { paymentType: PaymentType; amount: number; isChange?: boolean },
   ): Promise<void> {
@@ -205,7 +205,7 @@ export class Bill extends Model {
     });
   }
 
-  @action
+  @writer
   async addDiscount(p: { discount: Discount }): Promise<void> {
     await this.collections.get<BillDiscount>('bill_discounts').create(discount => {
       discount.bill.set(this);
@@ -213,7 +213,7 @@ export class Bill extends Model {
     });
   }
 
-  @action
+  @writer
   async addItems(
     p: {
       item: Item;
@@ -324,7 +324,7 @@ export class Bill extends Model {
   /**
    * Find all bill items that are storable and update their stored status
    */
-  @action
+  @writer
   async storeBill(): Promise<void> {
     // is_stored is not set on removed items to distinguish between cancelled and voided items
     const billItemsToStore = await this.billItems
@@ -342,7 +342,7 @@ export class Bill extends Model {
     await this.database.batch(...billItemsToUpdate);
   }
 
-  @action
+  @writer
   async close(): Promise<void> {
     await this.update(bill => {
       bill.isClosed = true;
@@ -350,7 +350,7 @@ export class Bill extends Model {
     });
   }
 
-  @action
+  @writer
   async processPrintLogs(updates: { billItemPrintLog: BillItemPrintLog; status: PrintStatus }[]) {
     const printLogsToUpdate = updates.map(({ billItemPrintLog, status }) =>
       billItemPrintLog.prepareUpdate(record => {
@@ -363,7 +363,7 @@ export class Bill extends Model {
     }
   }
 
-  @action
+  @writer
   async processCallLogs(updates: { billCallPrintLog: BillCallPrintLog; status: PrintStatus }[]): Promise<void> {
     const printLogsToUpdate = updates.map(({ billCallPrintLog, status }) =>
       billCallPrintLog.prepareUpdate(record => {

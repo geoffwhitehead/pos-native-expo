@@ -1,10 +1,10 @@
 import { Model, Q, Query, Relation, tableSchema } from '@nozbe/watermelondb';
 import { action, children, field, lazy, relation } from '@nozbe/watermelondb/decorators';
-import { ItemModifier, PrinterGroup } from '.';
-import { Category } from './Category';
-import { ItemPrice } from './ItemPrice';
-import { Modifier } from './Modifier';
-import { Printer } from './Printer';
+import type { ItemModifier, PrinterGroup } from '.';
+import type { Category } from './Category';
+import type { ItemPrice } from './ItemPrice';
+import type { Modifier } from './Modifier';
+import type { Printer } from './Printer';
 import { ASSOCIATION_TYPES } from './constants';
 import { tableNames } from './tableNames';
 
@@ -27,7 +27,7 @@ export const itemSchema = tableSchema({
   ],
 });
 
-export class Item extends Model {
+export class  Item extends Model {
   static table = 'items';
 
   @field('name') name!: string;
@@ -50,13 +50,13 @@ export class Item extends Model {
   @children('item_modifiers') itemModifiers!: Query<ItemModifier>;
 
   @lazy printers = this.collections
-    .get('printers')
-    .query(Q.on('printer_groups_printers', 'printer_group_id', this.printerGroupId)) as unknown as Query<Printer>;
-  @lazy modifiers = this.collections.get('modifiers').query(Q.on('item_modifiers', 'item_id', this.id)) as unknown as Query<
+    .get(tableNames.printers)
+    .query(Q.on(tableNames.printerGroupsPrinters, 'printer_group_id', this.printerGroupId)) as unknown as Query<Printer>;
+  @lazy modifiers = this.collections.get(tableNames.modifiers).query(Q.on(tableNames.itemModifiers, 'item_id', this.id)) as unknown as Query<
     Modifier
   >;
 
-  @action async remove() {
+  @writer async remove() {
     const [itemPrices, itemModifiers] = await Promise.all([this.prices.fetch(), this.itemModifiers.fetch()]);
     const itemPricesToDelete = itemPrices.map(itemPrice => itemPrice.prepareMarkAsDeleted());
     const itemModifiersToDelete = itemModifiers.map(itemModifier => itemModifier.prepareMarkAsDeleted());
@@ -64,7 +64,7 @@ export class Item extends Model {
     await this.database.batch(...toDelete);
   };
 
-  @action async updateItem({
+  @writer async updateItem({
     name,
     shortName,
     categoryId,

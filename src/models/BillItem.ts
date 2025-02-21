@@ -1,16 +1,15 @@
 import { Model, Query, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, children, date, field, immutableRelation, nochange, readonly } from '@nozbe/watermelondb/decorators';
+import { action, children, date, field, immutableRelation, nochange, readonly, writer } from '@nozbe/watermelondb/decorators';
 import dayjs from 'dayjs';
-import { BillItemPrintLog, tableNames } from '.';
-import { ModifyReason } from '../screens/Checkout/sub-components/Receipt/sub-components/ModalReason';
-import { Bill } from './Bill';
-import { BillItemModifier } from './BillItemModifier';
-import { BillItemModifierItem } from './BillItemModifierItem';
-import { PrintStatus, PrintType } from './BillItemPrintLog';
-import { Category } from './Category';
-import { Item } from './Item';
-import { PriceGroup } from './PriceGroup';
+import type { Bill } from './Bill';
+import type { BillItemModifier } from './BillItemModifier';
+import type { BillItemModifierItem } from './BillItemModifierItem';
+import type { Category } from './Category';
+import type { Item } from './Item';
+import type { PriceGroup } from './PriceGroup';
 import { ASSOCIATION_TYPES } from './constants';
+import type { ModifyReason } from '../screens/Checkout/sub-components/Receipt/sub-components/ModalReason';
+import type { BillItemPrintLog } from './BillItemPrintLog';
 
 export const billItemSchema = tableSchema({
   name: 'bill_items',
@@ -69,7 +68,7 @@ export class BillItem extends Model {
   @children('bill_item_modifier_items') billItemModifierItems!: Query<BillItemModifierItem>;
   @children('bill_item_print_logs') billItemPrintLogs!: Query<BillItemPrintLog>;
 
-  @action async void(values?: ModifyReason) {
+  @writer async void(values?: ModifyReason) {
     await this.update(billItem => {
       billItem.isVoided = true;
       billItem.reasonDescription = values?.reason || '';
@@ -78,7 +77,7 @@ export class BillItem extends Model {
     });
   }
 
-  @action async makeComp(values: ModifyReason) {
+  @writer async makeComp(values: ModifyReason) {
     await this.update(billItem => {
       billItem.isComp = true;
       billItem.reasonDescription = values.reason;

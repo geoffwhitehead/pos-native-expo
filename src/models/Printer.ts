@@ -1,7 +1,7 @@
 import { Model, Query, tableSchema } from '@nozbe/watermelondb';
-import { action, children, field } from '@nozbe/watermelondb/decorators';
-import { PrinterGroupPrinter } from '.';
+import { action, children, field, writer } from '@nozbe/watermelondb/decorators';
 import { ASSOCIATION_TYPES } from './constants';
+import type { PrinterGroupPrinter } from './PrinterGroupPrinter';
 
 export enum Emulations {
   'StarPRNT' = 'StarPRNT',
@@ -37,7 +37,7 @@ export class Printer extends Model {
 
   @children('printer_groups_printers') printerGroupsPrinters!: Query<PrinterGroupPrinter>;
 
-  @action async remove() {
+  @writer async remove() {
     const printerGroupLinks = await this.printerGroupsPrinters.fetch();
     const printerGroupPrintersToDelete = printerGroupLinks.map(pGP => pGP.prepareMarkAsDeleted());
     const toDelete = [...printerGroupPrintersToDelete, this.prepareMarkAsDeleted()];

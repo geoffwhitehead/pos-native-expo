@@ -1,7 +1,7 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, date, field, immutableRelation, nochange, readonly } from '@nozbe/watermelondb/decorators';
-import { Bill } from './Bill';
-import { Discount } from './Discount';
+import { action, date, field, immutableRelation, nochange, readonly, writer } from '@nozbe/watermelondb/decorators';
+import type { Bill } from './Bill';
+import type { Discount } from './Discount';
 import { ASSOCIATION_TYPES } from './constants';
 
 export const billDiscountSchema = tableSchema({
@@ -35,7 +35,7 @@ export class BillDiscount extends Model {
     discounts: { type: ASSOCIATION_TYPES.BELONGS_TO, key: 'discount_id' },
   };
 
-  @action async void() {
+  @writer async void() {
     await this.destroyPermanently();
   }
 
@@ -44,7 +44,7 @@ export class BillDiscount extends Model {
    * If this isn't done its quite a lot of work to recalcuate discounts
    * when working large amounts of bills in reports
    */
-  @action async finalize(amt: number) {
+  @writer async finalize(amt: number) {
     await this.update(billDiscount => {
       billDiscount.closingAmount = amt;
     });

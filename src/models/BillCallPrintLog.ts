@@ -1,8 +1,8 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, date, field, immutableRelation, nochange, readonly } from '@nozbe/watermelondb/decorators';
-import { BillCallLog, Printer } from '.';
-import { PrintStatus } from './BillItemPrintLog';
-import { ASSOCIATION_TYPES } from './constants';
+import { date, field, immutableRelation, nochange, readonly, writer } from '@nozbe/watermelondb/decorators';
+import { ASSOCIATION_TYPES, PrintStatus } from './constants';
+import type { Printer } from './Printer';
+import type { BillCallLog } from './BillCallLog';
 
 export const billCallPrintLogSchema = tableSchema({
   name: 'bill_call_print_logs',
@@ -32,7 +32,7 @@ export class BillCallPrintLog extends Model {
     printers: { type: ASSOCIATION_TYPES.BELONGS_TO, key: 'printer_id' },
   };
 
-  @action async void() {
+  @writer async void() {
     await this.destroyPermanently();
   }
 }

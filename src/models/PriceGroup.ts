@@ -1,7 +1,9 @@
 import { Model, Q, Query, tableSchema } from '@nozbe/watermelondb';
-import { action, children, field, lazy } from '@nozbe/watermelondb/decorators';
-import { BillItem, ItemPrice, Organization } from '.';
+import { action, children, field, lazy, writer } from '@nozbe/watermelondb/decorators';
 import { ASSOCIATION_TYPES } from './constants';
+import type { BillItem } from './BillItem';
+import type { ItemPrice } from './ItemPrice';
+import type { Organization } from './Organization';
 
 export const priceGroupSchema = tableSchema({
   name: 'price_groups',
@@ -31,11 +33,11 @@ export class PriceGroup extends Model {
 
   @lazy billItemsExclVoids = this.billItems.extend(Q.where('is_voided', Q.notEq(true)));
 
-  @action async updatePriceGroup(values: { name: string; shortName: string; isPrepTimeRequired: boolean }) {
+  @writer async updatePriceGroup(values: { name: string; shortName: string; isPrepTimeRequired: boolean }) {
     await this.update(record => Object.assign(record, values));
   }
 
-  @action async remove(organization: Organization) {
+  @writer async remove(organization: Organization) {
     await this.markAsDeleted();
     if (organization.defaultPriceGroupId === this.id) {
       await organization.update(record => record.defaultPriceGroup.set(null as any));

@@ -1,5 +1,5 @@
 import { Model, Query, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, children, field, relation } from '@nozbe/watermelondb/decorators';
+import { action, children, field, relation, writer } from '@nozbe/watermelondb/decorators';
 import { ASSOCIATION_TYPES } from './constants';
 import { tableNames } from './tableNames';
 
@@ -28,11 +28,11 @@ export class ModifierItem extends Model {
 
   @children('modifier_item_prices') prices!: Query<ModifierItemPrice>;
 
-  @action async updateItem(values: UpdateItemAndPricesValues) {
+  @writer async updateItem(values: UpdateItemAndPricesValues) {
     await this.update(record => Object.assign(record, values));
   };
 
-  @action async updateItemAndPrices(values: UpdateItemAndPricesValues) {
+  @writer async updateItemAndPrices(values: UpdateItemAndPricesValues) {
     const { name, prices, shortName } = values;
     const modifierItemToUpdate = this.prepareUpdate(record => Object.assign(record, { name, shortName }));
 

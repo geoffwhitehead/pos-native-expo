@@ -1,10 +1,10 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, field, immutableRelation, nochange } from '@nozbe/watermelondb/decorators';
-import { BillItem } from './BillItem';
-import { BillItemModifier } from './BillItemModifier';
-import { Modifier } from './Modifier';
-import { ModifierItem } from './ModifierItem';
-import { PriceGroup } from './PriceGroup';
+import { action, field, immutableRelation, nochange, writer } from '@nozbe/watermelondb/decorators';
+import type { BillItem } from './BillItem';
+import type { BillItemModifier } from './BillItemModifier';
+import type { Modifier } from './Modifier';
+import type { ModifierItem } from './ModifierItem';
+import type { PriceGroup } from './PriceGroup';
 import { ASSOCIATION_TYPES } from './constants';
 
 export const billItemModifierItemSchema = tableSchema({
@@ -54,7 +54,7 @@ export class BillItemModifierItem extends Model {
     modifiers: { type: ASSOCIATION_TYPES.BELONGS_TO, key: 'modifier_id' },
   };
 
-  @action async void() {
+  @writer async void() {
     await this.update(billItemModifierItem => {
       billItemModifierItem.isVoided = true;
     });

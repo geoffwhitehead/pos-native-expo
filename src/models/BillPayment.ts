@@ -1,8 +1,9 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, date, field, immutableRelation, nochange, readonly } from '@nozbe/watermelondb/decorators';
-import { Bill } from './Bill';
-import { PaymentType } from './PaymentType';
+import { action, date, field, immutableRelation, nochange, readonly, writer } from '@nozbe/watermelondb/decorators';
+import type { Bill } from './Bill';
+import type { PaymentType } from './PaymentType';
 import { ASSOCIATION_TYPES } from './constants';
+import { tableNames } from './tableNames';
 
 export const billPaymentSchema = tableSchema({
   name: 'bill_payments',
@@ -31,10 +32,10 @@ export class BillPayment extends Model {
     payment_types: { type: ASSOCIATION_TYPES.BELONGS_TO, key: 'payment_type_id' },
   };
 
-  @immutableRelation('payment_types', 'payment_type_id') paymentType!: Relation<PaymentType>;
-  @immutableRelation('bills', 'bill_id') bill!: Relation<Bill>;
+  @immutableRelation(tableNames.paymentTypes, 'payment_type_id') paymentType!: Relation<PaymentType>;
+  @immutableRelation(tableNames.bills, 'bill_id') bill!: Relation<Bill>;
 
-  @action async void() {
+  @writer async void() {
     await this.destroyPermanently();
   }
 }
