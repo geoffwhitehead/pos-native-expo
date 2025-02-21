@@ -8,7 +8,8 @@ import { registerRootComponent } from 'expo';
 
 // Import your existing App component from src
 import { App as MainApp } from './src/App';
-import { DatabaseProvider, database } from './watermelonDBModule';
+import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider';
+import { database } from './src/database';
 
 export default function App() {
   return (

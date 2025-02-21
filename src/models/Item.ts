@@ -50,8 +50,8 @@ export class Item extends Model {
 
   @lazy printers = this.collections
     .get('printers')
-    .query(Q.on('printer_groups_printers', 'printer_group_id', this.printerGroupId)) as Query<Printer>;
-  @lazy modifiers = this.collections.get('modifiers').query(Q.on('item_modifiers', 'item_id', this.id)) as Query<
+    .query(Q.on('printer_groups_printers', 'printer_group_id', this.printerGroupId)) as unknown as Query<Printer>;
+  @lazy modifiers = this.collections.get('modifiers').query(Q.on('item_modifiers', 'item_id', this.id)) as unknown as Query<
     Modifier
   >;
 
