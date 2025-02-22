@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import { Body, Button, Left, ListItem, Text } from 'native-base';
 import React from 'react';
-import { Printer } from '../../../../models';
+import type { Printer } from '../../../../models';
 import { commonStyles } from '../styles';
 
 interface PrinterRowInnerProps {}

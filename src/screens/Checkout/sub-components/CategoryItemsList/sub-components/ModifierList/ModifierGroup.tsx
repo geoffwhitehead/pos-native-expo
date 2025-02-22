@@ -1,4 +1,5 @@
-import { Database, Q } from '@nozbe/watermelondb';
+import type { Database} from '@nozbe/watermelondb';
+import { Q } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { keyBy } from 'lodash';

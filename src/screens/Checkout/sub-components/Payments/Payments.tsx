@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { capitalize } from 'lodash';
@@ -6,8 +6,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { Button, Col, Grid, Input, Item, Label, Row, Text } from '../../../../core';
-import { Bill, BillDiscount, BillItem, BillPayment, Discount, PaymentType } from '../../../../models';
-import { formatNumber, getDefaultCashDenominations, minimalBillSummary, MinimalBillSummary } from '../../../../utils';
+import type { Bill, BillDiscount, BillItem, BillPayment, Discount, PaymentType } from '../../../../models';
+import type { MinimalBillSummary } from '../../../../utils';
+import { formatNumber, getDefaultCashDenominations, minimalBillSummary } from '../../../../utils';
 import { paymentTypeNames } from '../../../../utils/consts';
 import { moderateScale } from '../../../../utils/scaling';
 import { tableNames } from '../../../../models/tableNames';

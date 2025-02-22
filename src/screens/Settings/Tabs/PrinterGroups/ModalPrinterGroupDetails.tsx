@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { Formik } from 'formik';
@@ -10,8 +10,8 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { Col, Form, Input, List, ListItem, Row, Text } from '../../../../core';
-import { PrinterGroup, PrinterGroupPrinter } from '../../../../models';
-import { Printer } from '../../../../models/Printer';
+import type { PrinterGroup, PrinterGroupPrinter } from '../../../../models';
+import type { Printer } from '../../../../models/Printer';
 import { PrinterRowChoice } from '../PrintersTab/PrinterRowChoice';
 import { commonStyles } from '../styles';
 import { tableNames } from '../../../../models/tableNames';

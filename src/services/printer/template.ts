@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 // import { StarPRNT } from 'react-native-star-prnt';
-import { Organization } from '../../models';
+import type { Organization } from '../../models';
 import { alignCenter, alignLeftRight } from './helpers';
 
 export const receiptTempate = (commands: any[], organization: Organization, printWidth: number) => {

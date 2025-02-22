@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import { useDatabase } from '@nozbe/watermelondb/hooks';
 import withObservables from '@nozbe/with-observables';
@@ -13,7 +13,7 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
 import { Button, Container, Footer, Form, Icon, Input, Picker, Text, View } from '../../../../core';
-import { Bill, BillPeriod, PriceGroup, Printer } from '../../../../models';
+import type { Bill, BillPeriod, PriceGroup, Printer } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import { areYouSure } from '../../../../utils/helpers';
 import { moderateScale } from '../../../../utils/scaling';

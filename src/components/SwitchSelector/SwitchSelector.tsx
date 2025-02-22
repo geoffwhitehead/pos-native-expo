@@ -1,5 +1,6 @@
 import React from 'react';
-import Switch, { ISwitchSelectorProps } from 'react-native-switch-selector';
+import type { ISwitchSelectorProps } from 'react-native-switch-selector';
+import Switch from 'react-native-switch-selector';
 import { colors } from '../../theme';
 
 type SwitchProps = {

@@ -1,7 +1,8 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
-import dayjs, { Dayjs } from 'dayjs';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
@@ -17,7 +18,8 @@ import type {
   Discount,
 } from '../../../models';
 import { fontSizes } from '../../../theme';
-import { formatNumber, minimalBillSummary, MinimalBillSummary } from '../../../utils';
+import type { MinimalBillSummary } from '../../../utils';
+import { formatNumber, minimalBillSummary } from '../../../utils';
 import { moderateScale } from '../../../utils/scaling';
 import { PrintStatus } from '../../../models/constants';
 import { tableNames } from '../../../models/tableNames';

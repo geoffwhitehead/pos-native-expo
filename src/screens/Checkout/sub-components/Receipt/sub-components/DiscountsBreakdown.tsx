@@ -3,8 +3,9 @@ import { Left, ListItem, Right, Separator, Text } from 'native-base';
 import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
-import { BillDiscount } from '../../../../../models';
-import { DiscountBreakdownProps as DiscountsBreakdownCalculationProps, formatNumber } from '../../../../../utils';
+import type { BillDiscount } from '../../../../../models';
+import type { DiscountBreakdownProps as DiscountsBreakdownCalculationProps} from '../../../../../utils';
+import { formatNumber } from '../../../../../utils';
 import { ITEM_SPACING } from '../../../../../utils/consts';
 
 interface DiscountBreakdownProps {

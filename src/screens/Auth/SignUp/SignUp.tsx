@@ -1,5 +1,5 @@
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import type { RouteProp } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, StatusBar, StyleSheet } from 'react-native';
@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { Button, Container, Form, Icon, Input, Text } from '../../../core';
-import { AuthStackParamList } from '../../../navigators/AuthNavigator';
+import type { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
 import { resolveButtonState } from '../../../utils/helpers';
 import { moderateScale } from '../../../utils/scaling';

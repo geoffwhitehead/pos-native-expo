@@ -1,5 +1,5 @@
 import React from 'react';
-import { Organization } from '../models';
+import type { Organization } from '../models';
 
 type OrganizationContextProps = {
   setOrganization: (organization: Organization) => void;

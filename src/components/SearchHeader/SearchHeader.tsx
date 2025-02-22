@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { useNavigation } from '@react-navigation/native';
@@ -6,7 +6,7 @@ import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { PriceGroupContext } from '../../contexts/PriceGroupContext';
 import { Icon, Input, Item, Label, Picker, Text } from '../../core';
-import { PriceGroup } from '../../models';
+import type { PriceGroup } from '../../models';
 import { moderateScale } from '../../utils/scaling';
 import { tableNames } from '../../models/tableNames';
 

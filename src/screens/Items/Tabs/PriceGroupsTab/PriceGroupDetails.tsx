@@ -10,7 +10,7 @@ import { ModalColorPickerContent } from '../../../../components/ModalColorPicker
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { RecentColorsContext } from '../../../../contexts/RecentColorsContext';
 import { Body, CheckBox, Form, Input, ListItem, Text, View } from '../../../../core';
-import {
+import type {
   Item as ItemModel,
   ItemPrice,
   ModifierItem,

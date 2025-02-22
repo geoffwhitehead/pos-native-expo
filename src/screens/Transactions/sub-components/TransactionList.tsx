@@ -1,13 +1,14 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
-import { Dictionary, groupBy } from 'lodash';
+import type { Dictionary} from 'lodash';
+import { groupBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { SwitchSelector } from '../../../components/SwitchSelector/SwitchSelector';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
 import { List, ListItem, Text } from '../../../core';
-import { Bill, PaymentType } from '../../../models';
+import type { Bill, PaymentType } from '../../../models';
 import { TransactionGroupingEnum, TransactionOrderEnum } from '../../../models/Organization';
 import { TransactionListRow } from './TransactionListRow';
 import { tableNames } from '../../../models/tableNames';

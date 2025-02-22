@@ -5,7 +5,7 @@ import { Button, Form, Icon, Input, Left, List, ListItem, Right, Text } from 'na
 import React, { useMemo } from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
-import { Item, ItemPrice, PriceGroup } from '../../../../models';
+import type { Item, ItemPrice, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
 
 type PriceGroupItemsOuterProps = {

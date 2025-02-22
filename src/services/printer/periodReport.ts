@@ -1,7 +1,7 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import dayjs from 'dayjs';
 import { capitalize, flatten, sumBy } from 'lodash';
-import {
+import type {
   Bill,
   BillItem,
   BillItemModifierItem,

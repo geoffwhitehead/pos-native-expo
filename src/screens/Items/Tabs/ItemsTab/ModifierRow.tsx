@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import { Body, Icon, Left, ListItem, Right, Text } from 'native-base';
 import React from 'react';
-import { Modifier } from '../../../../models';
+import type { Modifier } from '../../../../models';
 import { styles } from '../../../../styles';
 
 interface ModifierRowInnerProps {}

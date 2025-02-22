@@ -2,7 +2,7 @@ import withObservables from '@nozbe/with-observables';
 import React, { useContext } from 'react';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
 import { ListItem, Text, View } from '../../../../../core';
-import { Bill, BillItem, PriceGroup } from '../../../../../models';
+import type { Bill, BillItem, PriceGroup } from '../../../../../models';
 import { ItemBreakdown } from './ItemBreakdown';
 
 type ItemsBreakdownByPriceGroupOuterProps = {

@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { FieldArray, Formik } from 'formik';
@@ -12,7 +12,7 @@ import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ActionSheet, Col, Form, Grid, H3, Icon, Input, List, ListItem, Picker, Row, Text } from '../../../../core';
-import {
+import type {
   Category,
   Item as ItemModel,
   ItemModifier,

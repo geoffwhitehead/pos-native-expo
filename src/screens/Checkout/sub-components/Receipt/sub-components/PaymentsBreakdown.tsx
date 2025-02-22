@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
 import { Left, ListItem, Right, Separator, Text } from '../../../../../core';
-import { BillPayment, PaymentType } from '../../../../../models';
+import type { BillPayment, PaymentType } from '../../../../../models';
 import { formatNumber } from '../../../../../utils';
 import { ITEM_SPACING } from '../../../../../utils/consts';
 

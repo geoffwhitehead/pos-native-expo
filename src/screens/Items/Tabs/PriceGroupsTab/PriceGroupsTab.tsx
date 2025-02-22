@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { sortBy } from 'lodash';
@@ -8,7 +8,7 @@ import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ActionSheet, Button, Container, Icon, Left, List, ListItem, Right, Text } from '../../../../core';
-import { Category, Item, PriceGroup } from '../../../../models';
+import type { Category, Item, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
 import { PriceGroupDetails } from './PriceGroupDetails';
 import { PriceGroupItemsModal } from './PriceGroupItemsModal';

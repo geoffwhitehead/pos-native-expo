@@ -2,7 +2,7 @@ import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button, Left, ListItem, Right, Text, View } from '../../../../core';
-import { Category, PrintCategory } from '../../../../models';
+import type { Category, PrintCategory } from '../../../../models';
 
 type CategoryRowOuterProps = {
   onSelect: (category: Category) => void;

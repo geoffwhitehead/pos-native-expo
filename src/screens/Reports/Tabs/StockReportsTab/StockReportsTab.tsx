@@ -1,4 +1,5 @@
-import { Database, Q } from '@nozbe/watermelondb';
+import type { Database} from '@nozbe/watermelondb';
+import { Q } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import { useDatabase } from '@nozbe/watermelondb/hooks';
 import withObservables from '@nozbe/with-observables';
@@ -13,7 +14,7 @@ import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
 import { Button, Form, Icon, Item, Label, ListItem, Picker, Spinner, Text, View } from '../../../../core';
-import { BillItem, Category, PriceGroup } from '../../../../models';
+import type { BillItem, Category, PriceGroup } from '../../../../models';
 import { print } from '../../../../services/printer/printer';
 import { stockReport } from '../../../../services/printer/stockReport';
 import { colors } from '../../../../theme';

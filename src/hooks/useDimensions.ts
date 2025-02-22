@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Dimensions, ScaledSize } from 'react-native';
+import type { ScaledSize } from 'react-native';
+import { Dimensions } from 'react-native';
 
 export const useScreenDimensions = () => {
   const [screenData, setScreenData] = useState(Dimensions.get('screen'));

@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { useFocusEffect } from '@react-navigation/native';
@@ -7,7 +7,7 @@ import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { Button, Text } from '../../../../core';
-import {
+import type {
   Bill,
   BillDiscount,
   BillItem,

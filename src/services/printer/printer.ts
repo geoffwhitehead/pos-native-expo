@@ -1,5 +1,5 @@
 // import { Printers, StarPRNT } from 'react-native-star-prnt';
-import { Printer } from '../../models';
+import type { Printer } from '../../models';
 import { toast } from '../../utils/toast';
 
 export async function portDiscovery(): Promise<any> {

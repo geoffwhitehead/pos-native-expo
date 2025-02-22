@@ -1,6 +1,7 @@
-import { Database, Q } from '@nozbe/watermelondb';
+import type { Database} from '@nozbe/watermelondb';
+import { Q } from '@nozbe/watermelondb';
 import { flatten, groupBy, sumBy } from 'lodash';
-import {
+import type {
   BillDiscount,
   BillItem,
   BillItemModifierItem,

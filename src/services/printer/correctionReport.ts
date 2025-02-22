@@ -1,7 +1,7 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import dayjs from 'dayjs';
 import { capitalize, groupBy, sumBy } from 'lodash';
-import { Bill, BillItem, BillPeriod, Organization, Printer } from '../../models';
+import type { Bill, BillItem, BillPeriod, Organization, Printer } from '../../models';
 import { formatNumber } from '../../utils';
 import { addHeader, alignCenter, alignLeftRight, starDivider } from './helpers';
 import { receiptTempate } from './template';

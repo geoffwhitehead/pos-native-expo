@@ -8,7 +8,7 @@ import { ModalColorPickerContent } from '../../../../../../components/ModalColor
 import { RecentColorsContext } from '../../../../../../contexts/RecentColorsContext';
 import { Form, Icon, Picker } from '../../../../../../core';
 import { database } from '../../../../../../database';
-import { Category } from '../../../../../../models';
+import type { Category } from '../../../../../../models';
 import { colors } from '../../../../../../theme';
 // import { styles } from '../../../../../../styles';
 import { moderateScale } from '../../../../../../utils/scaling';

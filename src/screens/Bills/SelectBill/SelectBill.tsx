@@ -13,7 +13,8 @@ import { moderateScale } from '../../../utils/scaling';
 import { BillRow } from './BillRow';
 import { BillRowEmpty } from './BillRowEmpty';
 import { TableElementForm } from './TableElementForm';
-import { TableElement, TableViewer } from './TableViewer';
+import type { TableElement} from './TableViewer';
+import { TableViewer } from './TableViewer';
 import { tableNames } from '../../../models/tableNames';
 
 interface SelectBillInnerProps {

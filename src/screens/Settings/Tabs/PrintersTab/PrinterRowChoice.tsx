@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import { Body, Icon, Left, ListItem, Right, Text } from 'native-base';
 import React from 'react';
-import { Printer } from '../../../../models';
+import type { Printer } from '../../../../models';
 
 interface PrinterRowChoiceInnerProps {}
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bill } from '../models/Bill';
+import type { Bill } from '../models/Bill';
 
 type CurrentBillContextProps = {
   setCurrentBill: (bill: Bill) => void;

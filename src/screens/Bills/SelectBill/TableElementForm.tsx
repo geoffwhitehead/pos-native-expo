@@ -5,9 +5,10 @@ import React from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
 import { Button, Form, Icon, Input, Item, Picker, Right, Text, View } from '../../../core';
-import { TablePlanElement } from '../../../models';
+import type { TablePlanElement } from '../../../models';
+import type {
+  TablePlanElementProps} from '../../../models/TablePlanElement';
 import {
-  TablePlanElementProps,
   TablePlanElementRotations,
   TablePlanElementTypes,
 } from '../../../models/TablePlanElement';

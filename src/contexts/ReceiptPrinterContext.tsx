@@ -1,5 +1,5 @@
 import React from 'react';
-import { Printer } from '../models/Printer';
+import type { Printer } from '../models/Printer';
 
 type ReceiptPrinterContextProps = {
   setReceiptPrinter: (printer: Printer) => void;

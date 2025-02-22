@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
 import { Container, Content, Footer, List, Text } from '../../../../core';
-import { Category, Item, Modifier, PrinterGroup } from '../../../../models';
+import type { Category, Item, Modifier, PrinterGroup } from '../../../../models';
 import { ItemsTabRow } from './ItemsTabRow';
 import { ItemDetails } from './ModalItemDetails';
 

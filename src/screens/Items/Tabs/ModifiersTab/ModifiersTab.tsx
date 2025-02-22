@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { useState } from 'react';
@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
 import { Col, Container, Grid, List, Row, Separator, Text } from '../../../../core';
-import { Modifier } from '../../../../models';
+import type { Modifier } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
 import { ModalModifierDetails, ModalModifierDetailsInner } from './ModalModifierDetails';
 import { ModifierItems } from './ModifierItems';

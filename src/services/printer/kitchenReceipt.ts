@@ -1,6 +1,8 @@
-import dayjs, { Dayjs } from 'dayjs';
-import { capitalize, Dictionary, flatten, groupBy, keyBy, sortBy } from 'lodash';
-import {
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+import type { Dictionary} from 'lodash';
+import { capitalize, flatten, groupBy, keyBy, sortBy } from 'lodash';
+import type {
   Bill,
   BillCallPrintLog,
   BillItem,
@@ -12,7 +14,7 @@ import {
   Printer,
 } from '../../models';
 import { PrintType } from '../../models/BillItemPrintLog';
-import { PrintItemGroupingEnum } from '../../models/Organization';
+import type { PrintItemGroupingEnum } from '../../models/Organization';
 import { alignCenter, alignLeftRightSingle, starDivider, subHeader } from './helpers';
 
 const MOD_PREFIX = '- ';

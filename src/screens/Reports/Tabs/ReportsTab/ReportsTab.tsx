@@ -1,7 +1,8 @@
-import { Database, Q } from '@nozbe/watermelondb';
+import type { Database} from '@nozbe/watermelondb';
+import { Q } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import dayjs from 'dayjs';
 import React, { useContext, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -22,8 +23,8 @@ import {
   Toast,
   View,
 } from '../../../../core';
-import { BillPeriod, Organization, PaymentType, Printer } from '../../../../models';
-import { SidebarDrawerStackParamList } from '../../../../navigators/SidebarNavigator';
+import type { BillPeriod, Organization, PaymentType, Printer } from '../../../../models';
+import type { SidebarDrawerStackParamList } from '../../../../navigators/SidebarNavigator';
 import { correctionReport } from '../../../../services/printer/correctionReport';
 import { periodReport } from '../../../../services/printer/periodReport';
 import { print } from '../../../../services/printer/printer';

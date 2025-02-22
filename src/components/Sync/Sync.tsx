@@ -1,8 +1,8 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import withObservables from '@nozbe/with-observables';
 import React, { useEffect, useState } from 'react';
 import { useSync } from '../../hooks/useSync';
-import { Organization } from '../../models';
+import type { Organization } from '../../models';
 import { Loading } from '../Loading/Loading';
 import { tableNames } from '../../models/tableNames';
 

@@ -6,8 +6,9 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { Body, CheckBox, Form, Icon, Input, ListItem, Picker, Text } from '../../../../core';
-import { Printer } from '../../../../models';
-import { Emulations, PrinterProps } from '../../../../models/Printer';
+import type { Printer } from '../../../../models';
+import type { PrinterProps } from '../../../../models/Printer';
+import { Emulations } from '../../../../models/Printer';
 
 interface ModalPrinterDetailsOuterProps {
   onClose: () => void;

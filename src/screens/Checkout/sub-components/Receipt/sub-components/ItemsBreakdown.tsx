@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { Separator, Text, View } from '../../../../../core';
-import { Bill, BillItem, PriceGroup } from '../../../../../models';
+import type { Bill, BillItem, PriceGroup } from '../../../../../models';
 import { ItemsBreakdownByPriceGroup } from './ItemsBreakdownByPriceGroup';
 
 type ItemsBreakdownOuterProps = {

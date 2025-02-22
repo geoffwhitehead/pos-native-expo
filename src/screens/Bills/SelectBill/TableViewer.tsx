@@ -1,4 +1,5 @@
-import { Dictionary, groupBy, keyBy, times } from 'lodash';
+import type { Dictionary} from 'lodash';
+import { groupBy, keyBy, times } from 'lodash';
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -26,7 +27,7 @@ import BlockWallSquare from '../../../assets/wall-square.svg';
 import BlockWall from '../../../assets/wall.svg';
 import BlockWindow from '../../../assets/window.svg';
 import { Button, Col, Grid, Row, Text } from '../../../core';
-import { Bill, TablePlanElement } from '../../../models';
+import type { Bill, TablePlanElement } from '../../../models';
 import { TablePlanElementTypes } from '../../../models/TablePlanElement';
 import { fontSizes } from '../../../theme';
 

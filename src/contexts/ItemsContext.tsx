@@ -1,6 +1,6 @@
-import { Dictionary } from 'lodash';
+import type { Dictionary } from 'lodash';
 import React from 'react';
-import { Item } from '../models';
+import type { Item } from '../models';
 
 // categoryid => firstChar => array of items
 export type GroupedSortedItems = Dictionary<CategoryItems>;

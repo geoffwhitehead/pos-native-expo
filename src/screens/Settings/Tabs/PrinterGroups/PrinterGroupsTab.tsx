@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { useState } from 'react';
@@ -6,7 +6,7 @@ import { ScrollView } from 'react-native';
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { ActionSheet, Button, Container, Icon, Left, List, ListItem, Right, Text } from '../../../../core';
-import { PrinterGroup } from '../../../../models';
+import type { PrinterGroup } from '../../../../models';
 import { ModalPrinterGroupDetails } from './ModalPrinterGroupDetails';
 import { PrinterGroupRow } from './PrinterGroupRow';
 import { tableNames } from '../../../../models/tableNames';

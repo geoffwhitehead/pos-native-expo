@@ -9,7 +9,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { Form, Icon, Input, Label, List, ListItem, Picker, Text, View } from '../../../../core';
 import { database } from '../../../../database';
-import { Category, Item, ItemPrice, PriceGroup } from '../../../../models';
+import type { Category, Item, ItemPrice, PriceGroup } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
 
 type PriceGroupItemsOuterProps = {

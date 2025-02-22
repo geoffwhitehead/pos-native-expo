@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { keyBy } from 'lodash';
@@ -9,7 +9,7 @@ import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { Container, Footer, Icon, Label, List, Picker, Text } from '../../../../core';
-import { Category, PrintCategory } from '../../../../models';
+import type { Category, PrintCategory } from '../../../../models';
 import { MAX_GRID_SIZE } from '../../../../utils/consts';
 import { moderateScale } from '../../../../utils/scaling';
 import { CategoryRow } from './CategoryRow';

@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import { useDatabase } from '@nozbe/watermelondb/hooks';
 import withObservables from '@nozbe/with-observables';
@@ -10,7 +10,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { Content, Form, Input, Separator, Text } from '../../../../core';
-import { Modifier, ModifierItem, ModifierItemPrice, PriceGroup } from '../../../../models';
+import type { Modifier, ModifierItem, ModifierItemPrice, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
 import { tableNames } from '../../../../models/tableNames';
 

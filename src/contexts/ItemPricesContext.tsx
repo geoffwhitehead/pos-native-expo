@@ -1,6 +1,6 @@
-import { Dictionary } from 'lodash';
+import type { Dictionary } from 'lodash';
 import React from 'react';
-import { ItemPrice } from '../models';
+import type { ItemPrice } from '../models';
 
 export type GroupedPrices = Dictionary<Dictionary<ItemPrice>>;
 

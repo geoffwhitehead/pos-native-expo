@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { Organization } from '../models';
+import type { Organization } from '../models';
 import { SignIn } from '../screens/Auth/SignIn/SignIn';
 import { SignUp } from '../screens/Auth/SignUp/SignUp';
 

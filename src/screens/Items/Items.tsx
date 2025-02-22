@@ -1,14 +1,14 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Loading } from '../../components/Loading/Loading';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
 import { Container, Icon, Label, ListItem, Picker, Tab, Tabs, Text } from '../../core';
-import { Category } from '../../models';
-import { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
+import type { Category } from '../../models';
+import type { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { CategoriesTab } from './Tabs/CategoriesTab/CategoriesTab';
 import { ItemsTab } from './Tabs/ItemsTab/ItemsTab';
 import { ModifiersTab } from './Tabs/ModifiersTab/ModifiersTab';

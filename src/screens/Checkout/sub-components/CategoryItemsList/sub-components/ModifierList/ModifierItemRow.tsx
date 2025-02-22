@@ -2,7 +2,7 @@ import withObservables from '@nozbe/with-observables';
 import { Body, Left, ListItem, Right, Text } from 'native-base';
 import React, { useContext } from 'react';
 import { OrganizationContext } from '../../../../../../contexts/OrganizationContext';
-import { ModifierItem, ModifierItemPrice } from '../../../../../../models';
+import type { ModifierItem, ModifierItemPrice } from '../../../../../../models';
 import { formatNumber } from '../../../../../../utils';
 
 interface ModifierItemRowOuterProps {

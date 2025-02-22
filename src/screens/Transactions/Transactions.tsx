@@ -1,11 +1,11 @@
 import withObservables from '@nozbe/with-observables';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import React, { useState } from 'react';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
 import { Col, Container, Content, Grid } from '../../core';
 import { withBillPeriod } from '../../hocs/withBillPeriod';
-import { Bill, BillPeriod } from '../../models';
-import { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
+import type { Bill, BillPeriod } from '../../models';
+import type { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { Receipt } from '../Checkout/sub-components/Receipt/Receipt';
 import { TransactionList } from './sub-components/TransactionList';
 

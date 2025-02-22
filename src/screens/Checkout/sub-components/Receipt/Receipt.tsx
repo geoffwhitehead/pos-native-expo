@@ -1,4 +1,5 @@
-import { Database, Q } from '@nozbe/watermelondb';
+import type { Database} from '@nozbe/watermelondb';
+import { Q } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import { useDatabase } from '@nozbe/watermelondb/hooks';
 import withObservables from '@nozbe/with-observables';
@@ -11,7 +12,7 @@ import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
 import { ActionSheet, Button, Col, Grid, Icon, Row, Spinner, Text, View } from '../../../../core';
-import {
+import type {
   Bill,
   BillCallLog,
   BillCallPrintLog,
@@ -24,12 +25,13 @@ import {
   PrintCategory,
   Printer,
 } from '../../../../models';
-import { BillItem } from '../../../../models/BillItem';
+import type { BillItem } from '../../../../models/BillItem';
 import { kitchenCall, kitchenReceipt } from '../../../../services/printer/kitchenReceipt';
 import { print } from '../../../../services/printer/printer';
 import { receiptBill } from '../../../../services/printer/receiptBill';
 import { buttons, fonts, spacing } from '../../../../theme';
-import { formatNumber, minimalBillSummary, MinimalBillSummary } from '../../../../utils';
+import type { MinimalBillSummary } from '../../../../utils';
+import { formatNumber, minimalBillSummary } from '../../../../utils';
 import { RECEIPT_PANEL_BUTTONS_WIDTH } from '../../../../utils/consts';
 import { paddingHelper, resolveButtonState } from '../../../../utils/helpers';
 import { moderateScale } from '../../../../utils/scaling';

@@ -1,8 +1,9 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { capitalize } from 'lodash';
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import { ScrollView } from 'react-native';
 // import { Printer as StarPrinterProps, Printers } from 'react-native-star-prnt';
 import { Modal } from '../../../../components/Modal/Modal';
@@ -19,7 +20,7 @@ import {
   Spinner,
   Text,
 } from '../../../../core';
-import { Printer } from '../../../../models';
+import type { Printer } from '../../../../models';
 import { Emulations, PrinterProps } from '../../../../models/Printer';
 import { portDiscovery } from '../../../../services/printer/printer';
 import { ModalPrinterDetails } from './ModalPrinterDetails';

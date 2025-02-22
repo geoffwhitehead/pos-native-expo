@@ -1,4 +1,4 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import React, { useContext, useEffect, useState } from 'react';
 import { Loading } from '../../components/Loading/Loading';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
@@ -6,7 +6,7 @@ import { BillPeriodContext } from '../../contexts/BillPeriodContext';
 import { CurrentBillContext } from '../../contexts/CurrentBillContext';
 import { Col, Container, Grid } from '../../core';
 import { CheckoutItemNavigator } from '../../navigators/CheckoutItemNavigator';
-import { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
+import type { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { RECEIPT_PANEL_BUTTONS_WIDTH, RECEIPT_PANEL_WIDTH } from '../../utils/consts';
 import { SelectBill } from '../Bills/SelectBill/SelectBill';
 import { CompleteBill } from './sub-components/CompleteBill/CompleteBill';

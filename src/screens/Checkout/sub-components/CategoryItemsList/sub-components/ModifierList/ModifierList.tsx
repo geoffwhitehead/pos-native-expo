@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ModalContentButton } from '../../../../../../components/Modal/ModalContentButton';
 import { NumberPicker } from '../../../../../../components/NumberPicker/NumberPicker';
 import { Container, List } from '../../../../../../core';
-import { Bill, Item, Modifier, ModifierItem, PriceGroup } from '../../../../../../models';
+import type { Bill, Item, Modifier, ModifierItem, PriceGroup } from '../../../../../../models';
 import { ModifierGroup } from './ModifierGroup';
 
 interface ModifierListOuterProps {

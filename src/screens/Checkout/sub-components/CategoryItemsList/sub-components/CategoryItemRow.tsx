@@ -2,7 +2,7 @@ import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Body, Icon, Left, ListItem, Right, Text } from '../../../../../core';
-import { Item, ItemPrice } from '../../../../../models';
+import type { Item, ItemPrice } from '../../../../../models';
 import { formatNumber } from '../../../../../utils';
 
 interface CategoryItemRowOuterProps {

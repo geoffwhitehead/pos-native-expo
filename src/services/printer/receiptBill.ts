@@ -1,5 +1,5 @@
 import { capitalize, groupBy } from 'lodash';
-import {
+import type {
   BillDiscount,
   BillItem,
   BillPayment,
@@ -9,7 +9,8 @@ import {
   PriceGroup,
   Printer,
 } from '../../models';
-import { billSummary, BillSummary, formatNumber, getItemPrice, getModifierItemPrice } from '../../utils';
+import type { BillSummary} from '../../utils';
+import { billSummary, formatNumber, getItemPrice, getModifierItemPrice } from '../../utils';
 import { addHeader, alignCenter, alignLeftRight, divider } from './helpers';
 import { receiptTempate } from './template';
 

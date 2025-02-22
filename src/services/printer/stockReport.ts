@@ -1,7 +1,9 @@
-import { Database, Q } from '@nozbe/watermelondb';
+import type { Database} from '@nozbe/watermelondb';
+import { Q } from '@nozbe/watermelondb';
 import dayjs from 'dayjs';
-import { Dictionary, groupBy } from 'lodash';
-import { BillItem, BillItemModifierItem, Category, Modifier, Organization, Printer } from '../../models';
+import type { Dictionary} from 'lodash';
+import { groupBy } from 'lodash';
+import type { BillItem, BillItemModifierItem, Category, Modifier, Organization, Printer } from '../../models';
 import { addHeader, alignCenter, alignLeftRight, starDivider } from './helpers';
 import { receiptTempate } from './template';
 import { tableNames } from '../../models/tableNames';

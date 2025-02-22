@@ -6,8 +6,9 @@ import { Body, Left, ListItem, Right, Spinner, Text } from 'native-base';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
-import { Bill, BillDiscount, BillItem, BillPayment, PaymentType } from '../../../models';
-import { formatNumber, transactionSummary, TransactionSummary } from '../../../utils';
+import type { Bill, BillDiscount, BillItem, BillPayment, PaymentType } from '../../../models';
+import type { TransactionSummary } from '../../../utils';
+import { formatNumber, transactionSummary } from '../../../utils';
 
 interface TransactionListRowOuterProps {
   bill: Bill;

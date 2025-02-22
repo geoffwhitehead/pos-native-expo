@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { Button, Left, ListItem, Right, Text } from '../../../../core';
-import { Modifier } from '../../../../models';
+import type { Modifier } from '../../../../models';
 
 type ModifierRowOuterProps = {
   onSelect: (modifier: Modifier) => void;
