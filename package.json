@@ -2,6 +2,7 @@
   "name": "pos-client-expo",
   "version": "1.0.0",
   "main": "index.ts",
+  "type": "module",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -67,6 +68,8 @@
     "@babel/plugin-transform-private-methods": "^7.25.9",
     "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "@babel/plugin-transform-runtime": "7.21.0",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.21.0",
     "@react-native-community/cli": "^15.1.3",
     "@react-native-community/cli-platform-android": "^11.3.7",
     "@react-native-community/cli-platform-ios": "^11.3.7",

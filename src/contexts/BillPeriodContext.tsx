@@ -1,5 +1,5 @@
 import React from 'react';
-import { BillPeriod } from '../models/BillPeriod';
+import type { BillPeriod } from '../models/BillPeriod';
 
 type BillPeriodContextProps = {
   setBillPeriod: (billPeriod: BillPeriod) => void;

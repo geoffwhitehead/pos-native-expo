@@ -15,5 +15,6 @@
     "eslint.enable": true,
     "eslint.run": "onType",
     "eslint.debug": true,
+    "eslint.useFlatConfig": true,
     "typescript.tsdk": "node_modules/typescript/lib"
 }

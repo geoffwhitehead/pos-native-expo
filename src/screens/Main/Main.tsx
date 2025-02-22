@@ -1,22 +1,28 @@
-import { Database, Q } from '@nozbe/watermelondb';
+import type { Database} from '@nozbe/watermelondb';
+import { Q } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
-import dayjs, { Dayjs } from 'dayjs';
-import { Dictionary, groupBy, keyBy, sortBy } from 'lodash';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+import type { Dictionary} from 'lodash';
+import { groupBy, keyBy, sortBy } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Loading } from '../../components/Loading/Loading';
 import { BillPeriodContext } from '../../contexts/BillPeriodContext';
 import { CurrentBillContext } from '../../contexts/CurrentBillContext';
-import { GroupedPrices, ItemPricesContext } from '../../contexts/ItemPricesContext';
-import { CategoryItems, GroupedSortedItems, ItemsContext } from '../../contexts/ItemsContext';
+import type { GroupedPrices} from '../../contexts/ItemPricesContext';
+import { ItemPricesContext } from '../../contexts/ItemPricesContext';
+import type { CategoryItems, GroupedSortedItems} from '../../contexts/ItemsContext';
+import { ItemsContext } from '../../contexts/ItemsContext';
 import { LastSyncedAtContext } from '../../contexts/LastSyncedAtContext';
 import { OrganizationContext } from '../../contexts/OrganizationContext';
 import { PriceGroupContext } from '../../contexts/PriceGroupContext';
 import { ReceiptPrinterContext } from '../../contexts/ReceiptPrinterContext';
-import { RecentColorsContext, RecentColorsType } from '../../contexts/RecentColorsContext';
+import type { RecentColorsType } from '../../contexts/RecentColorsContext';
+import { RecentColorsContext } from '../../contexts/RecentColorsContext';
 import { database } from '../../database';
 import { useSync } from '../../hooks/useSync';
-import {
+import type {
   Bill,
   BillPeriod,
   Category,
