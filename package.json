@@ -82,6 +82,8 @@
     "babel-plugin-module-resolver": "^5.0.0",
     "babel-preset-expo": "~11.0.0",
     "eslint": "^9.20.1",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-native": "^5.0.0",
     "metro-react-native-babel-preset": "^0.76.8",
     "typescript": "~5.3.3"
   },

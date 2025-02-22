@@ -1,10 +1,9 @@
 import eslint from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import * as parser from "@typescript-eslint/parser";
-import { FlatCompat } from "@eslint/eslintrc";
 import globals from "globals";
-
-const compat = new FlatCompat();
+import react from "eslint-plugin-react";
+import reactNative from "eslint-plugin-react-native";
 
 export default [
   eslint.configs.recommended,
@@ -13,6 +12,8 @@ export default [
     languageOptions: {
       globals: {
         ...globals.node,
+        ...react.globals,
+        ...reactNative.globals,
       },
       parser: parser,
       parserOptions: {
@@ -20,10 +21,15 @@ export default [
         tsconfigRootDir: import.meta.dirname,
         ecmaVersion: 2022,
         sourceType: "module",
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
     plugins: {
       "@typescript-eslint": tseslint,
+      react: react,
+      "react-native": reactNative,
     },
     rules: {
       "@typescript-eslint/consistent-type-imports": [
@@ -34,7 +40,15 @@ export default [
           disallowTypeAnnotations: false,
         },
       ],
-      "no-unused-vars": "error",
+      "no-unused-vars": "off",
+    },
+  },
+  {
+    files: ["**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
     },
   },
 ];
