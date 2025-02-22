@@ -6,11 +6,12 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ActionSheet, Body, Button, Icon, Left, List, ListItem, Right, Spinner, Text, View } from '../../../../core';
-import { Discount, tableNames } from '../../../../models';
+import { Discount } from '../../../../models';
 import { formatNumber } from '../../../../utils';
 import { resolveButtonState } from '../../../../utils/helpers';
 import { commonStyles } from '../styles';
 import { ModalDiscountDetails } from './ModalDiscountDetails';
+import { tableNames } from '../../../../models/tableNames';
 
 interface DiscountTabOuterProps {
   database: Database;

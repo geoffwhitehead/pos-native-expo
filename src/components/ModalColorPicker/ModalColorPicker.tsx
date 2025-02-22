@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SlidersColorPicker } from 'react-native-color';
+// import { SlidersColorPicker } from 'react-native-color';
 import tinycolor from 'tinycolor2';
 import { fontSizes, spacing } from '../../theme';
 
@@ -34,7 +34,7 @@ export const ModalColorPickerContent: React.FC<ModalColorPickerContentProps> = (
       >
         <Text style={[styles.colorString, { color: overlayTextColor }]}>{tinycolor(hslColor).toHexString()}</Text>
       </TouchableOpacity>
-      <SlidersColorPicker
+      {/* <SlidersColorPicker
         visible={modalVisible}
         color={hslColor}
         returnMode={'hex'}
@@ -51,7 +51,7 @@ export const ModalColorPickerContent: React.FC<ModalColorPickerContentProps> = (
         swatchesLabel="RECENTS"
         okLabel="Done"
         cancelLabel="Cancel"
-      />
+      /> */}
     </View>
   );
 };

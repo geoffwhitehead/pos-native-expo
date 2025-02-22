@@ -6,8 +6,9 @@ import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { PriceGroupContext } from '../../contexts/PriceGroupContext';
 import { Icon, Input, Item, Label, Picker, Text } from '../../core';
-import { PriceGroup, tableNames } from '../../models';
+import { PriceGroup } from '../../models';
 import { moderateScale } from '../../utils/scaling';
+import { tableNames } from '../../models/tableNames';
 
 interface SearchHeaderOuterProps {
   onChangeText: (value: string) => void;

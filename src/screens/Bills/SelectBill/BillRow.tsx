@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
 import { Badge, Left, ListItem, Right, Text, View } from '../../../core';
-import {
+import type {
   Bill,
   BillCallLog,
   BillCallPrintLog,
@@ -15,12 +15,12 @@ import {
   BillItemPrintLog,
   BillPayment,
   Discount,
-  tableNames,
 } from '../../../models';
-import { PrintStatus } from '../../../models/BillItemPrintLog';
 import { fontSizes } from '../../../theme';
 import { formatNumber, minimalBillSummary, MinimalBillSummary } from '../../../utils';
 import { moderateScale } from '../../../utils/scaling';
+import { PrintStatus } from '../../../models/constants';
+import { tableNames } from '../../../models/tableNames';
 
 interface BillRowInnerProps {
   billPayments: BillPayment[];

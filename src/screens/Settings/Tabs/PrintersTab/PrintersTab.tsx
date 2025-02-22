@@ -19,11 +19,12 @@ import {
   Spinner,
   Text,
 } from '../../../../core';
-import { Printer, tableNames } from '../../../../models';
+import { Printer } from '../../../../models';
 import { Emulations, PrinterProps } from '../../../../models/Printer';
 import { portDiscovery } from '../../../../services/printer/printer';
 import { ModalPrinterDetails } from './ModalPrinterDetails';
 import { PrinterRow } from './PrinterRow';
+import { tableNames } from '../../../../models/tableNames';
 
 interface PrintersTabOuterProps {
   database: Database;

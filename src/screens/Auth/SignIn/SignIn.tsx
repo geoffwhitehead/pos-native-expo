@@ -10,11 +10,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import envKey from '../../../../build.env';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { Button, Container, Form, Input, Item, Label, Spinner, Text } from '../../../core';
-import { Organization, tableNames } from '../../../models';
+import { Organization } from '../../../models';
 import { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
 import { areYouSure, resolveButtonState } from '../../../utils/helpers';
 import { moderateScale } from '../../../utils/scaling';
+import { tableNames } from '../../../models/tableNames';
 
 interface SignInOuterProps {
   navigation: StackNavigationProp<AuthStackParamList, 'SignIn'>;

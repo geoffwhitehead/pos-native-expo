@@ -12,7 +12,6 @@ import {
   PaymentType,
   PriceGroup,
   Printer,
-  tableNames,
 } from '../../models';
 import {
   categorySummary,
@@ -26,6 +25,7 @@ import {
 } from '../../utils';
 import { addHeader, alignCenter, alignLeftRight, divider, starDivider } from './helpers';
 import { receiptTempate } from './template';
+import { tableNames } from '../../models/tableNames';
 
 type PeriodReportProps = {
   billPeriod: BillPeriod;

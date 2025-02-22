@@ -7,10 +7,10 @@ import {
   BillPayment,
   Discount,
   PaymentType,
-  PriceGroup,
-  tableNames,
+  PriceGroup
 } from '../models';
 import { CurrencyEnum } from '../models/Organization';
+import { tableNames } from '../models/tableNames';
 
 export const getDefaultCashDenominations = (currency: string): number[] => {
   const map = {

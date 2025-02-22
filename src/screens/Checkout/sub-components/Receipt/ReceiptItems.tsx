@@ -13,7 +13,7 @@ import { Modal } from '../../../../components/Modal/Modal';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ActionSheet, Content, Form, Input, List } from '../../../../core';
-import { Bill, BillDiscount, BillItem, BillPayment, PaymentType, tableNames } from '../../../../models';
+import { Bill, BillDiscount, BillItem, BillPayment, PaymentType } from '../../../../models';
 import { BillSummary } from '../../../../utils';
 import { moderateScale } from '../../../../utils/scaling';
 import { BillCalls } from './sub-components/BillCalls';
@@ -21,6 +21,7 @@ import { DiscountsBreakdown } from './sub-components/DiscountsBreakdown';
 import { ItemsBreakdown } from './sub-components/ItemsBreakdown';
 import { ModalReason, ModifyReason } from './sub-components/ModalReason';
 import { PaymentsBreakdown } from './sub-components/PaymentsBreakdown';
+import { tableNames } from '../../../../models/tableNames';
 
 type ReceiptItemsOuterProps = {
   readonly: boolean;

@@ -8,10 +8,11 @@ import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ActionSheet, Button, Container, Icon, Left, List, ListItem, Right, Text } from '../../../../core';
-import { Category, Item, PriceGroup, tableNames } from '../../../../models';
+import { Category, Item, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
 import { PriceGroupDetails } from './PriceGroupDetails';
 import { PriceGroupItemsModal } from './PriceGroupItemsModal';
+import { tableNames } from '../../../../models/tableNames';
 
 interface PriceGroupsTabOuterProps {
   database: Database;

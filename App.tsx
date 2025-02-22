@@ -15,7 +15,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <NavigationContainer>
+        <NavigationContainer >
           <Root>
             <DatabaseProvider database={database}>
               <MainApp />

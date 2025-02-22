@@ -5,13 +5,14 @@ import React from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
 import { Button, Form, Icon, Input, Item, Picker, Right, Text, View } from '../../../core';
-import { tableNames, TablePlanElement } from '../../../models';
+import { TablePlanElement } from '../../../models';
 import {
   TablePlanElementProps,
   TablePlanElementRotations,
   TablePlanElementTypes,
 } from '../../../models/TablePlanElement';
 import { commonStyles } from '../../Settings/Tabs/styles';
+import { tableNames } from '../../../models/tableNames';
 
 type TableElementFormInnerProps = {};
 

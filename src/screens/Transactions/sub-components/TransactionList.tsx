@@ -7,9 +7,10 @@ import { ScrollView } from 'react-native';
 import { SwitchSelector } from '../../../components/SwitchSelector/SwitchSelector';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
 import { List, ListItem, Text } from '../../../core';
-import { Bill, PaymentType, tableNames } from '../../../models';
+import { Bill, PaymentType } from '../../../models';
 import { TransactionGroupingEnum, TransactionOrderEnum } from '../../../models/Organization';
 import { TransactionListRow } from './TransactionListRow';
+import { tableNames } from '../../../models/tableNames';
 interface TransactionListInnerProps {
   paymentTypes: PaymentType[];
 }

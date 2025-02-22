@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -30,7 +30,10 @@
     },
     "plugins": [
       [
-        "@morrowdigital/watermelondb-expo-plugin"
+        "@morrowdigital/watermelondb-expo-plugin",
+        {
+          "platforms": ["ios", "android"]
+        }
       ],
       "expo-asset",
       "expo-build-properties",

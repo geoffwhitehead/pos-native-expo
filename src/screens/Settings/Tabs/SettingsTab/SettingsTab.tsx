@@ -13,11 +13,12 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
 import { Button, Container, Footer, Form, Icon, Input, Picker, Text, View } from '../../../../core';
-import { Bill, BillPeriod, PriceGroup, Printer, tableNames } from '../../../../models';
+import { Bill, BillPeriod, PriceGroup, Printer } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import { areYouSure } from '../../../../utils/helpers';
 import { moderateScale } from '../../../../utils/scaling';
 import { commonStyles } from '../styles';
+import { tableNames } from '../../../../models/tableNames';
 
 interface SettingsTabOuterProps {
   database: Database;

@@ -16,10 +16,10 @@ import {
   ModifierItem,
   ModifierItemPrice,
   PriceGroup,
-  tableNames,
 } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
 import { commonStyles } from '../../../Settings/Tabs/styles';
+import { tableNames } from '../../../../models/tableNames';
 
 interface PriceGroupDetailsProps {
   onClose: () => void;

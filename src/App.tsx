@@ -310,7 +310,7 @@ export const App: React.FC<{}> = () => {
   return (
     <Root>
       <DatabaseProvider database={database}>
-        <NavigationContainer theme={drawerTheme}>
+        <NavigationContainer independent theme={drawerTheme}>
           <AuthContext.Provider value={{ ...authContext, isSignInLoading, isSignUpLoading }}>
             {!accessToken || !refreshToken || !organizationId || !userId ? (
               <AuthNavigator />

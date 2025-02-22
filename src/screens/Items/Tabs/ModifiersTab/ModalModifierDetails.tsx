@@ -7,8 +7,9 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { ActionSheet, Form, Input } from '../../../../core';
-import { Modifier, tableNames } from '../../../../models';
+import { Modifier } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
+import { tableNames } from '../../../../models/tableNames';
 
 type ModalModifierDetailsOuterProps = {
   onClose: () => void;

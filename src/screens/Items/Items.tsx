@@ -7,12 +7,13 @@ import { StyleSheet } from 'react-native';
 import { Loading } from '../../components/Loading/Loading';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
 import { Container, Icon, Label, ListItem, Picker, Tab, Tabs, Text } from '../../core';
-import { Category, tableNames } from '../../models';
+import { Category } from '../../models';
 import { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { CategoriesTab } from './Tabs/CategoriesTab/CategoriesTab';
 import { ItemsTab } from './Tabs/ItemsTab/ItemsTab';
 import { ModifiersTab } from './Tabs/ModifiersTab/ModifiersTab';
 import { PriceGroupsTab } from './Tabs/PriceGroupsTab/PriceGroupsTab';
+import { tableNames } from '../../models/tableNames';
 
 interface ItemsOuterProps {
   navigation: DrawerNavigationProp<SidebarDrawerStackParamList, 'Items'>;

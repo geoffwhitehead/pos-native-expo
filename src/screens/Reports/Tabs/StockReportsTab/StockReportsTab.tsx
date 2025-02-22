@@ -13,12 +13,13 @@ import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
 import { Button, Form, Icon, Item, Label, ListItem, Picker, Spinner, Text, View } from '../../../../core';
-import { BillItem, Category, PriceGroup, tableNames } from '../../../../models';
+import { BillItem, Category, PriceGroup } from '../../../../models';
 import { print } from '../../../../services/printer/printer';
 import { stockReport } from '../../../../services/printer/stockReport';
 import { colors } from '../../../../theme';
 import { resolveButtonState } from '../../../../utils/helpers';
 import { moderateScale } from '../../../../utils/scaling';
+import { tableNames } from '../../../../models/tableNames';
 
 type StockReportsTabInnerProps = {
   categories: Category[];

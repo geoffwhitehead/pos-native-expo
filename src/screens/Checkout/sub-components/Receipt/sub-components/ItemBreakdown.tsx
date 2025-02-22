@@ -3,11 +3,11 @@ import { capitalize } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Badge, Left, ListItem, Right, Text, View } from '../../../../../core';
-import { BillItem, BillItemModifierItem } from '../../../../../models';
-import { BillItemPrintLog, PrintStatus, PrintType } from '../../../../../models/BillItemPrintLog';
+import type { BillItem, BillItemModifierItem, BillItemPrintLog } from '../../../../../models';
 import { CurrencyEnum } from '../../../../../models/Organization';
 import { formatNumber } from '../../../../../utils';
 import { ITEM_SPACING } from '../../../../../utils/consts';
+import { PrintStatus, PrintType } from '../../../../../models/constants';
 
 interface ItemBreakdownInnerProps {
   billItemModifierItems: BillItemModifierItem[];

@@ -5,7 +5,7 @@ import { Left, ListItem, Right, Separator, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Bill, BillCallLog, BillCallPrintLog } from '../../../../../models';
-import { PrintStatus } from '../../../../../models/BillItemPrintLog';
+import { PrintStatus } from '../../../../../models/constants';
 
 interface BillCallOuterProps {
   bill: Bill;

@@ -5,10 +5,10 @@ const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 2224;
 const guidelineBaseHeight = 1668;
 
-const scale = size => {
+const scale = (size: number) => {
   return (width / guidelineBaseWidth) * size;
 };
-const verticalScale = size => (height / guidelineBaseHeight) * size;
-const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
+const verticalScale = (size: number) => (height / guidelineBaseHeight) * size;
+const moderateScale = (size: number, factor = 0.5) => size + (scale(size) - size) * factor;
 
 export { scale, verticalScale, moderateScale };

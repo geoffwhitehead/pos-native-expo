@@ -8,15 +8,6 @@ import { Settings } from '../screens/Settings/Settings';
 import { Transactions } from '../screens/Transactions/Transactions';
 import { colors } from '../theme';
 
-export const sidebarRoutes: Record<string, string> = {
-  checkout: 'Checkout',
-  items: 'Items',
-  reports: 'Reports',
-  bills: 'Bills',
-  transactions: 'Transactions',
-  settings: 'Settings',
-};
-
 export type SidebarDrawerStackParamList = {
   Checkout: undefined;
   Items: undefined;

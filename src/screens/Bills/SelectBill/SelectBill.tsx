@@ -7,13 +7,14 @@ import { CurrentBillContext } from '../../../contexts/CurrentBillContext';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
 import { Button, Col, Footer, Grid, Icon, Item, List, Text } from '../../../core';
 import { database } from '../../../database';
-import { Bill, BillPeriod, tableNames, TablePlanElement } from '../../../models';
+import type { Bill, BillPeriod, TablePlanElement } from '../../../models';
 import { BillViewTypeEnum } from '../../../models/Organization';
 import { moderateScale } from '../../../utils/scaling';
 import { BillRow } from './BillRow';
 import { BillRowEmpty } from './BillRowEmpty';
 import { TableElementForm } from './TableElementForm';
 import { TableElement, TableViewer } from './TableViewer';
+import { tableNames } from '../../../models/tableNames';
 
 interface SelectBillInnerProps {
   openBills: Bill[];

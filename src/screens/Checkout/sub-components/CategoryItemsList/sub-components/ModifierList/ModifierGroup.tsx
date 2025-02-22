@@ -4,8 +4,9 @@ import withObservables from '@nozbe/with-observables';
 import { keyBy } from 'lodash';
 import React from 'react';
 import { ListItem, Text } from '../../../../../../core';
-import { Modifier, ModifierItem, ModifierItemPrice, PriceGroup, tableNames } from '../../../../../../models';
+import type { Modifier, ModifierItem, ModifierItemPrice, PriceGroup } from '../../../../../../models';
 import { ModifierItemRow } from './ModifierItemRow';
+import { tableNames } from '../../../../../../models/tableNames';
 
 interface ModifierGroupOuterProps {
   modifier: Modifier;

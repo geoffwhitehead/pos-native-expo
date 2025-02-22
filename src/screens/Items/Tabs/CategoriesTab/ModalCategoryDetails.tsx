@@ -12,9 +12,10 @@ import { ModalColorPickerContent } from '../../../../components/ModalColorPicker
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { RecentColorsContext } from '../../../../contexts/RecentColorsContext';
 import { Form, Icon, Input, Picker } from '../../../../core';
-import { Category, PrintCategory, tableNames } from '../../../../models';
+import { Category, PrintCategory } from '../../../../models';
 import { colors } from '../../../../theme';
 import { moderateScale } from '../../../../utils/scaling';
+import { tableNames } from '../../../../models/tableNames';
 
 type ModalCategoryDetailsOuterProps = {
   onClose: () => void;

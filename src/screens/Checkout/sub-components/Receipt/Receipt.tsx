@@ -23,10 +23,8 @@ import {
   PriceGroup,
   PrintCategory,
   Printer,
-  tableNames,
 } from '../../../../models';
 import { BillItem } from '../../../../models/BillItem';
-import { PrintStatus } from '../../../../models/BillItemPrintLog';
 import { kitchenCall, kitchenReceipt } from '../../../../services/printer/kitchenReceipt';
 import { print } from '../../../../services/printer/printer';
 import { receiptBill } from '../../../../services/printer/receiptBill';
@@ -36,6 +34,8 @@ import { RECEIPT_PANEL_BUTTONS_WIDTH } from '../../../../utils/consts';
 import { paddingHelper, resolveButtonState } from '../../../../utils/helpers';
 import { moderateScale } from '../../../../utils/scaling';
 import { ReceiptItems } from './ReceiptItems';
+import { PrintStatus } from '../../../../models/constants';
+import { tableNames } from '../../../../models/tableNames';
 
 interface ReceiptInnerProps {
   billPayments: BillPayment[];

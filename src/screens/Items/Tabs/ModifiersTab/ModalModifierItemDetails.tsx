@@ -10,8 +10,9 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { Content, Form, Input, Separator, Text } from '../../../../core';
-import { Modifier, ModifierItem, ModifierItemPrice, PriceGroup, tableNames } from '../../../../models';
+import { Modifier, ModifierItem, ModifierItemPrice, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
+import { tableNames } from '../../../../models/tableNames';
 
 type ModalModifierItemDetailsOuterProps = {
   database: Database;

@@ -1,9 +1,10 @@
 import { Database, Q } from '@nozbe/watermelondb';
 import dayjs from 'dayjs';
 import { Dictionary, groupBy } from 'lodash';
-import { BillItem, BillItemModifierItem, Category, Modifier, Organization, Printer, tableNames } from '../../models';
+import { BillItem, BillItemModifierItem, Category, Modifier, Organization, Printer } from '../../models';
 import { addHeader, alignCenter, alignLeftRight, starDivider } from './helpers';
 import { receiptTempate } from './template';
+import { tableNames } from '../../models/tableNames';
 
 type StockReportProps = {
   startDate: Date;

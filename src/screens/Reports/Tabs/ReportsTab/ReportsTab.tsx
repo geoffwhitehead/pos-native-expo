@@ -22,13 +22,14 @@ import {
   Toast,
   View,
 } from '../../../../core';
-import { BillPeriod, Organization, PaymentType, Printer, tableNames } from '../../../../models';
+import { BillPeriod, Organization, PaymentType, Printer } from '../../../../models';
 import { SidebarDrawerStackParamList } from '../../../../navigators/SidebarNavigator';
 import { correctionReport } from '../../../../services/printer/correctionReport';
 import { periodReport } from '../../../../services/printer/periodReport';
 import { print } from '../../../../services/printer/printer';
 import { resolveButtonState } from '../../../../utils/helpers';
 import { ReportReceipt } from './ReportReceipt/ReportReceipt';
+import { tableNames } from '../../../../models/tableNames';
 
 interface ReportsTabInnerProps {
   billPeriods: BillPeriod[];

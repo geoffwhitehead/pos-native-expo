@@ -7,8 +7,9 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { Form, Input, ListItem, View } from '../../../../core';
-import { Discount, tableNames } from '../../../../models';
+import { Discount } from '../../../../models';
 import { commonStyles } from '../styles';
+import { tableNames } from '../../../../models/tableNames';
 
 interface ModalDiscountDetailsProps {
   onClose: () => void;

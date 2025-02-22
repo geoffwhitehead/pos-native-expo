@@ -9,11 +9,12 @@ import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { Container, Footer, Icon, Label, List, Picker, Text } from '../../../../core';
-import { Category, PrintCategory, tableNames } from '../../../../models';
+import { Category, PrintCategory } from '../../../../models';
 import { MAX_GRID_SIZE } from '../../../../utils/consts';
 import { moderateScale } from '../../../../utils/scaling';
 import { CategoryRow } from './CategoryRow';
 import { ModalCategoryDetails } from './ModalCategoryDetails';
+import { tableNames } from '../../../../models/tableNames';
 
 interface CategoriesTabOuterProps {
   database?: Database;

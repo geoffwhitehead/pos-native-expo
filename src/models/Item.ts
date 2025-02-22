@@ -1,5 +1,5 @@
 import { Model, Q, Query, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, children, field, lazy, relation } from '@nozbe/watermelondb/decorators';
+import { children, field, lazy, relation, writer } from '@nozbe/watermelondb/decorators';
 import type { ItemModifier, PrinterGroup } from '.';
 import type { Category } from './Category';
 import type { ItemPrice } from './ItemPrice';

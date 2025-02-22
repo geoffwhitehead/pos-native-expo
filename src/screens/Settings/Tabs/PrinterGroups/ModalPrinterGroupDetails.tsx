@@ -10,10 +10,11 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { Col, Form, Input, List, ListItem, Row, Text } from '../../../../core';
-import { PrinterGroup, PrinterGroupPrinter, tableNames } from '../../../../models';
+import { PrinterGroup, PrinterGroupPrinter } from '../../../../models';
 import { Printer } from '../../../../models/Printer';
 import { PrinterRowChoice } from '../PrintersTab/PrinterRowChoice';
 import { commonStyles } from '../styles';
+import { tableNames } from '../../../../models/tableNames';
 
 interface ModalPrinterGroupDetailsOuterProps {
   onClose: () => void;

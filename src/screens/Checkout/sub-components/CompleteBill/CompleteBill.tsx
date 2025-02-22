@@ -16,11 +16,11 @@ import {
   PaymentType,
   PriceGroup,
   Printer,
-  tableNames,
 } from '../../../../models';
 import { fonts } from '../../../../theme';
 import { formatNumber } from '../../../../utils';
 import { moderateScale } from '../../../../utils/scaling';
+import { tableNames } from '../../../../models/tableNames';
 interface CompleteBillOuterProps {
   bill: Bill;
   onCloseBill: () => void;

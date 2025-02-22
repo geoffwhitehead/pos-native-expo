@@ -20,10 +20,10 @@ import {
   Modifier,
   PriceGroup,
   PrinterGroup,
-  tableNames,
 } from '../../../../models';
 import { styles as commonStyles } from '../../../../styles';
 import { ModifierRow } from './ModifierRow';
+import { tableNames } from '../../../../models/tableNames';
 interface ItemDetailsOuterProps {
   item?: ItemModel;
   onClose: () => void;

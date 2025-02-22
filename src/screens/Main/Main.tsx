@@ -25,9 +25,9 @@ import {
   Organization,
   PriceGroup,
   Printer,
-  tableNames,
 } from '../../models';
 import { SidebarNavigator } from '../../navigators/SidebarNavigator';
+import { tableNames } from '../../models/tableNames';
 
 interface MainInnerProps {
   priceGroups: PriceGroup[];

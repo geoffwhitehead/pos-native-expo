@@ -13,11 +13,12 @@ import { ItemPricesContext } from '../../../../contexts/ItemPricesContext';
 import { ItemsContext } from '../../../../contexts/ItemsContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { Button, Left, List, ListItem, Text, View } from '../../../../core';
-import { Item, ItemPrice, Modifier, PriceGroup, tableNames } from '../../../../models';
+import { Item, ItemPrice, Modifier, PriceGroup } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import { CheckoutItemStackParamList } from '../../../../navigators/CheckoutItemNavigator';
 import { CategoryItemRow } from './sub-components/CategoryItemRow';
 import { ModifierList } from './sub-components/ModifierList/ModifierList';
+import { tableNames } from '../../../../models/tableNames';
 
 interface CategoryItemsListOuterProps {
   database?: Database;
