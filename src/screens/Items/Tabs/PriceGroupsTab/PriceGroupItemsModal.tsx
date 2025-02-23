@@ -122,14 +122,15 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
                 <Picker
                   mode="dropdown"
                   iosHeader="Select a category"
-                  iosIcon={<Icon name="chevron-down-outline" />}
+                  iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                   placeholder="Select a category"
                   selectedValue={selectedCategory}
                   onValueChange={handleCategoryChange}
                   textStyle={styles.pickerText}
+                  
                 >
                   {categories.map(category => {
-                    return <Picker.Item key={category.id} label={category.name} value={category} />;
+                    return <Picker.Item key={category.id} label={category.name} value={category} iosIcon={<Icon name="chevron-forward-outline" color="white" size={24} />} />;
                   })}
                 </Picker>
               </ListItem>

@@ -88,8 +88,8 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
         <Text style={{ fontWeight: 'bold' }}>Categories</Text>
         {isGridView && (
           <Button style={styles.editButton} success={isEditing} small info={!isEditing} onPress={handleSetEditing}>
-            {!isEditing && <Icon name="build-outline" size={24} />}
-            {isEditing && <Icon name="checkmark" size={24} />}
+            {!isEditing && <Icon name="build-outline" size={20} color="white" />}
+            {isEditing && <Icon name="checkmark" size={20} color="white" />}
           </Button>
         )}
       </ListItem>
@@ -104,7 +104,7 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
                     <Text>{category.name}</Text>
                   </Left>
                   <Body>
-                    <Icon name="arrow-forward" size={24}/>
+                    <Icon name="arrow-forward" size={24} color="white"/>
                   </Body>
                   <Right />
                 </ListItem>

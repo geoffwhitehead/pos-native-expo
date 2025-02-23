@@ -83,7 +83,7 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
         <Picker
           mode="dropdown"
           iosHeader="Select a grid size"
-          iosIcon={<Icon name="chevron-down-outline" />}
+          iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
           placeholder="Select a grid size"
           selectedValue={organization.categoryGridSize}
           onValueChange={handleUpdateGridSize}

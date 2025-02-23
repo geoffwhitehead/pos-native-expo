@@ -1,7 +1,8 @@
 import withObservables from '@nozbe/with-observables';
-import { Body, Icon, Left, ListItem, Right, Text } from 'native-base';
+
 import React from 'react';
 import type { Printer } from '../../../../models';
+import { Left, ListItem, Text, Body, Right, Icon } from '../../../../core';
 
 interface PrinterRowChoiceInnerProps {}
 
@@ -26,7 +27,7 @@ const PrinterRowChoiceInner: React.FC<PrinterRowChoiceOuterProps & PrinterRowCho
           <Text note>{printer.address}</Text>
         </Body>
         <Right>
-          <Icon name="arrow-forward" />
+          <Icon name="arrow-forward" color="grey" size={24}/>
         </Right>
       </ListItem>
     );
@@ -34,7 +35,7 @@ const PrinterRowChoiceInner: React.FC<PrinterRowChoiceOuterProps & PrinterRowCho
     return (
       <ListItem key={printer.id} noIndent onPress={() => onSelect(printer)}>
         <Left>
-          <Icon name="arrow-back" style={{ color: 'grey' }} />
+          <Icon name="arrow-back" color="grey" size={24}/>
           <Text>{printer.name}</Text>
         </Left>
         <Body>

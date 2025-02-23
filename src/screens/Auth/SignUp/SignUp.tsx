@@ -360,7 +360,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation, route }) => {
                       onPress={handlePrevious}
                       style={{ flexGrow: 1 }}
                     >
-                      <Icon name="arrow-back-outline" />
+                      <Icon name="arrow-back-outline"  color="white"/>
                     </Button>
                   )}
                   {page !== 3 && (

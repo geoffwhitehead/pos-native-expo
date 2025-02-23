@@ -43,7 +43,7 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
             <Picker
               mode="dropdown"
               iosHeader="Select a category"
-              iosIcon={<Icon name="chevron-down-outline" />}
+              iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
               placeholder="Select a category"
               selectedValue={selectedCategory}
               onValueChange={c => setSelectedCategory(c)}

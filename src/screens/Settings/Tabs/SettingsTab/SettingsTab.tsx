@@ -147,7 +147,7 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                   >
                     <Picker
                       mode="dropdown"
-                      iosIcon={<Icon name="chevron-down-outline" />}
+                      iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                       placeholder="Select receipt printer"
                       selectedValue={receiptPrinterId}
                       onValueChange={handleChange('receiptPrinterId')}
@@ -174,7 +174,7 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                   >
                     <Picker
                       mode="dropdown"
-                      iosIcon={<Icon name="chevron-down-outline" />}
+                      iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                       placeholder="Select default price group"
                       selectedValue={defaultPriceGroupId}
                       onValueChange={handleChange('defaultPriceGroupId')}
@@ -218,7 +218,7 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                   >
                     <Picker
                       mode="dropdown"
-                      iosIcon={<Icon name="chevron-down-outline" />}
+                      iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                       placeholder="Select currency"
                       selectedValue={currency}
                       onValueChange={handleChange('currency')}
@@ -246,7 +246,7 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                   >
                     <Picker
                       mode="dropdown"
-                      iosIcon={<Icon name="chevron-down-outline" />}
+                      iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                       placeholder="Select list view type"
                       selectedValue={itemListViewType}
                       onValueChange={handleChange('itemListViewType')}

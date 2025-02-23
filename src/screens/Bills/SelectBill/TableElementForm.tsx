@@ -99,12 +99,12 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
             <Item style={{ backgroundColor: 'whitesmoke', padding: 5 }}>
               <Right style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                 <Button success small iconLeft onPress={handleSubmit}>
-                  <Icon name="add-circle-outline" size={24}/>
+                  <Icon name="add-circle-outline" size={24} color="white"/>
                   <Text>Save</Text>
                 </Button>
                 {tablePlanElement && (
                   <Button danger small onPress={onDelete} style={{ marginLeft: 5 }}>
-                    <Icon name="trash" size={24}/>
+                    <Icon name="trash" size={24} color="white"/>
                   </Button>
                 )}
               </Right>
@@ -135,7 +135,7 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
               >
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="chevron-down-outline" />}
+                  iosIcon={<Icon name="chevron-down-outline" color="white" size={24}/>}
                   placeholder="Select type"
                   selectedValue={type}
                   onValueChange={handleChange('type')}
@@ -162,7 +162,7 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
               >
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="chevron-down-outline" />}
+                  iosIcon={<Icon name="chevron-down-outline" color="white" size={24}/>}
                   placeholder="Select rotation"
                   selectedValue={rotation}
                   onValueChange={handleChange('rotation')}

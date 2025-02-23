@@ -187,7 +187,7 @@ export const ModalCategoryDetailsInner: React.FC<ModalCategoryDetailsOuterProps 
               >
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="chevron-down-outline" />}
+                  iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
                   placeholder="Select print category (optional)"
                   selectedValue={printCategoryId}
                   onValueChange={handleChange('printCategoryId')}

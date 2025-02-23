@@ -119,7 +119,7 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
                 >
                   <Picker
                     mode="dropdown"
-                    iosIcon={<Icon name="chevron-down-outline" />}
+                    iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                     placeholder="Select emulation"
                     selectedValue={emulation}
                     onValueChange={handleChange('emulation')}

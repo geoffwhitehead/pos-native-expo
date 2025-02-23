@@ -123,8 +123,8 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
         )}
         {shouldRenderPlanView && (
           <Button style={styles.editPlanButton} success={isEditing} small info={!isEditing} onPress={handleEditorState}>
-            {!isEditing && <Icon name="build-outline" size={24} />}
-            {isEditing && <Icon name="checkmark" />}
+            {!isEditing && <Icon name="build-outline" size={24}  color="white"/>}
+            {isEditing && <Icon name="checkmark"  color="white" size={24}/>}
           </Button>
         )}
       </Item>

@@ -154,7 +154,7 @@ export const EditDisplayModal: React.FC<EditDisplayModalProps> = ({
               >
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="chevron-down-outline" />}
+                  iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
                   placeholder="Select category"
                   selectedValue={categoryId}
                   onValueChange={onCategoryChange}

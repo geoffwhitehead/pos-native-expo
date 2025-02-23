@@ -318,7 +318,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
           <Col style={styles.columnMainButtons}>
             <Row style={{ height: buttons.large }}>
               <Button style={styles.buttonLeft} full info onPress={onStore}>
-                <Icon name="layers" size={24} />
+                <Icon name="layers" size={24} color="white" />
                 <Text>Bills</Text>
               </Button>
             </Row>
@@ -329,20 +329,20 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
                 onPress={callConfirmDialog}
                 style={styles.buttonLeft}
               >
-                <Icon name="notifications" size={24} />
+                <Icon name="notifications" size={24} color="white" />
                 <Text>Call </Text>
               </Button>
             </Row>
             <Row />
             <Row>
               <Button full success onPress={onCheckout} style={styles.buttonLeft}>
-                <Icon name="cart" size={24} />
+                <Icon name="cart" size={24}  color="white"/>
                 <Text>Pay</Text>
               </Button>
             </Row>
             <Row style={{}}>
               <Button block onPress={handleOnStore} full style={styles.buttonLeft}>
-                <Icon name="download" size={24} />
+                <Icon name="download" size={24}  color="white"/>
                 <Text>Store</Text>
               </Button>
             </Row>
@@ -405,7 +405,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
               style={styles.printButton}
               onPress={onPrint}
             >
-              {!isPrinting && <Icon name="receipt" style={{ color: 'white' }} />}
+              {!isPrinting && <Icon name="receipt"  color="white" size={24} />}
               {isPrinting && <Spinner color="white" />}
               <Text>Print</Text>
             </Button>

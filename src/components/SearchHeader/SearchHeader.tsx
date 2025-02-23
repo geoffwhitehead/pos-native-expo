@@ -65,7 +65,7 @@ export const WrappedSearchHeader: React.FC<SearchHeaderOuterProps & SearchHeader
 
   return (
     <Item {...props} style={styles.searchBar}>
-      <Icon name="search" size={24} />
+      <Icon name="search" size={24}  color="white"/>
       <Input placeholder="Search" onChangeText={onChangeText} value={value} />
       {showPriceGroup && (
         <Label>
@@ -76,7 +76,7 @@ export const WrappedSearchHeader: React.FC<SearchHeaderOuterProps & SearchHeader
         <Picker
           mode="dropdown"
           iosHeader="Select a price group"
-          iosIcon={<Icon name="chevron-down-outline" />}
+          iosIcon={<Icon name="chevron-down-outline"  color="white"/>}
           placeholder="Select a price group"
           selectedValue={priceGroup.id}
           onValueChange={handleChangePriceGroup}

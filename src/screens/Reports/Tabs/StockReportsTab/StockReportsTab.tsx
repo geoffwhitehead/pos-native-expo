@@ -174,7 +174,7 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
         <Picker
           mode="dropdown"
           iosHeader="Select a price group"
-          iosIcon={<Icon name="chevron-down-outline" />}
+          iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
           placeholder="Select a price group"
           selectedValue={selectedPriceGroup}
           onValueChange={pg => setSelectedPriceGroup(pg)}
@@ -196,7 +196,7 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
         <Picker
           mode="dropdown"
           iosHeader="Select a category"
-          iosIcon={<Icon name="chevron-down-outline" />}
+          iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
           placeholder="Select a category"
           selectedValue={selectedCategory}
           onValueChange={c => setSelectedCategory(c)}

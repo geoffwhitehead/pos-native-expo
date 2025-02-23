@@ -253,7 +253,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                       >
                         <Picker
                           mode="dropdown"
-                          iosIcon={<Icon name="chevron-down-outline" />}
+                          iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
                           placeholder="Select category"
                           selectedValue={categoryId}
                           onValueChange={handleChange('categoryId')}
@@ -280,7 +280,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                       >
                         <Picker
                           mode="dropdown"
-                          iosIcon={<Icon name="chevron-down-outline" />}
+                          iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                           placeholder="Select printer group"
                           selectedValue={printerGroupId}
                           onValueChange={handleChange('printerGroupId')}

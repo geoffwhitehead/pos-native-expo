@@ -27,12 +27,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <Item {...props} style={styles.searchBar}>
-      <Icon name="search" size={24}/>
+      <Icon name="search" size={24} color="white"/>
       <Input placeholder="Search" onChangeText={onSearch} value={value} />
       {children}
       {onPressSecondary && (
         <Button iconLeft small info onPress={onPressSecondary}>
-          {secondaryIconName && <Icon name={secondaryIconName} size={24}/>}
+          {secondaryIconName && <Icon color="white" name={secondaryIconName} size={24}/>}
           <Text>{secondaryText}</Text>
         </Button>
       )}
@@ -44,7 +44,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         disabled={isCreateDisabled}
         style={{ marginLeft: 5, alignSelf: 'center' }}
       >
-        <Icon name="add-circle-outline" size={24}/>
         <Text>Create</Text>
       </Button>
     </Item>
