@@ -64,7 +64,7 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
       }),
     );
 
-    await database.action(() => database.batch(...batched));
+    await database.write(() => database.batch(...batched));
     setLoading(false);
     setPricesUpdatedSucessfully(true);
   };

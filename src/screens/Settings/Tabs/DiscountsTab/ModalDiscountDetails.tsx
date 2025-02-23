@@ -47,7 +47,7 @@ export const ModalDiscountDetails: React.FC<ModalDiscountDetailsProps> = ({ disc
     } else {
       const discountCollection = database.collections.get<Discount>(tableNames.discounts);
 
-      await database.action(() =>
+      await database.write(() =>
         discountCollection.create(record => {
           Object.assign(record, {
             name,

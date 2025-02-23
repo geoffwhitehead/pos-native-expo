@@ -64,20 +64,20 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
   useEffect(() => {}, [selectedBillItem]);
 
   const onRemoveBillItem = async (billItem: BillItem, values?: ModifyReason) => {
-    await database.action(() => billItem.void(values));
+    await billItem.void(values)
     onCloseModalHandler();
   };
 
-  const onRemoveBillDiscount = async (billDiscount: BillDiscount) => database.action(() => billDiscount.void());
-  const onRemoveBillPayment = async (billPayment: BillPayment) => database.action(() => billPayment.void());
+  const onRemoveBillDiscount = (billDiscount: BillDiscount) => billDiscount.void();
+  const onRemoveBillPayment = (billPayment: BillPayment) => billPayment.void();
 
   const onMakeComplimentary = async (billItem: BillItem, values: ModifyReason) => {
-    await database.action(() => billItem.makeComp(values));
+    await billItem.makeComp(values)
     onCloseModalHandler();
   };
 
   const addPrintMessage = async values => {
-    await database.action(() => selectedBillItem.update(record => Object.assign(record, values)));
+    await database.write(() => selectedBillItem.update(record => Object.assign(record, values)));
     onCloseModalHandler();
   };
 

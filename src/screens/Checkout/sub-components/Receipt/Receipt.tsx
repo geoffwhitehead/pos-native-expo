@@ -109,10 +109,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
         status: PrintStatus.processing,
       }));
 
-      await database.action(async () => {
-        await bill.processPrintLogs(updates);
-        await bill.processCallLogs(callUpdates);
-      });
+      await bill.processPrintLogs(updates);
+      await bill.processCallLogs(callUpdates);
 
       // filter items not being printed and generate print commands
       const ids = billItemsPrintLogs.map(log => log.billItemId);
@@ -175,10 +173,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
         }),
       );
 
-      await database.action(async () => {
-        await bill.processPrintLogs(flatten(printStatuses));
-      });
-      // attempt to call
+      await bill.processPrintLogs(flatten(printStatuses));
+
       const printCallStatuses = await Promise.all(
         toPrintCallLogs.map(async ({ billCallPrintLog, printer, commands }) => {
           const res = await print({ commands, printer });
@@ -190,12 +186,10 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
         }),
       );
 
-      await database.action(async () => {
-        await bill.processCallLogs(printCallStatuses);
-      });
+      await bill.processCallLogs(printCallStatuses);
     }
 
-    await database.action(bill.storeBill);
+    await bill.storeBill
   };
 
   useEffect(() => {
@@ -242,7 +236,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
   };
 
   const handleSetPrepTime = async (date: Date) => {
-    await database.action(() =>
+    await database.write(() =>
       bill.update(record => {
         record.prepAt = date;
       }),
@@ -261,7 +255,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
 
   const createCallLog = async (message?: string) => {
     // TODO: pass message
-    await database.action(async () => {
+    await database.write(async () => {
       const billCallLog = database.collections.get<BillCallLog>(tableNames.billCallLogs).prepareCreate(record => {
         record.bill.set(bill);
         Object.assign(record, {

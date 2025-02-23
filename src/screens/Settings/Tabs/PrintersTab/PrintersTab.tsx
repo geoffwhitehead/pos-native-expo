@@ -50,7 +50,7 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
   //   if (!savedPrinter) {
   //     return;
   //   }
-  //   await database.action(() =>
+  //   await database.write(() =>
   //     savedPrinter.update(printerRecord => {
   //       printerRecord.macAddress = macAddress;
   //       printerRecord.name = modelName;
@@ -73,7 +73,7 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
   //   setIsSaving(true);
 
   //   if (selectedPrinter && selectedPrinter.id) {
-  //     await database.action(() =>
+  //     await database.write(() =>
   //       selectedPrinter.update(record => {
   //         record.macAddress = values.macAddress;
   //         record.name = values.name;
@@ -84,7 +84,7 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
   //       }),
   //     );
   //   } else {
-  //     await database.action(async () => {
+  //     await database.write(async () => {
   //       const collection = database.collections.get<Printer>(tableNames.printers);
   //       await collection.create(record => {
   //         Object.assign(record, {
@@ -103,7 +103,7 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
   // };
 
   // const onDelete = async (printer: Printer) => {
-  //   await database.action(printer.remove);
+  //   await database.write(printer.remove);
   // };
 
   // const areYouSure = (fn, p: Printer) => {

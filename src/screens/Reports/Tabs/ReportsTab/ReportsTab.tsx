@@ -63,7 +63,7 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
 
   const closePeriod = async (billPeriod: BillPeriod, organization: Organization) => {
     setIsLoading(true);
-    await database.action(() => billPeriod.closePeriod(organization));
+    await billPeriod.closePeriod(organization);
     await onPrintPeriodReport(billPeriod);
     setIsLoading(false);
   };

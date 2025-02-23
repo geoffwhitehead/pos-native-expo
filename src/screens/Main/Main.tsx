@@ -139,7 +139,7 @@ export const MainWrapped: React.FC<MainOuterProps & MainInnerProps> = ({
       setBillPeriod(currentBillPeriod);
     };
     const createAndSetNewBillPeriod = async (organization: Organization) => {
-      await database.action(() => organization.createNewBillPeriod());
+      await organization.createNewBillPeriod();
     };
 
     if (organization) {
@@ -177,7 +177,7 @@ export const MainWrapped: React.FC<MainOuterProps & MainInnerProps> = ({
 
       // TODO: This shouldnt be needed as a default price group is created on org create.
       const createDefaultPriceGroup = async () =>
-        await database.action(() =>
+        await database.write(() =>
           database.collections
             .get<PriceGroup>(tableNames.priceGroups)
             .create(record =>

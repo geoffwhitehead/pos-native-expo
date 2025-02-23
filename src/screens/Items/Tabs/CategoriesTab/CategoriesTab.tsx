@@ -17,7 +17,7 @@ import { ModalCategoryDetails } from './ModalCategoryDetails';
 import { tableNames } from '../../../../models/tableNames';
 
 interface CategoriesTabOuterProps {
-  database?: Database;
+  database: Database;
 }
 
 interface CategoriesTabInnerProps {
@@ -51,7 +51,7 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
   const onPressCreate = () => setModalOpen(true);
 
   const handleUpdateGridSize = async (size: number) => {
-    await database.action(() =>
+    await database.write(() =>
       organization.update(record => {
         record.categoryGridSize = size;
       }),

@@ -55,7 +55,7 @@ export const PriceGroupDetails: React.FC<PriceGroupDetailsProps> = ({ priceGroup
   const onSave = async (values: FormValues, priceGroup: PriceGroup) => {
     setLoading(true);
     if (priceGroup) {
-      await database.action(() => priceGroup.updatePriceGroup(values));
+      await priceGroup.updatePriceGroup(values);
     } else {
       const priceGroupCollection = database.collections.get<PriceGroup>(tableNames.priceGroups);
       const modifierItemsCollection = database.collections.get<ModifierItem>(tableNames.modifierItems);
@@ -93,7 +93,7 @@ export const PriceGroupDetails: React.FC<PriceGroupDetailsProps> = ({ priceGroup
 
       const batched = [priceGroupToCreate, ...itemPricesToCreate, ...modifierItemPricesToCreate];
 
-      await database.action(() => database.batch(...batched));
+      await database.write(() => database.batch(...batched));
     }
     setLoading(false);
     onClose();

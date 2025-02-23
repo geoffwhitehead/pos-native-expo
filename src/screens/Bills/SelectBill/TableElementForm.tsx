@@ -80,7 +80,7 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
 
     const tablePlanElementCollection = database.collections.get<TablePlanElement>(tableNames.tablePlanElements);
 
-    await database.action(() => {
+    await database.write(() => {
       if (tablePlanElement) {
         return tablePlanElement.update(record => Object.assign(record, parsedValues));
       } else {

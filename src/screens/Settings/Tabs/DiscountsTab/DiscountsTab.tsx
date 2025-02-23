@@ -27,7 +27,7 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
   const [selectedDiscount, setSelectedDiscount] = useState<Discount>();
 
   const onDelete = async (discount: Discount) => {
-    await database.action(() => discount.markAsDeleted());
+    await database.write(() => discount.markAsDeleted());
   };
 
   const onCancelHandler = () => {

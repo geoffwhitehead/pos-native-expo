@@ -73,7 +73,7 @@ export const database = new Database({
 
 export const resetDatabase = async () => {
   try {
-    await database.action(async () => {
+    await database.write(async () => {
       await database.unsafeResetDatabase();
       return { success: true };
     });

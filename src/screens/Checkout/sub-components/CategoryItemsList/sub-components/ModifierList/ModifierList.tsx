@@ -53,9 +53,7 @@ export const ModifierListInner: React.FC<ModifierListOuterProps & ModifierListIn
   });
 
   const createItemWithModifiers = async () => {
-    await database.action(() =>
-      currentBill.addItems({ item, priceGroup, quantity, selectedModifiers: Object.values(selectedModifiers) }),
-    );
+    await currentBill.addItems({ item, priceGroup, quantity, selectedModifiers: Object.values(selectedModifiers) });
     onClose();
   };
 

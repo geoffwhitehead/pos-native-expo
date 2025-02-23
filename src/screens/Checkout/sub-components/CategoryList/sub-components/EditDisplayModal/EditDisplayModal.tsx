@@ -58,7 +58,7 @@ export const EditDisplayModal: React.FC<EditDisplayModalProps> = ({
     setLoading(true);
     const newCategory = categories.find(c => c.id === values.categoryId);
     if (newCategory) {
-      await database.action(async () => {
+      await database.write(async () => {
         if (selectedCategory) {
           await selectedCategory.update(record => {
             Object.assign(record, { positionIndex: newCategory.positionIndex });

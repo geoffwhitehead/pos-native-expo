@@ -66,7 +66,7 @@ const ModalPrinterGroupDetailsInner: React.FC<ModalPrinterGroupDetailsOuterProps
 
       const toCreate = [pGToCreate, ...pGRefsToCreate];
 
-      await database.action(() => database.batch(...toCreate));
+      await database.write(() => database.batch(...toCreate));
     }
     setLoading(false);
     onClose();

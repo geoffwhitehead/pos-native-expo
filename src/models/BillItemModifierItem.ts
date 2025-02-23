@@ -1,5 +1,5 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, field, immutableRelation, nochange, writer } from '@nozbe/watermelondb/decorators';
+import { field, immutableRelation, nochange, writer } from '@nozbe/watermelondb/decorators';
 import type { BillItem } from './BillItem';
 import type { BillItemModifier } from './BillItemModifier';
 import type { Modifier } from './Modifier';

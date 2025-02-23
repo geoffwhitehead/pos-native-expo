@@ -97,7 +97,7 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
 
     setReceiptPrinter(receiptPrinter);
 
-    await database.action(() =>
+    await database.write(() =>
       organization.update(org => {
         org.defaultPriceGroup.set(priceGroup);
         org.receiptPrinter.set(receiptPrinter);

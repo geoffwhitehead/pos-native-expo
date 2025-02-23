@@ -63,7 +63,7 @@ export const OrganizationTab: React.FC<OrganizationTabProps> = () => {
 
   const updateOrganization = async values => {
     setLoading(true);
-    await database.action(() =>
+    await database.write(() =>
       organization.update(org => {
         org.name = values.name;
         org.phone = values.phone;

@@ -69,27 +69,25 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
 
   useEffect(() => {
     const finalize = async () => {
-      await database.action(async () => {
-        await bill.addPayment({ paymentType: cashType, amount: summary.balance, isChange: true });
-        await bill.close();
-        await Promise.all(
-          billDiscounts.map(async billDiscount => {
-            const amt = summary.discountBreakdown.find(d => d.billDiscountId === billDiscount.id).calculatedDiscount;
-            await billDiscount.finalize(amt);
-          }),
-        );
-      });
+      await bill.addPayment({ paymentType: cashType, amount: summary.balance, isChange: true });
+      await bill.close();
+      await Promise.all(
+        billDiscounts.map(async billDiscount => {
+          const amt = summary.discountBreakdown.find(d => d.billDiscountId === billDiscount.id).calculatedDiscount;
+          await billDiscount.finalize(amt);
+        }),
+      );
       onCompleteBill();
     };
     summary && summary.balance <= 0 && finalize();
   }, [summary, bill]);
 
   const addPayment = async (paymentType: PaymentType, amt: number) => {
-    await database.action(() => bill.addPayment({ paymentType, amount: amt || Math.max(summary.balance, 0) }));
+    await bill.addPayment({ paymentType, amount: amt || Math.max(summary.balance, 0) });
     setValue('');
   };
 
-  const addDiscount = async (discount: Discount) => database.action(() => bill.addDiscount({ discount }));
+  const addDiscount = async (discount: Discount) => bill.addDiscount({ discount });
 
   return (
     <Grid>

@@ -86,13 +86,13 @@ export const ModalModifierItemDetailsInner: React.FC<ModalModifierItemDetailsOut
         prices: reMappedPrices,
       };
 
-      await database.action(() => modifierItem.updateItem(remappedUpdate));
+      await database.write(() => modifierItem.updateItem(remappedUpdate));
     } else {
       // create
       const modifierItemCollection = database.collections.get<ModifierItem>(tableNames.modifierItems);
       const modifierItemPriceCollection = database.collections.get<ModifierItemPrice>(tableNames.modifierItemPrices);
 
-      await database.action(async () => {
+      await database.write(async () => {
         const modifierItemToCreate = modifierItemCollection.prepareCreate(record => {
           record.modifier.set(modifier);
           Object.assign(record, { name, shortName });
@@ -136,7 +136,7 @@ export const ModalModifierItemDetailsInner: React.FC<ModalModifierItemDetailsOut
   };
 
   const onDelete = async () => {
-    await database.action(() => modifierItem.markAsDeleted());
+    await database.write(() => modifierItem.markAsDeleted());
     onClose();
   };
 

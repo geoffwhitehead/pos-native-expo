@@ -70,7 +70,7 @@ export const ModalCategoryDetailsInner: React.FC<ModalCategoryDetailsOuterProps 
     setLoading(true);
     const printCategory = printCategories.find(pC => pC.id === values.printCategoryId);
     if (category) {
-      await database.action(() =>
+      await database.write(() =>
         category.update(record => {
           printCategory && record.printCategory.set(printCategory);
           Object.assign(record, { ...omit(values, 'name') });
@@ -78,7 +78,7 @@ export const ModalCategoryDetailsInner: React.FC<ModalCategoryDetailsOuterProps 
       );
     } else {
       const categoryCollection = database.collections.get<Category>(tableNames.categories);
-      await database.action(() =>
+      await database.write(() =>
         categoryCollection.create(record => {
           printCategory && record.printCategory.set(printCategory);
           Object.assign(record, values);
@@ -98,7 +98,7 @@ export const ModalCategoryDetailsInner: React.FC<ModalCategoryDetailsOuterProps 
   };
 
   const onDelete = async () => {
-    database.action(() => category.markAsDeleted());
+    database.write(() => category.markAsDeleted());
     onClose();
   };
 

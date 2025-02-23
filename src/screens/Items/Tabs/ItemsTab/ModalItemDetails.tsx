@@ -128,7 +128,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
           price: nullOrPrice,
         };
       });
-      await database.action(() => item.updateItem({ ...values, prices: reMappedPrices, selectedModifiers }));
+      await item.updateItem({ ...values, prices: reMappedPrices, selectedModifiers })
       onClose();
     } else {
       const itemCollection = database.collections.get<ItemModel>(tableNames.items);
@@ -163,14 +163,14 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
       });
 
       const toCreate = [itemToCreate, ...itemModifersToCreate, ...pricesToCreate];
-      await database.action(() => database.batch(...toCreate));
+      await database.write(() => database.batch(...toCreate));
     }
     setLoading(false);
     onClose();
   };
 
   const handleDelete = async (item: ItemModel) => {
-    await database.action(() => item.remove());
+    await database.write(() => item.remove());
     onClose();
   };
 

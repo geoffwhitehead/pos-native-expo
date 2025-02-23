@@ -1,5 +1,5 @@
 import { Model, Relation, tableSchema } from '@nozbe/watermelondb';
-import { action, date, field, immutableRelation, nochange, readonly, writer } from '@nozbe/watermelondb/decorators';
+import { date, field, immutableRelation, nochange, readonly, writer } from '@nozbe/watermelondb/decorators';
 import type { Bill } from './Bill';
 import type { Discount } from './Discount';
 import { ASSOCIATION_TYPES } from './constants';
