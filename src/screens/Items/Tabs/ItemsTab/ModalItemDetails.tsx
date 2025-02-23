@@ -170,7 +170,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
   };
 
   const handleDelete = async (item: ItemModel) => {
-    await database.write(() => item.remove());
+    await item.remove();
     onClose();
   };
 
@@ -223,13 +223,13 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                     <Form>
                       <H3 style={styles.heading}>Details</H3>
 
-                      <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
+                      <ItemField label="Name" touched={!!touched.name} name="name" errors={errors.name}>
                         <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
                       </ItemField>
 
                       <ItemField
                         label="Short Name"
-                        touched={touched.shortName}
+                        touched={!!touched.shortName}
                         name="shortName"
                         errors={errors.shortName}
                         description="Used on printers where space is restricted"
@@ -244,7 +244,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                       <ItemField
                         picker
                         label="Category"
-                        touched={touched.categoryId}
+                        touched={!!touched.categoryId}
                         name="categoryId"
                         errors={errors.categoryId}
                         style={{
@@ -271,7 +271,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                       <ItemField
                         picker
                         label="Printer Group"
-                        touched={touched.printerGroupId}
+                        touched={!!touched.printerGroupId}
                         name="printerGroupId"
                         errors={errors.printerGroupId}
                         style={{
@@ -309,7 +309,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                               <ItemField
                                 key={priceGroup.id}
                                 label={capitalize(priceGroup.name)}
-                                touched={touched.prices && touched.prices[index]?.price}
+                                touched={!!touched.prices && !!touched.prices[index]?.price}
                                 name={`prices[${index}].price`}
                                 errors={errors.prices && errors.prices[index]}
                               >
@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
 });
 
 const enhance = c =>
-  withDatabase<any>(
+  withDatabase(
     withObservables<ItemDetailsOuterProps, ItemDetailsInnerProps>(['item'], ({ item, database }) => {
       if (item) {
         return {
