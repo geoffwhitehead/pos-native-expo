@@ -85,49 +85,49 @@ export class Bill extends Model {
   @lazy billItemsByPriceGroupNoVoids = (priceGroupId: string) =>
     this.billItems.extend(Q.and(Q.where('price_group_id', Q.eq(priceGroupId)), Q.where('is_voided', Q.notEq(true))));
 
-  @lazy _billModifierItems = () => this.collections
+  @lazy _billModifierItems = this.collections
     .get<BillItemModifierItem>('bill_item_modifier_items')
     .query(Q.on('bill_items', 'bill_id', this.id));
 
-  @lazy assignedPriceGroups = () => this.collections
+  @lazy assignedPriceGroups = this.collections
     .get<PriceGroup>(tableNames.priceGroups)
     .query(Q.on(tableNames.billItems, 'bill_id', this.id));
 
-  @lazy billCallPrintLogs = () => this.collections
+  @lazy billCallPrintLogs = this.collections
     .get<BillCallPrintLog>(tableNames.billCallPrintLogs)
     .query(Q.on(tableNames.billItems, 'bill_id', this.id));
 
-  @lazy billModifierItems = () => this._billModifierItems().extend(
+  @lazy billModifierItems = this._billModifierItems.extend(
     Q.where('is_voided', Q.notEq(true)),
   );
 
-  @lazy billModifierItemVoids = () => this._billModifierItems().extend(
+  @lazy billModifierItemVoids = this._billModifierItems.extend(
     Q.where('is_voided', Q.eq(true)),
   );
 
-  @lazy chargableBillItems = () => this.billItems.extend(
+  @lazy chargableBillItems = this.billItems.extend(
     Q.and(Q.where('is_voided', Q.notEq(true)), Q.where('is_comp', Q.notEq(true))),
   );
 
   //
-  @lazy itemsRequiringPrepTimeCount = () => this.billItems.extend(Q.where('is_voided', Q.notEq(true))).observeCount();
-  @lazy priceGroups = () => this.database.collections
+  @lazy itemsRequiringPrepTimeCount = this.billItems.extend(Q.where('is_voided', Q.notEq(true))).observeCount();
+  @lazy priceGroups = this.database.collections
     .get<PriceGroup>(tableNames.priceGroups)
     .query(Q.on(tableNames.billItems, [Q.where('bill_id', this.id), Q.where('is_voided', Q.notEq(true))]));
 
-  @lazy priceGroupsInUse = () => this.database.collections
+  @lazy priceGroupsInUse = this.database.collections
     .get<PriceGroup>(tableNames.priceGroups)
     .query(Q.on(tableNames.billItems, Q.where('bill_id', this.id)));
 
   // @lazy billItemsByPriceGroup = (priceGroupId: string) => this.billItems.extend(Q.where('price_group_id', Q.eq(priceGroupId)));
 
-  @lazy billItemsExclVoids = () => this.billItems.extend(Q.where('is_voided', Q.notEq(true)));
+  @lazy billItemsExclVoids = this.billItems.extend(Q.where('is_voided', Q.notEq(true)));
 
-  @lazy chargableBillItemModifierItems = () => this._billModifierItems().extend(
+  @lazy chargableBillItemModifierItems = this._billModifierItems.extend(
     Q.and(Q.where('is_voided', Q.notEq(true)), Q.where('is_comp', Q.notEq(true))),
   );
 
-  @lazy overviewPrintLogs = () => this.collections
+  @lazy overviewPrintLogs = this.collections
     .get<BillItemPrintLog>(tableNames.billItemPrintLogs)
     .query(
       Q.experimentalJoinTables([tableNames.billItems]),
@@ -135,7 +135,7 @@ export class Bill extends Model {
       Q.on(tableNames.billItems, 'bill_id', this.id),
     );
 
-  @lazy billItemStatusLogs = () => this.collections
+  @lazy billItemStatusLogs = this.collections
     .get<BillItemPrintLog>(tableNames.billItemPrintLogs)
     .query(
       Q.experimentalJoinTables([tableNames.billItems]),
@@ -146,7 +146,7 @@ export class Bill extends Model {
       Q.on(tableNames.billItems, 'bill_id', this.id),
     );
 
-  @lazy toPrintBillLogs = () => this.collections
+  @lazy toPrintBillLogs = this.collections
     .get<BillItemPrintLog>(tableNames.billItemPrintLogs)
     .query(
       Q.experimentalJoinTables([tableNames.billItems]),
@@ -154,7 +154,7 @@ export class Bill extends Model {
       Q.on(tableNames.billItems, 'bill_id', this.id),
     );
 
-  @lazy toPrintBillCallPrintLogs = () => this.collections
+  @lazy toPrintBillCallPrintLogs = this.collections
     .get<BillCallPrintLog>(tableNames.billCallPrintLogs)
     .query(
       Q.experimentalJoinTables([tableNames.billCallLogs]),
@@ -162,7 +162,7 @@ export class Bill extends Model {
       Q.on(tableNames.billCallLogs, 'bill_id', this.id),
     );
 
-  @lazy overviewBillCallPrintLogs = () => this.collections
+  @lazy overviewBillCallPrintLogs = this.collections
     .get<BillCallPrintLog>(tableNames.billCallPrintLogs)
     .query(
       Q.experimentalJoinTables([tableNames.billCallLogs]),
@@ -173,7 +173,7 @@ export class Bill extends Model {
       Q.on(tableNames.billCallLogs, 'bill_id', this.id),
     );
 
-  @lazy incompleteBillCallPrintLogs = () => this.collections
+  @lazy incompleteBillCallPrintLogs = this.collections
     .get<BillCallPrintLog>(tableNames.billCallPrintLogs)
     .query(
       Q.experimentalJoinTables([tableNames.billCallLogs]),
@@ -185,8 +185,8 @@ export class Bill extends Model {
    * Note: these 2 queries are mainly used in the period report. Once nested joins are available with watermelon
    * they can be moved to the periodReport model to improve performance.
    */
-  // @lazy billModifierItemVoids = () => this._billModifierItems().extend(Q.where('is_voided', true));
-  @lazy billModifierItemComps = () => this._billModifierItems().extend(
+  // @lazy billModifierItemVoids = this._billModifierItems.extend(Q.where('is_voided', true));
+  @lazy billModifierItemComps = this._billModifierItems.extend(
     Q.and(Q.where('is_comp', Q.eq(true)), Q.where('is_voided', Q.notEq(true))),
   );
 
