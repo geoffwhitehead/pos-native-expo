@@ -27,7 +27,7 @@ export const itemSchema = tableSchema({
   ],
 });
 
-export class  Item extends Model {
+export class Item extends Model {
   static table = 'items';
 
   @field('name') name!: string;
@@ -50,11 +50,10 @@ export class  Item extends Model {
   @children('item_modifiers') itemModifiers!: Query<ItemModifier>;
 
   @lazy printers = this.collections
-    .get(tableNames.printers)
-    .query(Q.on(tableNames.printerGroupsPrinters, 'printer_group_id', this.printerGroupId)) as unknown as Query<Printer>;
-  @lazy modifiers = this.collections.get(tableNames.modifiers).query(Q.on(tableNames.itemModifiers, 'item_id', this.id)) as unknown as Query<
-    Modifier
-  >;
+    .get<Printer>(tableNames.printers)
+    .query(Q.on(tableNames.printerGroupsPrinters, 'printer_group_id', this.printerGroupId))
+
+  @lazy modifiers = this.collections.get<Modifier>(tableNames.modifiers).query(Q.on(tableNames.itemModifiers, 'item_id', this.id))
 
   @writer async remove() {
     const [itemPrices, itemModifiers] = await Promise.all([this.prices.fetch(), this.itemModifiers.fetch()]);
