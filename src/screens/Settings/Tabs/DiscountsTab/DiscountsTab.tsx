@@ -68,7 +68,7 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
               small
               onPress={() => setIsModalOpen(true)}
             >
-              <Icon name="ios-add-circle-outline" />
+              <Icon name="add-circle-outline" size={24}/>
               <Text>Create</Text>
             </Button>
           </Right>

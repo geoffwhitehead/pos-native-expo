@@ -82,7 +82,7 @@ export const PriceGroupItemsInner: React.FC<PriceGroupItemsOuterProps & PriceGro
               </Left>
               <Right>
                 <Button iconLeft success small onPress={() => {}}>
-                  <Icon name="ios-add-circle-outline" />
+                  <Icon name="add-circle-outline" size={24} />
                   <Text>Save</Text>
                 </Button>
               </Right>

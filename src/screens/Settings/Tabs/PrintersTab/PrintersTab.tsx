@@ -139,7 +139,7 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
     //       </Left>
     //       <Right>
     //         <Button iconLeft success small onPress={() => addPrinter({})}>
-    //           <Icon name="ios-add-circle-outline" />
+    //           <Icon name="add-circle-outline" size={24}/>
     //           <Text>Add</Text>
     //         </Button>
     //       </Right>

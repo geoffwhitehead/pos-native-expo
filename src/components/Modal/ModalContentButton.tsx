@@ -69,7 +69,7 @@ export const ModalContentButton: React.FC<ModalContentButtonProps> = ({
               disabled={isDeleteDisabled}
               onPress={onPressDelete}
             >
-              <Icon name="ios-trash" />
+              <Icon name="trash" size={24}/>
             </Button>
           )}
         </View>

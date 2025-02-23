@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { LastSyncedAtContext } from '../../contexts/LastSyncedAtContext';
 import { Body, Button, Header, Icon, Left, Right, Text, Title } from '../../core';
 import { useSync } from '../../hooks/useSync';
+import { Ionicons } from '@expo/vector-icons';
 
 interface SidebarHeaderProps {
   title: string;
@@ -30,7 +31,7 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ title, onOpen, dis
       <Left>
         {!disableNav && (
           <Button transparent onPress={onOpen}>
-            <Icon name="ios-menu" />
+            <Ionicons name="menu" size={24}/>
           </Button>
         )}
       </Left>

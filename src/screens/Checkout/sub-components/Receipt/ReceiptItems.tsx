@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { Formik } from 'formik';
 import { capitalize } from 'lodash';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Modal } from '../../../../components/Modal/Modal';
@@ -48,7 +48,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
   paymentTypes,
   bill,
 }) => {
-  const refContentList = useRef();
+  const refContentList = useRef<ScrollView>(null);
   const database = useDatabase();
   const [selectedBillItem, setSelectedBillItem] = useState<BillItem>();
   const [action, setAction] = useState<ReceiptItemAction>();
@@ -56,7 +56,9 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
   const [printMessage, setPrintMessage] = useState('');
 
   useEffect(() => {
-    refContentList.current._root.scrollToEnd();
+    if (refContentList.current) {
+      refContentList.current.scrollToEnd({ animated: true });
+    }
   }, [billItemsCount, billDiscounts, billPayments]);
 
   useEffect(() => {}, [selectedBillItem]);
@@ -131,7 +133,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
   const isPrintMessageModalOpen = !!selectedBillItem && action === ReceiptItemAction.message;
 
   return (
-    <Content ref={refContentList}>
+    <ScrollView ref={refContentList}>
       <List style={styles.receiptItems}>
         <BillCalls bill={bill} />
         <ItemsBreakdown bill={bill} readonly={readonly} onSelect={billItemDialog} />
@@ -205,7 +207,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
           }}
         </Formik>
       </Modal>
-    </Content>
+    </ScrollView>
   );
 };
 

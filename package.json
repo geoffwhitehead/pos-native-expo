@@ -13,6 +13,7 @@
   "dependencies": {
     "@babel/runtime": "^7.24.0",
     "@babel/runtime-corejs3": "7.21.0",
+    "@expo/vector-icons": "^14.0.4",
     "@morrowdigital/watermelondb-expo-plugin": "^2.3.3",
     "@nozbe/watermelondb": "^0.27.1",
     "@nozbe/with-observables": "^1.6.0",
@@ -55,6 +56,7 @@
     "react-native-star-io10": "^1.8.0",
     "react-native-svg": "15.2.0",
     "react-native-switch-selector": "^2.3.0",
+    "react-native-vector-icons": "^10.2.0",
     "tinycolor2": "^1.6.0",
     "victory-native": "^41.16.1",
     "yup": "^1.6.1"

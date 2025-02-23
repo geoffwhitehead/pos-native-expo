@@ -99,12 +99,12 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
             <Item style={{ backgroundColor: 'whitesmoke', padding: 5 }}>
               <Right style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                 <Button success small iconLeft onPress={handleSubmit}>
-                  <Icon name="ios-add-circle-outline" />
+                  <Icon name="add-circle-outline" size={24}/>
                   <Text>Save</Text>
                 </Button>
                 {tablePlanElement && (
                   <Button danger small onPress={onDelete} style={{ marginLeft: 5 }}>
-                    <Icon name="ios-trash" />
+                    <Icon name="trash" size={24}/>
                   </Button>
                 )}
               </Right>

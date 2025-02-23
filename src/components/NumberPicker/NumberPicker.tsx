@@ -1,4 +1,4 @@
-import { Icon, Input, View } from 'native-base';
+import { Icon, Input, View } from '../../core';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { fontSizes } from '../../theme';
@@ -14,9 +14,9 @@ export const NumberPicker: React.FC<{ value?: number; onPress?: (v: number) => v
 
   return (
     <View style={styles.numberPicker}>
-      <Icon style={styles.icon} onPress={() => _onPress(_value === 1 ? _value : _value - 1)} name="ios-remove" />
+      <Icon style={styles.icon} onPress={() => _onPress(_value === 1 ? _value : _value - 1)} name="remove" size={24} />
       <Input style={styles.numberInput} value={(value && value.toString()) || _value.toString()} />
-      <Icon style={styles.icon} onPress={() => _onPress(_value + 1)} name="ios-add" />
+      <Icon style={styles.icon} onPress={() => _onPress(_value + 1)} name="add" size={24}/>
     </View>
   );
 };

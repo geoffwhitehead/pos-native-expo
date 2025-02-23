@@ -17,7 +17,6 @@ export {
   H2,
   H3,
   Header,
-  Icon,
   Input,
   Item,
   Label,
@@ -38,3 +37,5 @@ export {
   Toast,
   View,
 } from 'native-base';
+
+export { Ionicons as Icon} from '@expo/vector-icons';

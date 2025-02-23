@@ -60,7 +60,7 @@ const ModifierItemsInner: React.FC<ModifierItemsOuterProps & ModifierItemsInnerP
         );
       })}
       <Button full info iconLeft onPress={handleAdd}>
-        <Icon name="ios-add-circle-outline" />
+        <Icon name="add-circle-outline" size={24} />
         <Text>Add</Text>
       </Button>
       <Modal isOpen={modalOpen} onClose={onCloseHandler}>

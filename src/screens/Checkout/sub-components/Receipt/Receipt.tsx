@@ -318,7 +318,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
           <Col style={styles.columnMainButtons}>
             <Row style={{ height: buttons.large }}>
               <Button style={styles.buttonLeft} full info onPress={onStore}>
-                <Icon name="ios-layers" />
+                <Icon name="layers" size={24} />
                 <Text>Bills</Text>
               </Button>
             </Row>
@@ -329,20 +329,20 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
                 onPress={callConfirmDialog}
                 style={styles.buttonLeft}
               >
-                <Icon name="ios-notifications" />
+                <Icon name="notifications" size={24} />
                 <Text>Call </Text>
               </Button>
             </Row>
             <Row />
             <Row>
               <Button full success onPress={onCheckout} style={styles.buttonLeft}>
-                <Icon name="ios-cart" />
+                <Icon name="cart" size={24} />
                 <Text>Pay</Text>
               </Button>
             </Row>
             <Row style={{}}>
               <Button block onPress={handleOnStore} full style={styles.buttonLeft}>
-                <Icon name="ios-download" />
+                <Icon name="download" size={24} />
                 <Text>Store</Text>
               </Button>
             </Row>

@@ -65,7 +65,7 @@ export const WrappedSearchHeader: React.FC<SearchHeaderOuterProps & SearchHeader
 
   return (
     <Item {...props} style={styles.searchBar}>
-      <Icon name="ios-search" />
+      <Icon name="search" size={24} />
       <Input placeholder="Search" onChangeText={onChangeText} value={value} />
       {showPriceGroup && (
         <Label>

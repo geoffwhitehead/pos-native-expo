@@ -65,7 +65,7 @@ const PrinterGroupsTabInner: React.FC<PrinterGroupsTabOuterProps & PrinterGroups
           </Left>
           <Right>
             <Button iconLeft success small onPress={() => setIsModalOpen(true)}>
-              <Icon name="ios-add-circle-outline" />
+              <Icon name="add-circle-outline" size={24} />
               <Text>Create</Text>
             </Button>
           </Right>
