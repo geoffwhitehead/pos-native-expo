@@ -106,14 +106,14 @@ export const TableViewerInner: React.FC<TableViewerProps> = ({
             {times(gridSize, column => {
               // TODO: refactor these
               const el = groupedByXY?.[row]?.[column];
-              const SVG = el ? elementMap[el.type as TablePlanElementTypes] : null;
+              const SVGComponent = el ? elementMap[el.type as TablePlanElementTypes] : null;
               const isSelected = selectedElement && selectedElement.y === column && selectedElement.x === row;
               const selectedStyles = isSelected ? styles.selected : {};
               const rotation = `${el?.rotation || 0}deg`;
               const bill = el?.billReference ? keyedOpenBills[el.billReference] : null;
               const color = el?.billReference ? (bill ? 'seagreen' : 'white') : 'white';
-              const shouldRenderButton = isEditing && (!el || !SVG);
-              const shouldRenderSVG = el && SVG;
+              const shouldRenderButton = isEditing && (!el || !SVGComponent);
+              const shouldRenderSVG = el && SVGComponent;
               return (
                 <Col key={`${row}-${column}`} style={{ ...styles.col, ...selectedStyles }}>
                   <TouchableOpacity
@@ -129,7 +129,7 @@ export const TableViewerInner: React.FC<TableViewerProps> = ({
                           ...styles.svgView,
                         }}
                       >
-                        <SVG width="100%" height="100%" />
+                        <SVGComponent width="100%" height="100%" />
                         {el.billReference && <Text style={styles.referenceText}>{el.billReference}</Text>}
                       </Animated.View>
                     )}

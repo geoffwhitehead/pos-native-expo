@@ -54,11 +54,11 @@ export const ModalReason: React.FC<ModalReasonProps> = ({ onComplete, onClose, m
             size="medium"
           >
             <Form>
-              <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
+              <ItemField label="Name" touched={!!touched.name} name="name" errors={errors.name}>
                 <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
               </ItemField>
 
-              <ItemField label="Reason" touched={touched.reason} name="reason" errors={errors.reason}>
+              <ItemField label="Reason" touched={!!touched.reason} name="reason" errors={errors.reason}>
                 <Input onChangeText={handleChange('reason')} onBlur={handleBlur('reason')} value={reason} />
                 <Textarea
                   style={{ width: '100%' }}
