@@ -23,6 +23,7 @@ import type { ModifyReason } from './sub-components/ModalReason';
 import { ModalReason } from './sub-components/ModalReason';
 import { PaymentsBreakdown } from './sub-components/PaymentsBreakdown';
 import { tableNames } from '../../../../models/tableNames';
+import { ReceiptItemAction } from './sub-components/constants';
 
 type ReceiptItemsOuterProps = {
   readonly: boolean;
@@ -38,12 +39,6 @@ type ReceiptItemsInnerProps = {
   paymentTypes: PaymentType[];
 };
 
-export enum Action {
-  void = 'void',
-  comp = 'comp',
-  message = 'message',
-}
-
 export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsInnerProps> = ({
   readonly,
   billItemsCount,
@@ -56,7 +51,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
   const refContentList = useRef();
   const database = useDatabase();
   const [selectedBillItem, setSelectedBillItem] = useState<BillItem>();
-  const [action, setAction] = useState<Action>();
+  const [action, setAction] = useState<ReceiptItemAction>();
   const { organization } = useContext(OrganizationContext);
   const [printMessage, setPrintMessage] = useState('');
 
@@ -95,15 +90,15 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
       index => {
         if (index === 0) {
           setSelectedBillItem(billItem);
-          setAction(Action.message);
+          setAction(ReceiptItemAction.message);
         } else if (index === 1) {
-          setAction(Action.comp);
+          setAction(ReceiptItemAction.comp);
           setSelectedBillItem(billItem);
         } else if (index === 2) {
           const endOfGracePeriod = dayjs(billItem.createdAt).add(organization.gracePeriodMinutes, 'minute');
           const hasGracePeriodExpired = dayjs().isAfter(endOfGracePeriod);
           if (hasGracePeriodExpired) {
-            setAction(Action.void);
+            setAction(ReceiptItemAction.void);
             setSelectedBillItem(billItem);
           } else {
             onRemoveBillItem(billItem);
@@ -132,8 +127,8 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
     setAction(null);
   };
 
-  const isReasonModalOpen = !!selectedBillItem && (action === Action.comp || action === Action.void);
-  const isPrintMessageModalOpen = !!selectedBillItem && action === Action.message;
+  const isReasonModalOpen = !!selectedBillItem && (action === ReceiptItemAction.comp || action === ReceiptItemAction.void);
+  const isPrintMessageModalOpen = !!selectedBillItem && action === ReceiptItemAction.message;
 
   return (
     <Content ref={refContentList}>
@@ -157,10 +152,10 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
         <ModalReason
           onClose={onCloseModalHandler}
           onComplete={values => {
-            if (action === Action.void) {
+            if (action === ReceiptItemAction.void) {
               onRemoveBillItem(selectedBillItem, values);
             }
-            if (action === Action.comp) {
+            if (action === ReceiptItemAction.comp) {
               onMakeComplimentary(selectedBillItem, values);
             }
           }}

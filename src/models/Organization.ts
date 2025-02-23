@@ -115,12 +115,9 @@ export class Organization extends Model {
 
   @writer async createNewBillPeriod() {
     const billPeriodsCollection = this.collections.get<BillPeriod>(tableNames.billPeriods);
-    const billPeriod = await billPeriodsCollection.create(billPeriod => {
-      // billPeriod.organization.set(this);
-      billPeriod.createdAt = new Date();
-    });
-    await this.update(record => {
-      record.currentBillPeriod.set(billPeriod);
+    const billPeriod = await billPeriodsCollection.create(() => {});
+    await this.update(organization => {
+      organization.currentBillPeriod.set(billPeriod);
     });
     return billPeriod;
   }

@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../../components/Modal/ModalContentButton';
 import { Form, Input, Textarea } from '../../../../../core';
-import { Action } from '../ReceiptItems';
+import { ReceiptItemAction } from './constants';
 
 const modalReasonSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -22,7 +22,7 @@ export type ModifyReason = {
 type ModalReasonProps = {
   onClose: () => void;
   onComplete: (values: ModifyReason) => void;
-  mode: Action;
+  mode: ReceiptItemAction;
   title: string;
 };
 
@@ -38,9 +38,9 @@ export const ModalReason: React.FC<ModalReasonProps> = ({ onComplete, onClose, m
         const { reason, name } = values;
 
         const description =
-          mode === Action.comp
+          mode === ReceiptItemAction.comp
             ? 'Please provide a reason for making this item complimentary...'
-            : mode === Action.void
+            : mode === ReceiptItemAction.void
             ? 'Please provide a reason why this item is being voided...'
             : 'Please provide a reason... ';
 

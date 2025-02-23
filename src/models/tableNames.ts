@@ -23,6 +23,6 @@ export const tableNames = {
   billItemPrintLogs: 'bill_item_print_logs',
   billCallLogs: 'bill_call_logs',
   billCallPrintLogs: 'bill_call_print_logs',
-  tablePlanElements: 'table_plan_elements',
+  tablePlanElements: 'table_plan_element',
   printCategories: 'print_categories',
 } as const;
