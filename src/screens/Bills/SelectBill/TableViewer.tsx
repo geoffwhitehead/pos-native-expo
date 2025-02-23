@@ -46,30 +46,32 @@ export type TableElement = {
   tablePlanElement?: TablePlanElement;
 };
 
-const elementMap = {
-  [TablePlanElementTypes['block:wall']]: BlockWall,
-  [TablePlanElementTypes['block:window']]: BlockWindow,
-  [TablePlanElementTypes['block:wall:center']]: BlockWallCenter,
-  [TablePlanElementTypes['block:wall:corner']]: BlockWallCorner,
-  [TablePlanElementTypes['block:wall:square']]: BlockWallSquare,
-  [TablePlanElementTypes['table:4:square']]: Table4Square,
-  [TablePlanElementTypes['table:2:round']]: Table2Round,
-  [TablePlanElementTypes['table:4']]: Table4,
-  [TablePlanElementTypes['furniture:armchair']]: FurnArmchair,
-  [TablePlanElementTypes['furniture:coffeetable']]: FurnCoffeeTable,
-  [TablePlanElementTypes['furniture:cupboard']]: FurnCupboard,
-  [TablePlanElementTypes['furniture:door']]: FurnDoor,
-  [TablePlanElementTypes['furniture:extractor']]: FurnExtractor,
-  [TablePlanElementTypes['furniture:plant1']]: FurnPlant1,
-  [TablePlanElementTypes['furniture:plant2']]: FurnPlant2,
-  [TablePlanElementTypes['furniture:plant3']]: FurnPlant3,
-  [TablePlanElementTypes['furniture:plant4']]: FurnPlant4,
-  [TablePlanElementTypes['furniture:chair']]: FurnChair,
-  [TablePlanElementTypes['furniture:drawers']]: FurnDrawers,
-  [TablePlanElementTypes['furniture:sink']]: FurnSink,
-  [TablePlanElementTypes['furniture:sofa']]: FurnSofa,
-  [TablePlanElementTypes['furniture:sofacorner']]: FurnSofaCorner,
+const elementMap: Record<TablePlanElementTypes, React.FC> = {
+  'block:wall': BlockWall,
+  'block:window': BlockWindow,
+  'block:wall:center': BlockWallCenter,
+  'block:wall:corner': BlockWallCorner,
+  'block:wall:square': BlockWallSquare,
+  'table:4:square': Table4Square,
+  'table:2:round': Table2Round,
+  'table:4': Table4,
+  'furniture:armchair': FurnArmchair,
+  'furniture:coffeetable': FurnCoffeeTable,
+  'furniture:cupboard': FurnCupboard,
+  'furniture:door': FurnDoor,
+  'furniture:extractor': FurnExtractor,
+  'furniture:plant1': FurnPlant1,
+  'furniture:plant2': FurnPlant2,
+  'furniture:plant3': FurnPlant3,
+  'furniture:plant4': FurnPlant4,
+  'furniture:chair': FurnChair,
+  'furniture:drawers': FurnDrawers,
+  'furniture:sink': FurnSink,
+  'furniture:sofa': FurnSofa,
+  'furniture:sofacorner': FurnSofaCorner,
 };
+
+console.log('elemenntMap', elementMap);
 
 const GRID_SPACING = 4;
 
@@ -104,7 +106,7 @@ export const TableViewerInner: React.FC<TableViewerProps> = ({
             {times(gridSize, column => {
               // TODO: refactor these
               const el = groupedByXY?.[row]?.[column];
-              const SVG = el ? elementMap[el.type] : null;
+              const SVG = el ? elementMap[el.type as TablePlanElementTypes] : null;
               const isSelected = selectedElement && selectedElement.y === column && selectedElement.x === row;
               const selectedStyles = isSelected ? styles.selected : {};
               const rotation = `${el?.rotation || 0}deg`;
