@@ -2,23 +2,26 @@ import { Model, Query, tableSchema } from '@nozbe/watermelondb';
 import { action, children, field, writer } from '@nozbe/watermelondb/decorators';
 import { ASSOCIATION_TYPES } from './constants';
 import type { PrinterGroupPrinter } from './PrinterGroupPrinter';
+import { StarPrinterEmulation } from 'react-native-star-io10';
 
-export enum Emulations {
-  'StarPRNT' = 'StarPRNT',
-  'StarLine' = 'StarLine',
-  'StarGraphic' = 'StarGraphic',
-  'StarDotImpact' = 'StarDotImpact',
-  'EscPosMobile' = 'EscPosMobile',
-  'EscPos' = 'EscPos',
-}
+// export enum Emulations {
+//   'StarPRNT' = 'StarPRNT',
+//   'StarLine' = 'StarLine',
+//   'StarGraphic' = 'StarGraphic',
+//   'StarDotImpact' = 'StarDotImpact',
+//   'EscPosMobile' = 'EscPosMobile',
+//   'EscPos' = 'EscPos',
+// }
 
 export type PrinterProps = {
   name: string;
   address: string;
   macAddress: string;
   printWidth: number;
-  emulation: Emulations;
+  emulation: StarPrinterEmulation;
   receivesBillCalls: boolean;
+  identifier: string;
+  interfaceType: string;
 };
 
 export class Printer extends Model {
@@ -28,8 +31,10 @@ export class Printer extends Model {
   @field('address') address!: string;
   @field('mac_address') macAddress!: string;
   @field('print_width') printWidth!: number;
-  @field('emulation') emulation!: Emulations;
+  @field('emulation') emulation!: StarPrinterEmulation;
   @field('receives_bill_calls') receivesBillCalls!: boolean;
+  @field('identifier') identifier!: string;
+  @field('interface_type') interfaceType!: string;
 
   static associations = {
     printer_groups_printers: { type: ASSOCIATION_TYPES.HAS_MANY, foreignKey: 'printer_id' },
@@ -54,5 +59,7 @@ export const printerSchema = tableSchema({
     { name: 'print_width', type: 'number' },
     { name: 'emulation', type: 'string' },
     { name: 'receives_bill_calls', type: 'boolean' },
+    { name: 'identifier', type: 'string' },
+    { name: 'interface_type', type: 'string' },
   ],
 });

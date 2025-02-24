@@ -1,11 +1,11 @@
 import { appSchema, Database } from '@nozbe/watermelondb';
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 import { Bill, BillCallLog, billCallLogSchema, BillCallPrintLog, billCallPrintLogSchema, BillDiscount, billDiscountSchema, BillItem, BillItemModifier, BillItemModifierItem, billItemModifierItemSchema, billItemModifierSchema, BillItemPrintLog, billItemPrintLogSchema, billItemSchema, BillPayment, billPaymentSchema, BillPeriod, billPeriodSchema, billSchema, Category, categorySchema, Discount, discountSchema, Item, ItemModifier, itemModifierSchema, ItemPrice, itemPriceSchema, itemSchema, models, Modifier, ModifierItem, ModifierItemPrice, modifierItemPriceSchema, modifierItemSchema, modifierSchema, Organization, organizationSchema, PaymentType, paymentTypeSchema, PriceGroup, priceGroupSchema, PrintCategory, printCategorySchema, Printer, PrinterGroup, PrinterGroupPrinter, printerGroupPrinterSchema, printerGroupSchema, printerSchema, schemas, TablePlanElement, tablePlanElementSchema } from '../models';
-
+import migrations from '../models/migrations';
 
 const adapter = new SQLiteAdapter({
   schema: appSchema({
-    version: 77,
+    version: 78,
     tables: [
       billSchema,
       billDiscountSchema,
@@ -36,6 +36,7 @@ const adapter = new SQLiteAdapter({
       printCategorySchema,
     ],
   }),
+  migrations
 });
 
 export const database = new Database({

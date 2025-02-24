@@ -8,7 +8,7 @@ import { ModalContentButton } from '../../../../components/Modal/ModalContentBut
 import { Body, CheckBox, Form, Icon, Input, ListItem, Picker, Text } from '../../../../core';
 import type { Printer } from '../../../../models';
 import type { PrinterProps } from '../../../../models/Printer';
-import { Emulations } from '../../../../models/Printer';
+import { StarPrinterEmulation } from 'react-native-star-io10';
 
 interface ModalPrinterDetailsOuterProps {
   onClose: () => void;
@@ -35,8 +35,10 @@ const printerDetailsSchema = Yup.object().shape({
     .max(50, 'Too Long')
     .required('Required'),
   emulation: Yup.mixed()
-    .oneOf(Object.values(Emulations))
+    .oneOf(Object.values(StarPrinterEmulation))
     .required('Required'),
+  identifier: Yup.string(),
+  interfaceType: Yup.string(),
   receivesBillCalls: Yup.boolean(),
 });
 
@@ -46,7 +48,7 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
   onSave,
   isLoading,
 }) => {
-  const { name, address, macAddress, emulation, printWidth, receivesBillCalls } = printer;
+  const { name, address, macAddress, emulation, printWidth, receivesBillCalls, identifier, interfaceType } = printer;
 
   const initialValues = {
     name: name || '',
@@ -55,6 +57,8 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
     emulation,
     macAddress: macAddress || '',
     receivesBillCalls: receivesBillCalls || false,
+    identifier: identifier || '',
+    interfaceType: interfaceType || '',
   };
 
   return (
@@ -76,15 +80,15 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
           >
             <ScrollView>
               <Form>
-                <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
+                <ItemField label="Name" touched={!!touched.name} name="name" errors={errors.name}>
                   <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
                 </ItemField>
-                <ItemField label="Address" touched={touched.address} name="address" errors={errors.address}>
+                <ItemField label="Address" touched={!!touched.address} name="address" errors={errors.address}>
                   <Input onChangeText={handleChange('address')} onBlur={handleBlur('address')} value={address} />
                 </ItemField>
                 <ItemField
                   label="MAC Address"
-                  touched={touched.macAddress}
+                  touched={!!touched.macAddress}
                   name="macAddress"
                   errors={errors.macAddress}
                 >
@@ -95,8 +99,32 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
                   />
                 </ItemField>
                 <ItemField
+                  label="Identifier"
+                  touched={!!touched.identifier}
+                  name="identifier"
+                  errors={errors.identifier}
+                >
+                  <Input
+                    onChangeText={handleChange('identifier')}
+                    onBlur={handleBlur('identifier')}
+                    value={identifier}
+                  />
+                </ItemField>
+                <ItemField
+                  label="interface Type"
+                  touched={!!touched.interfaceType}
+                  name="interfaceType"
+                  errors={errors.interfaceType}
+                >
+                  <Input
+                    onChangeText={handleChange('interfaceType')}
+                    onBlur={handleBlur('interfaceType')}
+                    value={interfaceType}
+                  />
+                </ItemField>
+                <ItemField
                   label="Print Width"
-                  touched={touched.printWidth}
+                  touched={!!touched.printWidth}
                   name="printWidth"
                   errors={errors.printWidth}
                 >
@@ -110,7 +138,7 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
                 <ItemField
                   picker
                   label="Emulation"
-                  touched={touched.emulation}
+                  touched={!!touched.emulation}
                   name="emulation"
                   errors={errors.emulation}
                   style={{
@@ -128,7 +156,7 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
                       paddingRight: 0,
                     }}
                   >
-                    {Object.keys(Emulations).map(emulation => (
+                    {Object.keys(StarPrinterEmulation).map(emulation => (
                       <Picker.Item key={emulation} label={emulation} value={emulation} />
                     ))}
                   </Picker>
@@ -136,7 +164,6 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
 
                 <ListItem>
                   <CheckBox
-                    checked={receivesBillCalls}
                     onPress={() => setFieldValue('receivesBillCalls', !receivesBillCalls)}
                     onBlur={handleBlur('isPrepTimeRequired')}
                   />
