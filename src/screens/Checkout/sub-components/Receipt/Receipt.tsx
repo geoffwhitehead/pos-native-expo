@@ -27,7 +27,7 @@ import type {
 } from '../../../../models';
 import type { BillItem } from '../../../../models/BillItem';
 import { kitchenCall, kitchenReceipt } from '../../../../services/printer/kitchenReceipt';
-import { print } from '../../../../services/printer/printer';
+import { getNewBuilder, print } from '../../../../services/printer/printer';
 import { receiptBill } from '../../../../services/printer/receiptBill';
 import { buttons, fonts, spacing } from '../../../../theme';
 import type { MinimalBillSummary } from '../../../../utils';
@@ -38,6 +38,7 @@ import { moderateScale } from '../../../../utils/scaling';
 import { ReceiptItems } from './ReceiptItems';
 import { PrintStatus } from '../../../../models/constants';
 import { tableNames } from '../../../../models/tableNames';
+import { StarXpandCommand } from 'react-native-star-io10';
 
 interface ReceiptInnerProps {
   billPayments: BillPayment[];
@@ -220,7 +221,11 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
         .fetch(),
     ]);
 
-    const commands = await receiptBill(
+    const printerBuilder = new StarXpandCommand.PrinterBuilder();
+
+    await receiptBill(
+      printerBuilder,
+      bill,
       billItems,
       billDiscounts,
       billPayments,
@@ -231,8 +236,15 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
       organization,
     );
 
-    await print({ commands, printer: receiptPrinter });
+    try {
+
+      await print({ printerBuilder, printer: receiptPrinter });
+    } catch (e){
+      console.log('Error printing', e)
+      setIsPrinting(false);
+    }
     setIsPrinting(false);
+
   };
 
   const handleSetPrepTime = async (date: Date) => {

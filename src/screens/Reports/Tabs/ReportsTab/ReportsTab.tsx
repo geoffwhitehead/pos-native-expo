@@ -31,6 +31,7 @@ import { print } from '../../../../services/printer/printer';
 import { resolveButtonState } from '../../../../utils/helpers';
 import { ReportReceipt } from './ReportReceipt/ReportReceipt';
 import { tableNames } from '../../../../models/tableNames';
+import { StarXpandCommand } from 'react-native-star-io10';
 
 interface ReportsTabInnerProps {
   billPeriods: BillPeriod[];
@@ -56,8 +57,11 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
 
   const onPrintPeriodReport = async (billPeriod: BillPeriod) => {
     setIsLoading(true);
-    const commands = await periodReport({ billPeriod, database, printer: receiptPrinter, organization });
-    await print({ commands, printer: receiptPrinter });
+    const printerBuilder = new StarXpandCommand.PrinterBuilder();
+
+    await periodReport({ builder: printerBuilder, billPeriod, database, printer: receiptPrinter, organization });
+    
+    await print({ printerBuilder, printer: receiptPrinter });
     setIsLoading(false);
   };
 
@@ -187,7 +191,7 @@ const enhance = c =>
     withObservables<ReportsTabOuterProps, ReportsTabInnerProps>([], ({ database }) => ({
       paymentTypes: database.collections.get<PaymentType>(tableNames.paymentTypes).query(),
       billPeriods: database.collections
-        .get<Printer>(tableNames.billPeriods)
+        .get<BillPeriod>(tableNames.billPeriods)
         .query(Q.experimentalSortBy('created_at', Q.desc), Q.experimentalTake(7)),
     }))(c),
   );

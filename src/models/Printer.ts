@@ -48,6 +48,19 @@ export class Printer extends Model {
     const toDelete = [...printerGroupPrintersToDelete, this.prepareMarkAsDeleted()];
     await this.database.batch(...toDelete);
   };
+  @writer async _update(values: PrinterProps) {
+    console.log('values', values)
+    await this.update(printer => {
+      printer.name = values.name;
+      printer.address = values.address;
+      printer.macAddress = values.macAddress;
+      printer.printWidth = values.printWidth;
+      printer.emulation = values.emulation;
+      printer.receivesBillCalls = values.receivesBillCalls;
+      printer.identifier = values.identifier;
+      printer.interfaceType = values.interfaceType;
+    })
+  }
 }
 
 export const printerSchema = tableSchema({

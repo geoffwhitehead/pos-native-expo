@@ -7,7 +7,7 @@ import type { Organization } from './Organization';
 import { tableNames } from './tableNames';
 
 export const billPeriodSchema = tableSchema({
-  name: 'bill_periods',
+  name: tableNames.billPeriods,
   columns: [
     { name: 'created_at', type: 'number' },
     { name: 'closed_at', type: 'number', isOptional: true },
@@ -15,7 +15,7 @@ export const billPeriodSchema = tableSchema({
 });
 
 export class BillPeriod extends Model {
-  static table = 'bill_periods';
+  static table = tableNames.billPeriods;
 
   static associations = {
     bills: { type: ASSOCIATION_TYPES.HAS_MANY, foreignKey: 'bill_period_id' },

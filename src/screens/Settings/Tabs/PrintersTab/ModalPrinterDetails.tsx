@@ -53,7 +53,7 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
   const initialValues = {
     name: name || '',
     address: address || '',
-    printWidth: printWidth || 80,
+    printWidth: printWidth?.toString() || '80',
     emulation,
     macAddress: macAddress || '',
     receivesBillCalls: receivesBillCalls || false,
@@ -62,7 +62,10 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={printerDetailsSchema} onSubmit={onSave}>
+    <Formik initialValues={initialValues} validationSchema={printerDetailsSchema} onSubmit={(values) => onSave({
+      ...values,
+      printWidth: Number(values?.printWidth),
+    } as any)}>
       {({ handleChange, handleBlur, handleSubmit, setFieldValue, errors, touched, values }) => {
         const { name, address, macAddress, printWidth, emulation, receivesBillCalls } = values;
 

@@ -1,4 +1,6 @@
-import { ceil, floor } from 'lodash';
+import { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
+import { StarXpandCommand } from 'react-native-star-io10';
+import { Organization } from '../../models';
 
 export const alignLeftRight = (left: string, right: string = '', receiptWidth: number, rightWidth = 12) => {
   const leftWidth = Math.max(receiptWidth - rightWidth, 0);
@@ -22,21 +24,40 @@ export const alignRight = (string: string, receiptWidth: number) => {
   return `${' '.repeat(leftSpaces)}${string}`;
 };
 
-export const divider = (receiptWidth: number) => ({ appendBitmapText: '-'.repeat(receiptWidth) });
-export const starDivider = (receiptWidth: number) => ({ appendBitmapText: '*'.repeat(receiptWidth) });
-export const newLine = { appendBitmapText: ' \n' };
+export const divider = (receiptWidth: number) => (appendNewLine('-'.repeat(receiptWidth)));
+export const starDivider = (receiptWidth: number) => (appendNewLine('*'.repeat(receiptWidth)));
+export const newLine = ' \n';
 
-export const addHeader = (c: any[], header: string, printWidth: number): void => {
-  c.push({ appendBitmapText: ' ' });
-  c.push({ appendBitmapText: header });
-  c.push(divider(printWidth));
+export const addHeader = (builder: PrinterBuilder, header: string, printWidth: number) => {
+  builder.actionPrintText(appendNewLine(header))
+  builder.actionPrintText(divider(printWidth))
 };
 
 export const subHeader = (header: string, receiptWidth: number, symbol: string = '-') => {
-  const rem = (receiptWidth - header.length) / 2;
-  const left = symbol.repeat(ceil(rem));
-  const right = symbol.repeat(floor(rem));
-  const str = `${left}${header}${right}`;
-  console.log('str ', str);
-  return str;
+  const paddingLength = (receiptWidth - header.length) / 2;
+  const leftPadding = symbol.repeat(Math.floor(paddingLength));
+  const rightPadding = symbol.repeat(Math.ceil(paddingLength));
+  return `${leftPadding}${header}${rightPadding}`;
 };
+
+export const appendNewLine = (c: string = '') => c + '\n';
+
+export const alignSpaceBetween = (left: string, right: string, width:number, addNewLine: boolean = true) => {
+  const spaces = Math.max(width - left.length - right.length, 0);
+  return addNewLine ? appendNewLine(`${left}${' '.repeat(spaces)}${right}`) : `${left}${' '.repeat(spaces)}${right}`;
+};
+
+export const appendAddress = (builder: PrinterBuilder, organization: Organization, printWidth: number) => {
+  builder.actionPrintText(appendNewLine(organization.name))
+  .actionPrintText(appendNewLine(organization.addressLine1))
+  .actionPrintText((organization.addressLine2 ? appendNewLine(organization.addressLine2) : ''))
+  .actionPrintText(appendNewLine(organization.addressCity))
+  .actionPrintText(appendNewLine(organization.addressCounty))
+  .actionPrintText(appendNewLine(organization.addressPostcode))
+}
+export const formatSize = (builder: PrinterBuilder, text: string, size: number) => {
+  builder.add(new StarXpandCommand.PrinterBuilder()
+  .styleMagnification(new StarXpandCommand.MagnificationParameter(size, size))
+  .actionPrintText(appendNewLine(text))
+)
+}

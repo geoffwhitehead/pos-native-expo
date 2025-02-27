@@ -23,11 +23,13 @@ import {
   paymentSummary,
   priceGroupSummmary,
 } from '../../utils';
-import { addHeader, alignCenter, alignLeftRight, divider, starDivider } from './helpers';
-import { receiptTempate } from './template';
+import { addHeader, alignCenter, alignLeftRight, alignSpaceBetween, divider, starDivider } from './helpers';
+import { receiptTemplate } from './template';
 import { tableNames } from '../../models/tableNames';
+import { StarXpandCommand } from 'react-native-star-io10';
 
 type PeriodReportProps = {
+  builder: StarXpandCommand.PrinterBuilder;
   billPeriod: BillPeriod;
   database: Database;
   printer: Printer;
@@ -130,9 +132,7 @@ export const periodReportData = async ({ billPeriod, database }: PeriodReportDat
   };
 };
 
-export const periodReport = async ({ billPeriod, database, printer, organization }: PeriodReportProps) => {
-  let c = [];
-
+export const periodReport = async ({ builder, billPeriod, database, printer, organization }: PeriodReportProps) => {
   const {
     bills,
     billItems,
@@ -151,175 +151,158 @@ export const periodReport = async ({ billPeriod, database, printer, organization
 
   const { currency } = organization;
 
-  c.push(starDivider(printer.printWidth));
-  c.push({
-    appendBitmapText: alignCenter(
-      billPeriod.closedAt ? '-- END PERIOD REPORT --' : '-- STATUS REPORT --',
-      printer.printWidth,
-    ),
-  });
+  builder.actionPrintText(starDivider(printer.printWidth));
 
-  c.push({
-    appendBitmapText: alignLeftRight(
+  receiptTemplate(builder, organization, printer.printWidth)
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
+
+  builder.actionPrintText(billPeriod.closedAt ? '-- END PERIOD REPORT --' : '-- STATUS REPORT --');
+
+  builder.actionPrintText(alignSpaceBetween(
       `Opened: `,
       dayjs(billPeriod.createdAt).format('DD/MM/YYYY HH:mm:ss'),
       Math.round(printer.printWidth / 2),
     ),
-  });
+  );
 
-  c.push({
-    appendBitmapText: alignLeftRight(
-      `Closed: `,
-      billPeriod.closedAt ? dayjs(billPeriod.closedAt).format('DD/MM/YYYY HH:mm:ss') : '',
-      Math.round(printer.printWidth / 2),
-    ),
-  });
+  builder.actionPrintText(alignSpaceBetween(
+    `Closed: `,
+    billPeriod.closedAt ? dayjs(billPeriod.closedAt).format('DD/MM/YYYY HH:mm:ss') : '',
+    Math.round(printer.printWidth / 2),
+  ));
 
-  c.push(starDivider(printer.printWidth));
+  builder.actionPrintText(starDivider(printer.printWidth));
 
-  addHeader(c, 'Category Totals', printer.printWidth);
-  c.push(
-    ...categoryTotals.breakdown.map(categoryTotal => {
-      return {
-        appendBitmapText: alignLeftRight(
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
+
+  addHeader(builder, 'Category Totals', printer.printWidth);
+  categoryTotals.breakdown.forEach(categoryTotal => {
+      builder.actionPrintText(alignSpaceBetween(
           capitalize(categories.find(c => c.id === categoryTotal.categoryId).name),
           `${categoryTotal.count} / ${formatNumber(categoryTotal.total, currency)}`,
           printer.printWidth,
         ),
-      };
+      );
     }),
-  );
-  c.push({
-    appendBitmapText: alignLeftRight(
+
+  builder.actionPrintText(alignSpaceBetween(
       'Total: ',
       `${categoryTotals.count} / ${formatNumber(categoryTotals.total, currency)}`,
       printer.printWidth,
     ),
-  });
+  );
 
-  addHeader(c, 'Modifier Totals', printer.printWidth);
-  modifierTotals.breakdown.map(modifierGroup => {
-    c.push({
-      appendBitmapText: alignCenter(modifierGroup.modifierName, printer.printWidth),
-    });
-    c.push(
-      ...modifierGroup.breakdown.map(modifierItemGroup => {
-        return {
-          appendBitmapText: alignLeftRight(
+  addHeader(builder, 'Modifier Totals', printer.printWidth);
+  modifierTotals.breakdown.forEach(modifierGroup => {
+    builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
+
+    builder.actionPrintText(alignCenter(modifierGroup.modifierName, printer.printWidth));
+    builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
+
+    modifierGroup.breakdown.forEach(modifierItemGroup => {
+        builder.actionPrintText(alignSpaceBetween(
             capitalize(modifierItemGroup.modifierItemName),
             `${modifierItemGroup.count} / ${formatNumber(modifierItemGroup.total, currency)}`,
             printer.printWidth,
-          ),
-        };
-      }),
-    );
-  });
-  c.push({
-    appendBitmapText: alignLeftRight(
-      'Total: ',
-      `${modifierTotals.count} / ${formatNumber(modifierTotals.total, currency)}`,
-      printer.printWidth,
-    ),
-  });
+        ),
+      );
+    })
+  })
 
-  addHeader(c, 'Price Group Totals (excl discounts)', printer.printWidth);
-  c.push(
-    ...priceGroupTotals.map(priceGroupTotal => {
-      return {
-        appendBitmapText: alignLeftRight(
+  builder.actionPrintText(alignSpaceBetween(
+    'Total: ',
+    `${modifierTotals.count} / ${formatNumber(modifierTotals.total, currency)}`,
+    printer.printWidth,
+  ));
+
+  addHeader(builder, 'Price Group Totals (excl discounts)', printer.printWidth);
+  priceGroupTotals.forEach(priceGroupTotal => {
+      builder.actionPrintText(alignSpaceBetween(
           priceGroupTotal.name,
           `${priceGroupTotal.count} / ${formatNumber(priceGroupTotal.total, currency)}`,
           printer.printWidth,
         ),
-      };
-    }),
-  );
-  c.push({
-    appendBitmapText: alignLeftRight(
-      'Total: ',
-      `${sumBy(priceGroupTotals, ({ count }) => count)} / ${formatNumber(
-        sumBy(priceGroupTotals, ({ total }) => total),
-        currency,
-      )}`,
+      );
+    })
+
+  builder.actionPrintText(alignSpaceBetween(
+    'Total: ',
+    `${sumBy(priceGroupTotals, ({ count }) => count)} / ${formatNumber(
+      sumBy(priceGroupTotals, ({ total }) => total),
+      currency,
+    )}`,
       printer.printWidth,
     ),
-  });
-  addHeader(c, 'Discount Totals', printer.printWidth);
-  c.push(
-    ...discountTotals.breakdown.map(discountTotal => ({
-      appendBitmapText: alignLeftRight(
+  );
+
+  addHeader(builder, 'Discount Totals', printer.printWidth);
+  discountTotals.breakdown.forEach(discountTotal => {
+    builder.actionPrintText(alignSpaceBetween(
         capitalize(discountTotal.name),
         `${discountTotal.count} / ${formatNumber(discountTotal.total, currency)}`,
         printer.printWidth,
       ),
-    })),
-  );
-  c.push({
-    appendBitmapText: alignLeftRight(
+    );
+  })
+  
+  builder.actionPrintText(alignSpaceBetween(
       'Total: ',
       `${discountTotals.count} / ${formatNumber(discountTotals.total, currency)}`,
       printer.printWidth,
     ),
-  });
-  c.push(divider(printer.printWidth));
+  );
+  builder.actionPrintText(divider(printer.printWidth));
 
-  addHeader(c, 'Payment Totals', printer.printWidth);
-  c.push(
-    ...paymentTotals.breakdown.map(paymentTotal => ({
-      appendBitmapText: alignLeftRight(
+  addHeader(builder, 'Payment Totals', printer.printWidth);
+  paymentTotals.breakdown.forEach(paymentTotal => builder.actionPrintText(alignLeftRight(
         capitalize(paymentTotal.name),
         `${paymentTotal.count} / ${formatNumber(paymentTotal.total, currency)}`,
         printer.printWidth,
       ),
-    })),
-  );
-  c.push({
-    appendBitmapText: alignLeftRight(
+    ));
+  builder.actionPrintText(alignLeftRight(
       'Total: ',
       `${paymentTotals.count} / ${formatNumber(paymentTotals.total, currency)}`,
       printer.printWidth,
     ),
-  });
+  );
+  builder.actionPrintText(divider(printer.printWidth));
 
-  addHeader(c, 'Complimentary Totals', printer.printWidth);
+  addHeader(builder, 'Complimentary Totals', printer.printWidth);
 
-  c.push({
-    appendBitmapText: alignLeftRight(
+  builder.actionPrintText(alignLeftRight(
       'Items',
       `${compBillItems.length} / ${formatNumber(sumBy(compBillItems, 'itemPrice'), currency)}`,
       printer.printWidth,
     ),
-  });
-  c.push({
-    appendBitmapText: alignLeftRight(
+  );
+  builder.actionPrintText(alignLeftRight(
       'Modifiers',
       `${compBillItemModifierItems.length} / ${formatNumber(
         sumBy(compBillItemModifierItems, 'modifierItemPrice'),
         currency,
       )}`,
       printer.printWidth,
-    ),
-  });
+    ));
 
-  addHeader(c, 'Totals', printer.printWidth);
-  c.push({ appendBitmapText: alignLeftRight('Number of bills: ', bills.length.toString(), printer.printWidth) });
-  c.push({
-    appendBitmapText: alignLeftRight(
+  addHeader(builder, 'Totals', printer.printWidth);
+  builder.actionPrintText(alignLeftRight('Number of bills: ', bills.length.toString(), printer.printWidth));
+  builder.actionPrintText(alignLeftRight(
       'Voids: ',
       `${voidCount} / ${formatNumber(voidTotal, currency)}`,
       printer.printWidth,
     ),
-  });
-  c.push({
-    appendBitmapText: alignLeftRight(
+  );
+  builder.actionPrintText(alignLeftRight(
       'Discounts: ',
       `${discountTotals.count} / ${formatNumber(discountTotals.total, currency)}`,
       printer.printWidth,
     ),
-  });
-  c.push({
-    appendBitmapText: alignLeftRight('Sales Total: ', formatNumber(salesTotal, currency), printer.printWidth),
-  });
-
-  return receiptTempate(c, organization, printer.printWidth);
-};
+  );
+  builder.actionPrintText(alignLeftRight(
+      'Sales Total: ',
+      formatNumber(salesTotal, currency),
+      printer.printWidth,
+    ),
+  );
+}

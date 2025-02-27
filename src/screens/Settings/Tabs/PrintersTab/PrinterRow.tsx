@@ -25,8 +25,9 @@ const PrinterRowInner: React.FC<PrinterRowOuterProps & PrinterRowInnerProps> = (
         <Text>{printer.name}</Text>
       </Left>
       <Body>
-        {/* <Text note>{capitalize(printer)}</Text> */}
+        <Text note>{'Lan'}</Text>
         <Text note>{printer.address}</Text>
+        <Text note>{printer.macAddress}</Text>
       </Body>
       <Button style={{ marginRight: 10 }} bordered danger small onPress={() => onDelete(printer)}>
         <Text>Delete</Text>

@@ -1,25 +1,24 @@
 import dayjs from 'dayjs';
 // import { StarPRNT } from 'react-native-star-prnt';
 import type { Organization } from '../../models';
-import { alignCenter, alignLeftRight } from './helpers';
+import { alignCenter, alignLeftRight, alignSpaceBetween, appendAddress, appendNewLine } from './helpers';
+import { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
+import { StarXpandCommand } from 'react-native-star-io10';
+import { Command } from './receiptBill';
 
-export const receiptTempate = (commands: any[], organization: Organization, printWidth: number) => {
-  const { name, addressLine1, addressLine2, addressCity, addressCounty, addressPostcode } = organization;
-  return [
-    // { appendCodePage: StarPRNT.CodePageType.CP858 },
-    // { appendEncoding: StarPRNT.Encoding.USASCII },
-    // { appendInternational: StarPRNT.InternationalType.UK },
-    // { appendBitmapText: alignCenter(name, printWidth) },
-    // { appendBitmapText: alignCenter(addressLine1, printWidth) },
-    // // addressLine2 && { appendBitmapText: alignCenter(addressLine2, printWidth) },
-    // { appendBitmapText: alignCenter(addressCity, printWidth) },
-    // { appendBitmapText: alignCenter(addressCounty, printWidth) },
-    // { appendBitmapText: alignCenter(addressPostcode, printWidth) },
-    // { appendBitmapText: ' ' },
-    // {
-    //   appendBitmapText: alignLeftRight(`Date: ${dayjs().format('DD/MM/YYYY')}`, `Time: ${dayjs().format('HH:mm')}`, printWidth, Math.round(printWidth / 2)),
-    // },
-    // { appendBitmapText: ' ' },
-    // ...commands,
-  ];
+export const receiptTemplate = (printerBuilder: StarXpandCommand.PrinterBuilder, organization: Organization, printWidth: number, table?: string)  => {
+  printerBuilder
+    .styleInternationalCharacter(StarXpandCommand.Printer.InternationalCharacterType.UK)
+    .styleCharacterSpace(0)
+    .styleAlignment(StarXpandCommand.Printer.Alignment.Center)
+
+  appendAddress(printerBuilder, organization, printWidth)
+
+  printerBuilder
+  .styleAlignment(StarXpandCommand.Printer.Alignment.Left)
+  .actionPrintText(appendNewLine())
+  .actionPrintText(appendNewLine('Table: ' + (table?.toString() ?? '')))
+  .actionPrintText(appendNewLine('Date: ' + dayjs().format('DD/MM/YYYY') + ' ' + dayjs().format('HH:mm')))
+  .actionPrintText(appendNewLine())
+
 };

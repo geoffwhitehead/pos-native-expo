@@ -5,7 +5,7 @@ import type { Dictionary} from 'lodash';
 import { groupBy } from 'lodash';
 import type { BillItem, BillItemModifierItem, Category, Modifier, Organization, Printer } from '../../models';
 import { addHeader, alignCenter, alignLeftRight, starDivider } from './helpers';
-import { receiptTempate } from './template';
+import { receiptTemplate } from './template';
 import { tableNames } from '../../models/tableNames';
 
 type StockReportProps = {
@@ -133,5 +133,5 @@ export const stockReport = async ({ startDate, endDate, printer, organization, d
   c.push({ appendBitmapText: ' ' });
   c.push({ appendBitmapText: ' ' });
 
-  return receiptTempate(c, organization, printer.printWidth);
+  return receiptTemplate(c, organization, printer.printWidth);
 };

@@ -4,7 +4,7 @@ import { capitalize, groupBy, sumBy } from 'lodash';
 import type { Bill, BillItem, BillPeriod, Organization, Printer } from '../../models';
 import { formatNumber } from '../../utils';
 import { addHeader, alignCenter, alignLeftRight, starDivider } from './helpers';
-import { receiptTempate } from './template';
+import { receiptTemplate } from './template';
 
 type CorrectionReportProps = {
   database: Database;
@@ -19,7 +19,7 @@ export const correctionReport = async ({
   database,
   printer,
   organization,
-}: CorrectionReportProps): Promise<string[]> => {
+}: CorrectionReportProps) => {
   const { currency } = organization;
 
   let commands = [];
@@ -66,7 +66,7 @@ export const correctionReport = async ({
   commands.push(starDivider(printer.printWidth));
   commands.push(...itemCancelCommands);
 
-  return receiptTempate(commands, organization, printer.printWidth);
+  return receiptTemplate(commands, organization, printer.printWidth);
 };
 
 type ReportProps = {
