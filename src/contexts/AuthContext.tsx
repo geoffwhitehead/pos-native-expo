@@ -7,7 +7,14 @@ type AuthContextProps = {
   unlink: () => any;
   isSignUpLoading: boolean;
   isSignInLoading: boolean;
+  accessToken: string | null;
+  refreshToken: string | null;
+  organizationId: string | null;
+  userId: string | null;
+  isLoading: boolean;
+  isSignout: boolean;
 };
+
 export const AuthContext = React.createContext<AuthContextProps>({
   signIn: async () => {},
   signOut: () => {},
@@ -17,4 +24,10 @@ export const AuthContext = React.createContext<AuthContextProps>({
   unlink: () => {},
   isSignInLoading: false,
   isSignUpLoading: false,
+  accessToken: null,
+  refreshToken: null,
+  organizationId: null,
+  userId: null,
+  isLoading: false,
+  isSignout: false,
 });

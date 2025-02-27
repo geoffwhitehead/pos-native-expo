@@ -15,7 +15,12 @@ export const AuthNavigator: React.FC<{}> = () => {
   const Stack = createStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="SignIn" headerMode="none">
+    <Stack.Navigator 
+      initialRouteName="SignIn"
+      screenOptions={{ 
+        headerShown: false 
+      }}
+    >
       <Stack.Screen
         name="SignIn"
         component={SignIn}

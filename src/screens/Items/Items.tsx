@@ -34,8 +34,8 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
   return (
     <Container>
       <SidebarHeader title="Items" onOpen={() => navigation.openDrawer()} />
-      <Tabs>
-        <Tab heading="Items">
+      <Tabs tabBarUnderlineStyle={styles.tabBarUnderline}>
+        <Tab heading="Items" tabStyle={styles.tab} textStyle={styles.tabText} activeTabStyle={styles.activeTab} activeTextStyle={styles.activeTabText}>
           <ListItem itemDivider style={styles.categoryPickerItem}>
             <Label>
               <Text style={styles.categoryPickerText}>Category: </Text>
@@ -43,7 +43,7 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
             <Picker
               mode="dropdown"
               iosHeader="Select a category"
-              iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
+              iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
               placeholder="Select a category"
               selectedValue={selectedCategory}
               onValueChange={c => setSelectedCategory(c)}
@@ -60,13 +60,13 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
           {selectedCategory && <ItemsTab category={selectedCategory} />}
           {!selectedCategory && <Text>Select a category to show items...</Text>}
         </Tab>
-        <Tab heading="Categories">
+        <Tab heading="Categories" tabStyle={styles.tab} textStyle={styles.tabText} activeTabStyle={styles.activeTab} activeTextStyle={styles.activeTabText}>
           <CategoriesTab />
         </Tab>
-        <Tab heading="Modifiers">
+        <Tab heading="Modifiers" tabStyle={styles.tab} textStyle={styles.tabText} activeTabStyle={styles.activeTab} activeTextStyle={styles.activeTabText}>
           <ModifiersTab />
         </Tab>
-        <Tab heading="Prices">
+        <Tab heading="Prices" tabStyle={styles.tab} textStyle={styles.tabText} activeTabStyle={styles.activeTab} activeTextStyle={styles.activeTabText}>
           <PriceGroupsTab />
         </Tab>
       </Tabs>
@@ -77,6 +77,21 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
 const styles = StyleSheet.create({
   categoryPickerItem: { paddingLeft: 15 },
   categoryPickerText: { color: 'grey' },
+  tab: {
+    backgroundColor: '#f8f9fa'
+  },
+  tabText: {
+    color: '#6c757d'
+  },
+  activeTab: {
+    backgroundColor: '#fff'
+  },
+  activeTabText: {
+    color: '#000'
+  },
+  tabBarUnderline: {
+    backgroundColor: '#007bff'
+  }
 });
 
 export const Items = withDatabase<{}>(

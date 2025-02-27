@@ -18,7 +18,7 @@ interface TransactionsInnerProps {
   closedBills: Bill[];
 }
 
-export const TransactionsInner: React.FC<TransactionsOuterProps & TransactionsInnerProps> = ({
+const TransactionsInner: React.FC<TransactionsOuterProps & TransactionsInnerProps> = ({
   navigation,
   closedBills,
 }) => {
@@ -49,12 +49,12 @@ export const TransactionsInner: React.FC<TransactionsOuterProps & TransactionsIn
   );
 };
 
-const enhance = c =>
-  withBillPeriod(
-    withObservables<TransactionsOuterProps, TransactionsInnerProps>(['billPeriod'], ({ billPeriod }) => ({
-      billPeriod,
-      closedBills: billPeriod.closedBills,
-    }))(c),
-  );
+const EnhancedTransactions = withBillPeriod(
+  withObservables<TransactionsOuterProps, TransactionsInnerProps>(['billPeriod'], ({ billPeriod }) => ({
+    billPeriod,
+    closedBills: billPeriod.closedBills,
+  }))(TransactionsInner)
+);
 
-export const Transactions = enhance(TransactionsInner);
+// Create a stable component reference
+export const Transactions = React.memo(EnhancedTransactions);

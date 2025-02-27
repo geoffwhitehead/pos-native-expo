@@ -41,13 +41,14 @@ interface MainInnerProps {
   itemPrices: ItemPrice[];
   items: Item[];
   categories: Category[];
+  children?: React.ReactNode;
 }
 
 interface MainOuterProps {
-  // currentBillPeriod: BillPeriod;
   database: Database;
   organizationId: string;
   userId: string;
+  children?: React.ReactNode;
 }
 
 export const MainWrapped: React.FC<MainOuterProps & MainInnerProps> = ({
@@ -56,6 +57,7 @@ export const MainWrapped: React.FC<MainOuterProps & MainInnerProps> = ({
   itemPrices,
   organization,
   categories,
+  children
 }) => {
   const [billPeriod, setBillPeriod] = useState<BillPeriod>();
   const [priceGroup, setPriceGroup] = useState<PriceGroup>();
@@ -193,9 +195,6 @@ export const MainWrapped: React.FC<MainOuterProps & MainInnerProps> = ({
     }
   }, [priceGroups, organization, setPriceGroup]);
 
-  console.log('billPeriod', billPeriod);
-  console.log('priceGroup', priceGroup);
-  console.log('organization', organization);
   if (!billPeriod || !priceGroup || !organization) {
     return <Loading />;
   }
@@ -213,7 +212,7 @@ export const MainWrapped: React.FC<MainOuterProps & MainInnerProps> = ({
                     <ItemsContext.Provider
                       value={{ categoryItems, setCategoryItems, groupedSortedItems, setGroupedSortedItems }}
                     >
-                      <SidebarNavigator />
+                      {children}
                     </ItemsContext.Provider>
                   </ItemPricesContext.Provider>
                 </LastSyncedAtContext.Provider>

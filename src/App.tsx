@@ -10,7 +10,7 @@ import { signIn, signUp } from './api/auth';
 import { Sync } from './components/Sync/Sync';
 import { AuthContext } from './contexts/AuthContext';
 import { database, resetDatabase } from './database';
-import { AuthNavigator } from './navigators/AuthNavigator';
+import { SidebarNavigator } from './navigators/SidebarNavigator';
 import { Main } from './screens/Main/Main';
 import { SplashScreen } from './screens/SplashScreen/SplashScreen';
 import { toast } from './utils/toast';
@@ -303,25 +303,30 @@ export const App: React.FC<{}> = () => {
     },
   } as const;
 
-  if (isLoading) {
-    // We haven't finished checking for the token yet
-    return <SplashScreen />;
-  }
-
   return (
     <Root>
       <DatabaseProvider database={database}>
-        <NavigationContainer independent theme={drawerTheme}>
-          <AuthContext.Provider value={{ ...authContext, isSignInLoading, isSignUpLoading }}>
-            {!accessToken || !refreshToken || !organizationId || !userId ? (
-              <AuthNavigator />
+          <AuthContext.Provider 
+            value={{
+              ...authContext,
+              isSignInLoading: state.isSignInLoading,
+              isSignUpLoading: state.isSignUpLoading,
+              accessToken: state.accessToken,
+              refreshToken: state.refreshToken,
+              organizationId: state.organizationId,
+              userId: state.userId,
+              isLoading: state.isLoading,
+              isSignout: state.isSignout
+            }}
+          >
+            {state.isLoading ? (
+              <SplashScreen />
             ) : (
-              <Sync database={database} organizationId={organizationId}>
-                <Main organizationId={organizationId} userId={userId} />
-              </Sync>
+              <NavigationContainer theme={drawerTheme}>
+                <SidebarNavigator />
+              </NavigationContainer>
             )}
           </AuthContext.Provider>
-        </NavigationContainer>
       </DatabaseProvider>
     </Root>
   );
