@@ -192,7 +192,7 @@ const enhance = c =>
       paymentTypes: database.collections.get<PaymentType>(tableNames.paymentTypes).query(),
       billPeriods: database.collections
         .get<BillPeriod>(tableNames.billPeriods)
-        .query(Q.experimentalSortBy('created_at', Q.desc), Q.experimentalTake(7)),
+        .query(Q.sortBy('created_at', Q.desc), Q.take(7)),
     }))(c),
   );
 
