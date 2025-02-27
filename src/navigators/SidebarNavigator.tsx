@@ -17,11 +17,16 @@ export type SidebarDrawerStackParamList = {
   Settings: undefined;
 };
 
-export const SidebarNavigator: React.FC<{}> = () => {
+export const SidebarNavigator: React.FC = () => {
   const Drawer = createDrawerNavigator<SidebarDrawerStackParamList>();
 
   return (
-    <Drawer.Navigator initialRouteName="Checkout" drawerStyle={{ backgroundColor: colors.bgGreyBlue }}>
+    <Drawer.Navigator 
+      initialRouteName="Checkout" 
+      screenOptions={{
+        drawerStyle: { backgroundColor: colors.bgGreyBlue }
+      }}
+    >
       <Drawer.Screen name="Checkout" component={Checkout} />
       <Drawer.Screen name="Items" component={Items} />
       <Drawer.Screen name="Reports" component={Reports} />
