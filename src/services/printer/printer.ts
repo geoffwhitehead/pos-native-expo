@@ -48,7 +48,7 @@ export async function print({ printerBuilder, printer, openDrawer = false, onFin
     );
   
     commandBuilder.addDocument(documentBuilder);
-    
+
     const commands = await  commandBuilder.getCommands()
   
     await starPrinter.open();
@@ -58,8 +58,10 @@ export async function print({ printerBuilder, printer, openDrawer = false, onFin
 
     return { success: true };
   } catch (e) {
+
+
     toast({
-          message: `Failed to print. ${e}`,
+          message: `Failed to print. Check paper has not ran out and printer is connected and try again. Error details: ${e}`,
         });
         return { success: false, error: e }
   } finally {
