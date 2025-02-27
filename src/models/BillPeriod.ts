@@ -60,6 +60,6 @@ export class BillPeriod extends Model {
     await this.update(record => {
       record.closedAt = new Date();
     });
-    await organization.createNewBillPeriod();
+    await this.callWriter(() => organization.createNewBillPeriod());
   }
 }
