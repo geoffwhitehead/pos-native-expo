@@ -4,9 +4,11 @@ import dayjs from 'dayjs';
 import type { Dictionary} from 'lodash';
 import { groupBy } from 'lodash';
 import type { BillItem, BillItemModifierItem, Category, Modifier, Organization, Printer } from '../../models';
-import { addHeader, alignCenter, alignLeftRight, starDivider } from './helpers';
+import { addHeader, alignSpaceBetween, appendNewLine, starDivider } from './helpers';
 import { receiptTemplate } from './template';
 import { tableNames } from '../../models/tableNames';
+import { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
+import { StarXpandCommand } from 'react-native-star-io10';
 
 type StockReportProps = {
   startDate: Date;
@@ -14,9 +16,10 @@ type StockReportProps = {
   printer: Printer;
   organization: Organization;
   database: Database;
+  builder: PrinterBuilder
 };
 
-export const stockReport = async ({ startDate, endDate, printer, organization, database }: StockReportProps) => {
+export const stockReport = async ({ builder, startDate, endDate, printer, organization, database }: StockReportProps) => {
   const startDateUnix =
     dayjs(startDate)
       .startOf('day')
@@ -80,58 +83,52 @@ export const stockReport = async ({ startDate, endDate, printer, organization, d
     {} as Dictionary<Dictionary<BillItem[]>>,
   );
 
-  let c = [];
+  receiptTemplate(builder, organization, printer.printWidth);
+  builder.actionPrintText(starDivider(printer.printWidth));
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
+  builder.actionPrintText('-- SALES STOCK REPORT --');
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
 
-  c.push(starDivider(printer.printWidth));
-  c.push({
-    appendBitmapText: alignCenter('-- SALES STOCK REPORT --', printer.printWidth),
-  });
-
-  c.push({
-    appendBitmapText: alignLeftRight(
+builder.actionPrintText(alignSpaceBetween(
       `Start Date: `,
       dayjs(startDate).format('DD/MM/YYYY'),
       Math.round(printer.printWidth / 2),
     ),
-  });
+  );
 
-  c.push({
-    appendBitmapText: alignLeftRight(
+  builder.actionPrintText(alignSpaceBetween(
       `End Date: `,
       dayjs(endDate).format('DD/MM/YYYY'),
       Math.round(printer.printWidth / 2),
     ),
-  });
+  );
 
-  c.push(starDivider(printer.printWidth));
+  builder.actionPrintText(starDivider(printer.printWidth));
 
   Object.values(groupedByCategoryAndItem).map(categoryBillItems => {
     Object.values(categoryBillItems).map((billItems, i) => {
       if (i === 0) {
-        addHeader(c, `Category: ${billItems[0].categoryName}`, printer.printWidth);
+        addHeader(builder, `Category: ${billItems[0].categoryName}`, printer.printWidth);
       }
-      c.push({
-        appendBitmapText: alignLeftRight(`${billItems[0].itemName}`, billItems.length.toString(), printer.printWidth),
-      });
+      builder.actionPrintText(alignSpaceBetween(`${billItems[0].itemName}`, billItems.length.toString(), printer.printWidth));
     });
   });
 
   Object.values(groupedByModifierAndModifierItem).map(billModifierItems => {
     Object.values(billModifierItems).map((modifierItems, i) => {
       if (i === 0) {
-        addHeader(c, `Modifier: ${modifierItems[0].modifierName}`, printer.printWidth);
+        addHeader(builder, `Modifier: ${modifierItems[0].modifierName}`, printer.printWidth);
       }
-      c.push({
-        appendBitmapText: alignLeftRight(
+      builder.actionPrintText(alignSpaceBetween(
           `${modifierItems[0].modifierItemName}`,
           modifierItems.length.toString(),
           printer.printWidth,
-        ),
+        ))
       });
     });
-  });
-  c.push({ appendBitmapText: ' ' });
-  c.push({ appendBitmapText: ' ' });
 
-  return receiptTemplate(c, organization, printer.printWidth);
+
+  builder.actionPrintText(appendNewLine(''));
+  builder.actionPrintText(appendNewLine(''));
+
 };

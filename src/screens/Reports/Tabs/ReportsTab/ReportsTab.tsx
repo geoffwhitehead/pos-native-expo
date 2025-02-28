@@ -51,7 +51,7 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
   const { organization } = useContext(OrganizationContext);
   const { receiptPrinter } = useContext(ReceiptPrinterContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedBillPeriod, setSelectedBillPeriod] = useState<BillPeriod>();
+  const [selectedBillPeriod, setSelectedBillPeriod] = useState<BillPeriod>(billPeriods[0]);
 
   navigation.addListener('focus', () => setSelectedBillPeriod(null));
 
@@ -74,8 +74,9 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
 
   const onPrintCorrectionReport = async (billPeriod: BillPeriod) => {
     setIsLoading(true);
-    const commands = await correctionReport({ billPeriod, database, printer: receiptPrinter, organization });
-    await print({ commands, printer: receiptPrinter });
+    const printerBuilder = new StarXpandCommand.PrinterBuilder();
+    await correctionReport({ builder: printerBuilder, billPeriod, database, printer: receiptPrinter, organization });
+    await print({ printerBuilder, printer: receiptPrinter });
     setIsLoading(false);
   };
 
@@ -112,7 +113,7 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
             <List>
               {billPeriods.map(billPeriod => {
                 return (
-                  <ListItem key={billPeriod.id} onPress={() => setSelectedBillPeriod(billPeriod)}>
+                  <ListItem key={billPeriod.id} style={billPeriod.id === selectedBillPeriod?.id ? { marginLeft: 0, paddingLeft: 14, backgroundColor: 'lightblue' } : {}} selected={billPeriod.id === selectedBillPeriod?.id} onPress={() => setSelectedBillPeriod(billPeriod)}>
                     <Left>
                       <View style={{ display: 'flex' }}>
                         <Text>{`Opened: ${dayjs(billPeriod.createdAt).format('ddd DD/MM/YYYY HH:mm:ss')}`}</Text>
@@ -125,9 +126,10 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
                     </Left>
                     <Right>
                       {!billPeriod.closedAt && (
-                        <View>
+                        <View style={{width: 200}}>
                           <Button
                             small
+                            full
                             {...resolveButtonState(isLoading, 'info')}
                             style={{ marginBottom: 2 }}
                             onPress={() => onPrintPeriodReport(billPeriod)}
@@ -135,6 +137,7 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
                             <Text>Print Status Report</Text>
                           </Button>
                           <Button
+                            full
                             small
                             {...resolveButtonState(isLoading, 'danger')}
                             onPress={() => confirmClosePeriod(billPeriod, organization)}
@@ -144,9 +147,10 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
                         </View>
                       )}
                       {billPeriod.closedAt && (
-                        <View>
+                        <View style={{width: 200}}>
                           <Button
                             small
+                            full
                             {...resolveButtonState(isLoading, 'primary')}
                             onPress={() => onPrintPeriodReport(billPeriod)}
                             style={{ marginBottom: 2 }}
@@ -155,6 +159,7 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
                           </Button>
                           <Button
                             small
+                            full
                             {...resolveButtonState(isLoading, 'info')}
                             style={{ marginRight: 2 }}
                             onPress={() => onPrintCorrectionReport(billPeriod)}

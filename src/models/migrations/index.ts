@@ -3,6 +3,5 @@ import { migration as addPrinterFieldsMigration} from './add-printer-fields'
 
 export default schemaMigrations({
   migrations: [
-    addPrinterFieldsMigration
   ],
 })

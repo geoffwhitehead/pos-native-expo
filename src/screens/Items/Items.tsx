@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const Items = withDatabase<{}>(
+export const Items = withDatabase(
   withObservables<ItemsOuterProps, ItemsInnerProps>([], ({ database }) => ({
     categories: database.collections
       .get<Category>(tableNames.categories)

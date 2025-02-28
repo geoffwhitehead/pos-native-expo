@@ -1,3 +1,4 @@
+
 import { Model, Query, Relation, tableSchema } from '@nozbe/watermelondb';
 import { children, date, field, immutableRelation, nochange, readonly, writer } from '@nozbe/watermelondb/decorators';
 import dayjs from 'dayjs';
@@ -82,7 +83,6 @@ export class BillItem extends Model {
       billItem.isComp = true;
       billItem.reasonDescription = values.reason;
       billItem.reasonName = values.name;
-      // billItem.voidedAt = new Date().getTime().toString();
     });
   }
 

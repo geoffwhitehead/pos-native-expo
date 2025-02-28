@@ -13,9 +13,11 @@ import type {
   PrintCategory,
   Printer,
 } from '../../models';
-import { PrintType } from '../../models/BillItemPrintLog';
 import type { PrintItemGroupingEnum } from '../../models/Organization';
-import { alignCenter, alignLeftRightSingle, starDivider, subHeader } from './helpers';
+import { alignSpaceBetween, starDivider, subHeader } from './helpers';
+import { PrintType } from '../../models/constants';
+import { StarXpandCommand } from 'react-native-star-io10';
+import { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
 
 const MOD_PREFIX = '- ';
 const REF_NAME = 'Table';
@@ -26,21 +28,26 @@ export const kitchenCall = async (p: {
   bill: Bill;
   billCallPrintLogs: BillCallPrintLog[];
   printers: Printer[];
-}): Promise<{ billCallPrintLog: BillCallPrintLog; printer: Printer; commands: any[] }[]> => {
+}): Promise<{ billCallPrintLog: BillCallPrintLog; printer: Printer; printerBuilder: PrinterBuilder }[]> => {
   const { bill, printers, billCallPrintLogs } = p;
 
   const printersToPrintTo = printers.filter(printer => printer.receivesBillCalls);
   const keyedPrinters = keyBy(printersToPrintTo, printer => printer.id);
 
-  const billCallCommands = billCallPrintLogs.map(log =>
-    generateBillCallCommands({
-      printer: keyedPrinters[log.printerId],
-      reference: bill.reference,
-      billCallPrintLog: log,
-    }),
-  );
+  return billCallPrintLogs.map(log => {
 
-  return billCallCommands;
+    const printerBuilder = new PrinterBuilder();
+    const callCommands = generateBillCallCommands({
+      builder: printerBuilder,
+      reference: bill.reference,
+    });
+
+    return {
+      billCallPrintLog: log,
+      printer: keyedPrinters[log.printerId],
+      printerBuilder
+    };
+  });
 };
 
 export const kitchenReceipt = async (p: {
@@ -53,7 +60,7 @@ export const kitchenReceipt = async (p: {
   categories: Category[];
   printCategories: PrintCategory[];
   printItemGrouping: PrintItemGroupingEnum;
-}): Promise<{ billItemPrintLogs: BillItemPrintLog[]; printer: Printer; commands: any[] }[]> => {
+}): Promise<{ billItemPrintLogs: BillItemPrintLog[]; printer: Printer; printerBuilder: PrinterBuilder }[]> => {
   const {
     billItems,
     printers,
@@ -115,27 +122,42 @@ export const kitchenReceipt = async (p: {
 
   const flattenedPrintCommands = flatten(printCommands);
 
-  const billPrintCommands = flattenedPrintCommands.map(generateBillItemCommands);
+  const billPrintCommands = flattenedPrintCommands.map(printCommands => {
+
+    const printerBuilder = new StarXpandCommand.PrinterBuilder();
+
+    generateBillItemCommands({
+      builder: printerBuilder,
+      itemsToPrint: printCommands.itemsToPrint as any,
+      priceGroup: printCommands.priceGroup,
+      printer: printCommands.printer,
+      prepTime: printCommands.prepTime,
+      reference: printCommands.reference,
+      keyedCategories: printCommands.keyedCategories,
+      keyedPrintCategories: printCommands.keyedPrintCategories,
+    });
+
+    return {
+      printerBuilder,
+      billItemPrintLogs: printCommands.itemsToPrint.map(({ billItemPrintLog }) => billItemPrintLog),
+      printer: printCommands.printer,
+    };
+  });
 
   return billPrintCommands;
 };
 
-const generateBillCallCommands = (p: { printer: Printer; reference: number; billCallPrintLog: BillCallPrintLog }) => {
-  const { printer, reference, billCallPrintLog } = p;
+const generateBillCallCommands = (p: { builder: PrinterBuilder; reference: number}) => {
+  const { builder, reference } = p;
 
-  let c = [];
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
+  builder.actionPrintText('IN: ' + dayjs().format(timeFormat))
+  builder.actionPrintText('CALL: ' + reference)
 
-  c.push({ appendBitmapText: alignCenter('IN: ' + dayjs().format(timeFormat), printer.printWidth) });
-  c.push({ appendBitmapText: alignCenter('CALL: ' + reference, printer.printWidth) });
-
-  return {
-    commands: c,
-    printer,
-    billCallPrintLog,
-  };
 };
 
 const generateBillItemCommands = (p: {
+  builder: StarXpandCommand.PrinterBuilder;
   itemsToPrint: { billItem: BillItem; mods: BillItemModifierItem[]; billItemPrintLog: BillItemPrintLog }[];
   priceGroup: PriceGroup;
   printer: Printer;
@@ -144,16 +166,16 @@ const generateBillItemCommands = (p: {
   keyedCategories: Dictionary<Category>;
   keyedPrintCategories: Dictionary<PrintCategory>;
 }) => {
-  const { itemsToPrint, priceGroup, printer, prepTime, reference, keyedCategories, keyedPrintCategories } = p;
-
-  let c = [];
+  const { builder, itemsToPrint, priceGroup, printer, prepTime, reference, keyedCategories, keyedPrintCategories } = p;
 
   const pGName = priceGroup.shortName || priceGroup.name;
-  c.push({ appendBitmapText: alignCenter(pGName.toUpperCase(), printer.printWidth) });
-  c.push({ appendBitmapText: alignCenter('IN: ' + dayjs().format(timeFormat), printer.printWidth) });
-  prepTime && c.push({ appendBitmapText: alignCenter('PREP: ' + prepTime.format(timeFormat), printer.printWidth) });
-  c.push({ appendBitmapText: alignCenter(REF_NAME.toUpperCase() + ': ' + reference, printer.printWidth) });
-  c.push(starDivider(printer.printWidth));
+
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
+  builder.actionPrintText(pGName.toUpperCase());
+  builder.actionPrintText('IN: ' + dayjs().format(timeFormat))
+  prepTime && builder.actionPrintText('PREP: ' + prepTime.format(timeFormat))
+  builder.actionPrintText(REF_NAME.toUpperCase() + ': ' + reference)
+  builder.actionPrintText(starDivider(printer.printWidth));
 
   const groupedIntoQuantities = Object.values(
     groupBy(itemsToPrint, ({ billItem, mods, billItemPrintLog }) => {
@@ -198,35 +220,30 @@ const generateBillItemCommands = (p: {
     // Note: use the print category if defined otherwise default to standard category id
     const categoryShortName = printCategory || category;
 
-    c.push({ appendBitmapText: subHeader(categoryShortName?.toUpperCase() || 'OTHER', printer.printWidth) });
+    builder.actionPrintText(subHeader(categoryShortName?.toUpperCase() || 'OTHER', printer.printWidth))
 
+    builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
     quantifiedItems.map(({ quantity, billItem, mods, isVoided, printMessage }) => {
       if (isVoided) {
-        c.push({
-          appendBitmapText: alignLeftRightSingle(
+        builder.actionPrintText(alignSpaceBetween(
             `${('VOID ' + capitalize(billItem.itemShortName)).slice(0, printer.printWidth)}`,
             quantity.toString(),
             printer.printWidth,
           ),
-        });
+        );
       } else {
-        c.push({
-          appendBitmapText: alignLeftRightSingle(`${billItem.itemShortName}`, quantity.toString(), printer.printWidth),
-        });
+        builder.actionPrintText(alignSpaceBetween(`${billItem.itemShortName}`, quantity.toString(), printer.printWidth))
       }
       mods.map(mod => {
-        c.push({ appendBitmapText: MOD_PREFIX + capitalize(mod.modifierItemShortName) });
+        builder.actionPrintText(MOD_PREFIX + capitalize(mod.modifierItemShortName))
       });
       printMessage &&
-        c.push({
-          appendBitmapText: printMessage,
-        });
+        builder.actionPrintText(alignSpaceBetween(printMessage, '', printer.printWidth));
     });
   });
 
   return {
     billItemPrintLogs: itemsToPrint.map(({ billItemPrintLog }) => billItemPrintLog),
-    printer,
-    commands: c,
+    printer
   };
 };

@@ -5,6 +5,9 @@ import type { Bill } from './Bill';
 import { ASSOCIATION_TYPES } from './constants';
 import type { Organization } from './Organization';
 import { tableNames } from './tableNames';
+import { BillItem } from './BillItem';
+import { BillDiscount } from './BillDiscount';
+import { BillPayment } from './BillPayment';
 
 export const billPeriodSchema = tableSchema({
   name: tableNames.billPeriods,
@@ -34,7 +37,7 @@ export class BillPeriod extends Model {
    * currently pending in a sale.
    */
 
-  @lazy _periodItems = this.collections.get('bill_items').query(Q.on('bills', 'bill_period_id', this.id));
+  @lazy _periodItems = this.collections.get<BillItem>(tableNames.billItems).query(Q.on(tableNames.bills, 'bill_period_id', this.id));
   @lazy periodItems = this._periodItems.extend(Q.where('is_voided', Q.notEq(true)));
   @lazy chargablePeriodItems = this._periodItems.extend(
     Q.and(Q.where('is_comp', Q.notEq(true)), Q.where('is_voided', Q.notEq(true))),
@@ -44,9 +47,11 @@ export class BillPeriod extends Model {
     Q.and(Q.where('is_comp', Q.eq(true)), Q.where('is_voided', Q.notEq(true))),
   );
   @lazy periodDiscounts = this.collections
-    .get('bill_discounts')
-    .query(Q.on('bills', 'bill_period_id', this.id));
-  @lazy periodPayments = this.collections.get('bill_payments').query(Q.on('bills', 'bill_period_id', this.id))
+    .get<BillDiscount>(tableNames.billDiscounts)
+    .query(Q.on(tableNames.bills, 'bill_period_id', this.id));
+  @lazy periodPayments = this.collections
+    .get<BillPayment>(tableNames.billPayments)
+    .query(Q.on(tableNames.bills, 'bill_period_id', this.id));
 
   @writer async createBill(params: { reference: number }): Promise<Bill> {
     const bill = await this.collections.get<Bill>(tableNames.bills).create(bill => {

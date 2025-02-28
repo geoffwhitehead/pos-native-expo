@@ -335,7 +335,7 @@ export class Bill extends Model {
     const billItemsToUpdate = billItemsToStore.map(billItem =>
       billItem.prepareUpdate(record => {
         record.isStored = true;
-        record.storedAt = dayjs().toISOString();
+        record.storedAt = new Date().getTime().toString();
       }),
     );
 

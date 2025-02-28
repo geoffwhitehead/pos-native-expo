@@ -5,10 +5,13 @@ import { useDatabase } from '@nozbe/watermelondb/hooks';
 import withObservables from '@nozbe/with-observables';
 import dayjs from 'dayjs';
 import { groupBy, maxBy, truncate } from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
+// import { VictoryBar } from 'victory-native/lib/components/victory-bar';
+// import { VictoryAxis } from 'victory-native/lib/components/victory-axis';
+// import { VictoryChart } from 'victory-native/lib/components/victory-chart';
+// import { VictoryTheme } from 'victory-native/lib/victory-theme';
 import { SwitchSelector } from '../../../../components/SwitchSelector/SwitchSelector';
 import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
@@ -21,6 +24,8 @@ import { colors } from '../../../../theme';
 import { resolveButtonState } from '../../../../utils/helpers';
 import { moderateScale } from '../../../../utils/scaling';
 import { tableNames } from '../../../../models/tableNames';
+import { StarXpandCommand } from 'react-native-star-io10';
+import LottieView from 'lottie-react-native';
 
 type StockReportsTabInnerProps = {
   categories: Category[];
@@ -32,12 +37,8 @@ type StockReportsTabOuterProps = {
 };
 
 enum SortTypeEnum {
-  /**
-   * Note: notice asc / desc are reversed. For some reason in Victory ascending will go
-   * from the highest to the lowest value.
-   */
-  'ascending' = 'descending',
-  'descending' = 'ascending',
+  'ascending' = 'ascending',
+  'descending' = 'descending',
   'alphabetical' = 'alphabetical',
 }
 
@@ -71,8 +72,9 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
   const onPrintStockReport = async () => {
     setIsLoading(true);
 
-    const commands = await stockReport({ startDate, endDate, database, printer: receiptPrinter, organization });
-    await print({ commands, printer: receiptPrinter });
+    const printerBuilder = new StarXpandCommand.PrinterBuilder();
+    await stockReport({ builder: printerBuilder, startDate, endDate, database, printer: receiptPrinter, organization });
+    await print({ printerBuilder, printer: receiptPrinter });
     setIsLoading(false);
   };
 
@@ -107,20 +109,28 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
         ),
       )
       .fetch();
-    console.log('billItems ', billItems);
 
     const grouped = groupBy(billItems, billItem => billItem.itemId);
-
-    console.log('grouped', grouped);
-    const data = Object.values(grouped).map((billItems, i) => {
+    
+    let data = Object.values(grouped).map((billItems, i) => {
       const itemName = truncate(billItems[0].itemName, { length: 50 });
       return {
         x: `${itemName} (${i})`,
         y: billItems.length,
-        label: billItems.length,
+        label: billItems.length.toString(),
         name: itemName,
       };
     });
+
+    // Handle sorting
+    if (sortType === SortTypeEnum.alphabetical) {
+      data = data.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortType === SortTypeEnum.ascending) {
+      data = data.sort((a, b) => a.y - b.y);
+    } else {
+      data = data.sort((a, b) => b.y - a.y);
+    }
+
     if (data.length) {
       const pixelsPerChar = 7;
       const graphPadding = (maxBy(data, el => el.x.length).x.length + 5) * pixelsPerChar;
@@ -141,6 +151,18 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
   const handlePressStartDate = () => setVisibleDatePicker('start');
   const handlePressEndDate = () => setVisibleDatePicker('end');
   const chartHeight = 200 + 20 * graphData.length;
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ marginBottom: 20 }}>I disabled this section, need to spend more time updating it.</Text>
+      <LottieView
+        style={{ height: 250, width: 250 }}
+        source={require('../../../../animations/maintenance.json')}
+        autoPlay={true}
+        loop={true}
+      />
+    </View>
+  )
   return (
     <>
       <ListItem itemHeader first>
@@ -224,8 +246,10 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
         />
       </ListItem>
       {isGraphLoading && <Spinner />}
-      {!isGraphLoading && graphData.length === 0 && <Text style={{ padding: 10 }}>No results found... </Text>}
-      {!isGraphLoading && graphData.length > 0 && (
+
+      <Icon name="print-outline" />
+      {/* {!isGraphLoading && graphData.length === 0 && <Text style={{ padding: 10 }}>No results found... </Text>} */}
+      {/* {!isGraphLoading && graphData.length > 0 && (
         <ScrollView>
           <VictoryChart
             height={chartHeight}
@@ -235,36 +259,40 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
             domainPadding={{ x: 20 }}
             animate={{
               duration: 500,
-              onLoad: { duration: 250 },
+              easing: "cubic",
+              onLoad: { duration: 250 }
             }}
           >
             <VictoryBar
-              sortKey={sortType === SortTypeEnum.alphabetical ? 'name' : ['y', 'name']}
-              sortOrder={sortType === SortTypeEnum.alphabetical ? SortTypeEnum.ascending : sortType}
               barWidth={15}
               alignment="middle"
               style={{
                 data: { fill: colors.highlightBlue },
-                parent: { border: '1px solid #ccc' },
+                labels: { fill: "black", fontSize: 12 }
               }}
               data={graphData}
+              labels={({ datum }) => datum.y}
             />
             <VictoryAxis
               dependentAxis
               label={`Items sold (${dayjs(startDate).format('DD/MM/YYYY')} - ${dayjs(endDate).format('DD/MM/YYYY')})`}
               style={{
-                axisLabel: { padding: 30, fontWeight: 'bold' },
+                axisLabel: { padding: 30, fontWeight: "bold" },
+                grid: { stroke: "none" },
+                ticks: { stroke: "none" }
               }}
             />
             <VictoryAxis
               label="Item"
               style={{
-                axisLabel: { padding: yPadding - LABEL_PADDING, fontWeight: 'bold' },
+                axisLabel: { padding: yPadding - LABEL_PADDING, fontWeight: "bold" },
+                grid: { stroke: "none" },
+                ticks: { stroke: "none" }
               }}
             />
           </VictoryChart>
         </ScrollView>
-      )}
+      )} */}
       <View>
         <TimePicker
           isVisible={visibleDatePicker === 'start'}
@@ -294,7 +322,7 @@ const styles = StyleSheet.create({
 });
 
 const enhance = c =>
-  withDatabase<any>(
+  withDatabase(
     withObservables<StockReportsTabOuterProps, StockReportsTabInnerProps>([], ({ database }) => ({
       categories: database.collections.get<Category>(tableNames.categories).query(),
       priceGroups: database.collections.get<PriceGroup>(tableNames.priceGroups).query(),

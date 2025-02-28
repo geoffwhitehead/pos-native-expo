@@ -3,10 +3,13 @@ import dayjs from 'dayjs';
 import { capitalize, groupBy, sumBy } from 'lodash';
 import type { Bill, BillItem, BillPeriod, Organization, Printer } from '../../models';
 import { formatNumber } from '../../utils';
-import { addHeader, alignCenter, alignLeftRight, starDivider } from './helpers';
+import { addHeader, alignCenter, alignSpaceBetween, appendNewLine, starDivider } from './helpers';
 import { receiptTemplate } from './template';
+import { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
+import { StarXpandCommand } from 'react-native-star-io10';
 
 type CorrectionReportProps = {
+  builder: PrinterBuilder
   database: Database;
   billPeriod: BillPeriod;
   printer: Printer;
@@ -15,6 +18,7 @@ type CorrectionReportProps = {
 const modPrefix = ' -';
 
 export const correctionReport = async ({
+  builder,
   billPeriod,
   database,
   printer,
@@ -22,69 +26,62 @@ export const correctionReport = async ({
 }: CorrectionReportProps) => {
   const { currency } = organization;
 
-  let commands = [];
-
   const [periodItemVoids, bills] = await Promise.all([
     billPeriod.periodItemVoidsAndCancels.fetch(),
     billPeriod.bills.fetch(),
   ]);
 
   const voids = periodItemVoids.filter(item => dayjs(item.voidedAt).isAfter(item.storedAt));
-  const cancels = periodItemVoids.filter(item => dayjs(item.voidedAt).isBefore(item.storedAt));
+  const cancels = periodItemVoids.filter(item => !item.storedAt || dayjs(item.voidedAt).isBefore(item.storedAt));
 
-  commands.push(starDivider(printer.printWidth));
-  commands.push({
-    appendBitmapText: alignCenter('-- CORRECTION REPORT --', printer.printWidth),
-  });
+  receiptTemplate(builder, organization, printer.printWidth);
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
+  builder.actionPrintText(starDivider(printer.printWidth));
+  builder.actionPrintText('-- CORRECTION REPORT --');
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
 
-  commands.push({
-    appendBitmapText: alignLeftRight(
-      `Opened: `,
-      dayjs(billPeriod.createdAt).format('DD/MM/YYYY HH:mm:ss'),
-      Math.round(printer.printWidth / 2),
-    ),
-  });
+  builder.actionPrintText(appendNewLine(`Opened: ` + 
+      dayjs(billPeriod.createdAt).format('DD/MM/YYYY HH:mm:ss')
+  ));
 
-  commands.push({
-    appendBitmapText: alignLeftRight(
-      `Closed: `,
-      billPeriod.closedAt ? dayjs(billPeriod.closedAt).format('DD/MM/YYYY HH:mm:ss') : '',
-      Math.round(printer.printWidth / 2),
-    ),
-  });
+  builder.actionPrintText(appendNewLine(`Closed: ` +  billPeriod.closedAt ? dayjs(billPeriod.closedAt).format('DD/MM/YYYY HH:mm:ss') : ''));
 
-  const itemVoidCommands = await itemsReport({ bills, billItems: voids, printer, currency });
-  const itemCancelCommands = await itemsReport({ bills, billItems: cancels, printer, currency });
+  builder.actionPrintText(starDivider(printer.printWidth));
 
-  commands.push(starDivider(printer.printWidth));
-  addHeader(commands, alignCenter('Voids', printer.printWidth), printer.printWidth);
-  commands.push(starDivider(printer.printWidth));
-  commands.push(...itemVoidCommands);
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
 
-  commands.push(starDivider(printer.printWidth));
-  addHeader(commands, alignCenter('Cancels', printer.printWidth), printer.printWidth);
-  commands.push(starDivider(printer.printWidth));
-  commands.push(...itemCancelCommands);
+  addHeader(builder, 'Voids', printer.printWidth);
 
-  return receiptTemplate(commands, organization, printer.printWidth);
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
+
+  await itemsReport({ builder, bills, corrections: voids, printer, currency });
+
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
+
+  addHeader(builder, 'Cancels', printer.printWidth);
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
+
+  await itemsReport({ builder, bills, corrections: cancels, printer, currency });
+
 };
 
 type ReportProps = {
+  builder: PrinterBuilder;
   bills: Bill[];
-  billItems: BillItem[];
+  corrections: BillItem[];
   printer: Printer;
   currency: string;
 };
-const itemsReport = async ({ bills, billItems, printer, currency }: ReportProps): Promise<string[]> => {
-  let commands = [];
-  const sorter = (bill1: Bill, bill2: Bill) => bill2.createdAt - bill1.createdAt;
+const itemsReport = async ({ builder, bills, corrections, printer, currency }: ReportProps) => {
 
+  console.log('c', corrections)
   // filter any bills that dont contain any voids
-  const filteredBills = bills.filter(({ id }) => billItems.some(({ billId }) => billId === id));
+  const filteredBills = bills.filter(({ id }) => corrections.some(({ billId }) => billId === id));
 
-  const sortedBillsCreatedAsc = filteredBills.sort(sorter);
+  console.log('f', filteredBills)
+  const sortedBillsCreatedAsc = filteredBills.sort((bill1: Bill, bill2: Bill) => dayjs(bill2.createdAt).isBefore(bill1.createdAt) ? -1 : 1);
 
-  const groupedVoidsByBillId = groupBy(billItems, item => item.billId);
+  const groupedVoidsByBillId = groupBy(corrections, item => item.billId);
 
   const combinedBillsItemsMods = await Promise.all(
     sortedBillsCreatedAsc.map(async bill => {
@@ -93,10 +90,10 @@ const itemsReport = async ({ bills, billItems, printer, currency }: ReportProps)
 
       const billItemVoidsWithModifiers = groupedVoidsByBillId[bill.id].map(billItem => {
         const modifiers = groupedVoidsByBillItem[billItem.id];
-        return {
-          billItem,
+          return {
+            billItem,
           modifiers: modifiers || [],
-        };
+          };
       });
 
       return {
@@ -115,58 +112,34 @@ const itemsReport = async ({ bills, billItems, printer, currency }: ReportProps)
     return acc + itemTotal;
   }, 0);
 
-  combinedBillsItemsMods.map(({ billItemVoids, bill }) => {
-    addHeader(commands, `Bill: ${bill.id}`, printer.printWidth);
-    commands.push({
-      appendBitmapText: alignLeftRight(
-        `Opened: `,
-        dayjs(bill.createdAt).format('DD/MM/YYYY HH:mm:ss'),
-        Math.round(printer.printWidth / 2),
-      ),
-    });
+  combinedBillsItemsMods.forEach(({ billItemVoids, bill }) => {
+    addHeader(builder, `Table: ${bill.reference}`, printer.printWidth);
+    builder.actionPrintText(appendNewLine(`Date: ${dayjs(bill.createdAt).format('DD/MM/YYYY HH:mm:ss')}`));
 
-    commands.push({
-      appendBitmapText: alignLeftRight(
-        `Closed: `,
-        bill.closedAt ? dayjs(bill.closedAt).format('DD/MM/YYYY HH:mm:ss') : '',
-        Math.round(printer.printWidth / 2),
-      ),
-    });
+    billItemVoids.forEach(({ billItem, modifiers }) => {
 
-    billItemVoids.map(({ billItem, modifiers }) => {
-      commands.push({ appendBitmapText: dayjs(billItem.voidedAt).format('DD/MM/YYYY HH:mm:ss') });
-      commands.push({
-        appendBitmapText: alignLeftRight(
-          capitalize(billItem.itemName),
-          formatNumber(billItem.itemPrice, currency),
-          printer.printWidth,
-        ),
-      });
+
+      // builder.actionPrintText(appendNewLine(`Voided at: ${dayjs(billItem.voidedAt).format('DD/MM/YYYY HH:mm:ss')}`));
+      builder.actionPrintText(alignSpaceBetween(
+        capitalize(billItem.itemName),
+        formatNumber(billItem.itemPrice, currency),
+        printer.printWidth,
+      ));
       modifiers.map(mod => {
-        commands.push({
-          appendBitmapText: alignLeftRight(
-            `${modPrefix} ${capitalize(mod.modifierItemName)}`,
-            formatNumber(mod.modifierItemPrice, currency),
-            printer.printWidth,
-          ),
-        });
+        builder.actionPrintText(alignSpaceBetween(
+          `${modPrefix} ${capitalize(mod.modifierItemName)}`,
+          formatNumber(mod.modifierItemPrice, currency),
+          printer.printWidth,
+        ));
       });
 
       if (billItem.reasonName || billItem.reasonDescription) {
-        commands.push({
-          appendBitmapText: billItem.reasonName,
-        });
-        commands.push({
-          appendBitmapText: billItem.reasonDescription,
-        });
+        builder.actionPrintText(billItem.reasonName);
+        builder.actionPrintText(billItem.reasonDescription);
       }
     });
   });
 
-  commands.push(starDivider(printer.printWidth));
-  commands.push({
-    appendBitmapText: alignLeftRight(`Total: `, formatNumber(total, currency), printer.printWidth),
-  });
-
-  return commands;
+  builder.actionPrintText(starDivider(printer.printWidth));
+  builder.actionPrintText(alignSpaceBetween(`Total: `, formatNumber(total, currency), printer.printWidth));
 };

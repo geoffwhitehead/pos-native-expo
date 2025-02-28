@@ -5,7 +5,7 @@ import migrations from '../models/migrations';
 
 const adapter = new SQLiteAdapter({
   schema: appSchema({
-    version: 78,
+    version: 1,
     tables: [
       billSchema,
       billDiscountSchema,

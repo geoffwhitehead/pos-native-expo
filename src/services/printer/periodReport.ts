@@ -23,7 +23,7 @@ import {
   paymentSummary,
   priceGroupSummmary,
 } from '../../utils';
-import { addHeader, alignCenter, alignLeftRight, alignSpaceBetween, divider, starDivider } from './helpers';
+import { addHeader, alignSpaceBetween, appendNewLine, divider, formatSize, starDivider } from './helpers';
 import { receiptTemplate } from './template';
 import { tableNames } from '../../models/tableNames';
 import { StarXpandCommand } from 'react-native-star-io10';
@@ -151,24 +151,19 @@ export const periodReport = async ({ builder, billPeriod, database, printer, org
 
   const { currency } = organization;
 
-  builder.actionPrintText(starDivider(printer.printWidth));
-
   receiptTemplate(builder, organization, printer.printWidth)
   builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
 
-  builder.actionPrintText(billPeriod.closedAt ? '-- END PERIOD REPORT --' : '-- STATUS REPORT --');
+  builder.actionPrintText(appendNewLine(billPeriod.closedAt ? '-- END PERIOD REPORT --' : '-- STATUS REPORT --'));
+  builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
 
-  builder.actionPrintText(alignSpaceBetween(
-      `Opened: `,
-      dayjs(billPeriod.createdAt).format('DD/MM/YYYY HH:mm:ss'),
-      Math.round(printer.printWidth / 2),
+  builder.actionPrintText(appendNewLine(
+      `Opened: ${dayjs(billPeriod.createdAt).format('DD/MM/YYYY HH:mm:ss')}`,
     ),
   );
 
-  builder.actionPrintText(alignSpaceBetween(
-    `Closed: `,
-    billPeriod.closedAt ? dayjs(billPeriod.closedAt).format('DD/MM/YYYY HH:mm:ss') : '',
-    Math.round(printer.printWidth / 2),
+  builder.actionPrintText(appendNewLine(
+    `Closed: ${billPeriod.closedAt ? dayjs(billPeriod.closedAt).format('DD/MM/YYYY HH:mm:ss') : ''}`,
   ));
 
   builder.actionPrintText(starDivider(printer.printWidth));
@@ -192,11 +187,14 @@ export const periodReport = async ({ builder, billPeriod, database, printer, org
     ),
   );
 
+builder.actionPrintText(appendNewLine());
+
+
   addHeader(builder, 'Modifier Totals', printer.printWidth);
   modifierTotals.breakdown.forEach(modifierGroup => {
     builder.styleAlignment(StarXpandCommand.Printer.Alignment.Center);
 
-    builder.actionPrintText(alignCenter(modifierGroup.modifierName, printer.printWidth));
+    builder.actionPrintText(modifierGroup.modifierName);
     builder.styleAlignment(StarXpandCommand.Printer.Alignment.Left);
 
     modifierGroup.breakdown.forEach(modifierItemGroup => {
@@ -215,6 +213,7 @@ export const periodReport = async ({ builder, billPeriod, database, printer, org
     printer.printWidth,
   ));
 
+  builder.actionPrintText(appendNewLine());
   addHeader(builder, 'Price Group Totals (excl discounts)', printer.printWidth);
   priceGroupTotals.forEach(priceGroupTotal => {
       builder.actionPrintText(alignSpaceBetween(
@@ -235,6 +234,7 @@ export const periodReport = async ({ builder, billPeriod, database, printer, org
     ),
   );
 
+  builder.actionPrintText(appendNewLine());
   addHeader(builder, 'Discount Totals', printer.printWidth);
   discountTotals.breakdown.forEach(discountTotal => {
     builder.actionPrintText(alignSpaceBetween(
@@ -253,30 +253,17 @@ export const periodReport = async ({ builder, billPeriod, database, printer, org
   );
   builder.actionPrintText(divider(printer.printWidth));
 
-  addHeader(builder, 'Payment Totals', printer.printWidth);
-  paymentTotals.breakdown.forEach(paymentTotal => builder.actionPrintText(alignLeftRight(
-        capitalize(paymentTotal.name),
-        `${paymentTotal.count} / ${formatNumber(paymentTotal.total, currency)}`,
-        printer.printWidth,
-      ),
-    ));
-  builder.actionPrintText(alignLeftRight(
-      'Total: ',
-      `${paymentTotals.count} / ${formatNumber(paymentTotals.total, currency)}`,
-      printer.printWidth,
-    ),
-  );
-  builder.actionPrintText(divider(printer.printWidth));
+builder.actionPrintText(appendNewLine());
 
   addHeader(builder, 'Complimentary Totals', printer.printWidth);
 
-  builder.actionPrintText(alignLeftRight(
+  builder.actionPrintText(alignSpaceBetween(
       'Items',
       `${compBillItems.length} / ${formatNumber(sumBy(compBillItems, 'itemPrice'), currency)}`,
       printer.printWidth,
     ),
   );
-  builder.actionPrintText(alignLeftRight(
+  builder.actionPrintText(alignSpaceBetween(
       'Modifiers',
       `${compBillItemModifierItems.length} / ${formatNumber(
         sumBy(compBillItemModifierItems, 'modifierItemPrice'),
@@ -285,21 +272,43 @@ export const periodReport = async ({ builder, billPeriod, database, printer, org
       printer.printWidth,
     ));
 
-  addHeader(builder, 'Totals', printer.printWidth);
-  builder.actionPrintText(alignLeftRight('Number of bills: ', bills.length.toString(), printer.printWidth));
-  builder.actionPrintText(alignLeftRight(
+    builder.actionPrintText(appendNewLine());
+    
+    formatSize(builder, 'Payment Totals', 2);
+    builder.actionPrintText(divider(printer.printWidth));
+
+    paymentTotals.breakdown.forEach(paymentTotal => builder.actionPrintText(alignSpaceBetween(
+          capitalize(paymentTotal.name),
+          `${paymentTotal.count} / ${formatNumber(paymentTotal.total, currency)}`,
+          printer.printWidth,
+        ),
+      ));
+    builder.actionPrintText(alignSpaceBetween(
+        'Total: ',
+        `${paymentTotals.count} / ${formatNumber(paymentTotals.total, currency)}`,
+        printer.printWidth,
+      ),
+    );
+    builder.actionPrintText(divider(printer.printWidth));
+  
+    builder.actionPrintText(appendNewLine());
+
+  formatSize(builder, 'Totals', 2);
+  builder.actionPrintText(divider(printer.printWidth));
+  builder.actionPrintText(alignSpaceBetween('Number of bills: ', bills.length.toString(), printer.printWidth));
+  builder.actionPrintText(alignSpaceBetween(
       'Voids: ',
       `${voidCount} / ${formatNumber(voidTotal, currency)}`,
       printer.printWidth,
     ),
   );
-  builder.actionPrintText(alignLeftRight(
+  builder.actionPrintText(alignSpaceBetween(
       'Discounts: ',
       `${discountTotals.count} / ${formatNumber(discountTotals.total, currency)}`,
       printer.printWidth,
     ),
   );
-  builder.actionPrintText(alignLeftRight(
+  builder.actionPrintText(alignSpaceBetween(
       'Sales Total: ',
       formatNumber(salesTotal, currency),
       printer.printWidth,

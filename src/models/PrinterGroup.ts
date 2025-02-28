@@ -46,7 +46,7 @@ export class PrinterGroup extends Model {
       }),
     );
 
-    await this.database.write(() => this.database.batch(...batched));
+    await this.database.batch(...batched)
   }
 
   @writer async remove() {

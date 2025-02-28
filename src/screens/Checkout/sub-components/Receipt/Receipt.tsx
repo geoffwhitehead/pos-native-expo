@@ -161,8 +161,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
 
       // attempt to print the receipts
       const printStatuses = await Promise.all(
-        toPrintBillItemLogs.map(async ({ billItemPrintLogs, printer, commands }) => {
-          const res = await print({ commands, printer });
+        toPrintBillItemLogs.map(async ({ billItemPrintLogs, printer, printerBuilder }) => {
+          const res = await print({ printerBuilder, printer });
           const status = res.success ? PrintStatus.succeeded : PrintStatus.errored;
 
           return billItemPrintLogs.map(billItemPrintLog => {
@@ -177,8 +177,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
       await bill.processPrintLogs(flatten(printStatuses));
 
       const printCallStatuses = await Promise.all(
-        toPrintCallLogs.map(async ({ billCallPrintLog, printer, commands }) => {
-          const res = await print({ commands, printer });
+        toPrintCallLogs.map(async ({ billCallPrintLog, printer, printerBuilder }) => {
+          const res = await print({ printerBuilder, printer });
           const status = res.success ? PrintStatus.succeeded : PrintStatus.errored;
           return {
             billCallPrintLog,

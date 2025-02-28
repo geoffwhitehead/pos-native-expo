@@ -9,24 +9,10 @@ import {
   StarPrinter
 } from 'react-native-star-io10';
 
-export async function portDiscovery(): Promise<any> {
-  // try {
-  //   let printers = await StarPRNT.portDiscovery('All');
-  //   return printers;
-  // } catch (e) {
-  //   console.error(e);
-  //   toast({
-  //     message: `Failed to discover printers. ${e}`,
-  //   });
-  // }
-}
-
 type PrintProps = { printerBuilder: PrinterBuilder; printer: Printer; openDrawer?: boolean; onFinished?: (success: boolean) => void };
 
 
 export async function print({ printerBuilder, printer, openDrawer = false, onFinished }: PrintProps) {
-
-  console.log('printing ')
   try {
 
     var connectionSettings = new StarConnectionSettings();
