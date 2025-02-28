@@ -2,7 +2,7 @@ import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import decode from 'jwt-decode';
-import { Root } from 'native-base';
+import { extendTheme, NativeBaseProvider } from 'native-base';
 import React from 'react';
 import { api } from './api';
 import type { SignInParams, SignUpParams } from './api/auth';
@@ -39,7 +39,15 @@ type ReducerAction =
   | { type: 'SIGN_UP_FAILED' }
   | { type: 'SIGN_OUT' };
 
-export const App: React.FC<{}> = () => {
+// Initialize NativeBase theme
+const theme = extendTheme({
+  config: {
+    useSystemColorMode: false,
+    initialColorMode: 'light',
+  },
+});
+
+export default function App() {
   // if (env === 'local') {
   //   const whyDidYouRender = require('@welldone-software/why-did-you-render');
   //   whyDidYouRender(React, {
@@ -304,7 +312,7 @@ export const App: React.FC<{}> = () => {
   } as const;
 
   return (
-    <Root>
+    <NativeBaseProvider theme={theme}>
       <DatabaseProvider database={database}>
           <AuthContext.Provider 
             value={{
@@ -328,6 +336,6 @@ export const App: React.FC<{}> = () => {
             )}
           </AuthContext.Provider>
       </DatabaseProvider>
-    </Root>
+    </NativeBaseProvider>
   );
 };
