@@ -7,9 +7,8 @@ import { useEffect, useState } from 'react';
 import { FlatList, ScrollView } from 'react-native';
 // import { Printer as StarPrinterProps, Printers } from 'react-native-star-prnt';
 import { Modal } from '../../../../components/Modal/Modal';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import {
-  ActionSheet,
-  Body,
   Button,
   Container,
   Icon,
@@ -20,6 +19,7 @@ import {
   Spinner,
   Text,
   View,
+  useDisclose,
 } from '../../../../core';
 import type { Printer } from '../../../../models';
 import type { PrinterProps } from '../../../../models/Printer';
@@ -59,7 +59,8 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
   const [discoveredPrinters, setDiscoveredPrinters] = useState<StarPrinter[]>([]);
   const [manager, setManager] = useState<StarDeviceDiscoveryManager | undefined>(undefined);
 
-
+  const { isOpen, onOpen, onClose } = useDisclose();
+  const [printerToDelete, setPrinterToDelete] = useState<Printer | null>(null);
 
   useEffect( () => {
     const _startDiscovery = async () => {
@@ -155,21 +156,10 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
 
   const onDelete = async (printer: Printer) => {
     await printer.remove()
+    onClose()
   };
 
-  const areYouSure = (fn, p: Printer) => {
-    const options = ['Yes', 'Cancel'];
-    ActionSheet.show(
-      {
-        options,
-        title:
-          'This will permanently remove this printer and remove it from all printer groups you have defined. Are you sure?',
-      },
-      index => {
-        index === 0 && fn(p);
-      },
-    );
-  };
+
 
   async function discoverPrinters() {
       try {
@@ -212,7 +202,10 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
               isSelected={p === selectedPrinter}
               printer={p}
               onSelect={setSelectedPrinter}
-              onDelete={() => areYouSure(onDelete, p)}
+              onDelete={() => {
+                setPrinterToDelete(p);
+                onOpen();
+              }}
             />
           ))}
         </ScrollView>
@@ -270,6 +263,14 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
       <Modal isOpen={!!selectedPrinter} onClose={onCancelHandler} style={{ maxWidth: 800 }}>
         <ModalPrinterDetails printer={selectedPrinter} onSave={onSave} onClose={onCancelHandler} isLoading={isSaving} />
       </Modal>
+
+      {/* Delete Confirmation Actionsheet */}
+      <ConfirmationActionsheet
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={() => printerToDelete && onDelete(printerToDelete)}
+        message="This will permanently remove this printer and remove it from all printer groups you have defined. Are you sure?"
+      />
     </Container>
   );
 };

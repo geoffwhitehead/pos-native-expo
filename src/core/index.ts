@@ -1,5 +1,6 @@
 export {
-  ActionSheet,
+  Actionsheet,
+  useDisclose,
   Badge,
   Body,
   Button,

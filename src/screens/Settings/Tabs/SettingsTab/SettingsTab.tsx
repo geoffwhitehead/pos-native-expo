@@ -9,13 +9,13 @@ import * as Yup from 'yup';
 import { HeaderButtonBar } from '../../../../components/HeaderButtonBar/HeaderButtonBar';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { AuthContext } from '../../../../contexts/AuthContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Button, Container, Footer, Form, Icon, Input, Picker, Text, View } from '../../../../core';
+import { Button, Container, Footer, Form, Icon, Input, Picker, Text, View, useDisclose } from '../../../../core';
 import type { Bill, BillPeriod, PriceGroup, Printer } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
-import { areYouSure } from '../../../../utils/helpers';
 import { moderateScale } from '../../../../utils/scaling';
 import { commonStyles } from '../styles';
 import { tableNames } from '../../../../models/tableNames';
@@ -70,9 +70,19 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
 }) => {
   const { organization } = useContext(OrganizationContext);
   const { setReceiptPrinter } = useContext(ReceiptPrinterContext);
+  const { signOut, unlink } = useContext(AuthContext);
+  const { 
+    isOpen: isLogoutOpen, 
+    onOpen: onLogoutOpen, 
+    onClose: onLogoutClose 
+  } = useDisclose();
+  const { 
+    isOpen: isUnlinkOpen, 
+    onOpen: onUnlinkOpen, 
+    onClose: onUnlinkClose 
+  } = useDisclose();
   const [loading, setLoading] = useState(false);
   const database = useDatabase();
-  const { signOut, unlink } = useContext(AuthContext);
 
   if (!printers || !openBills) {
     return <Loading />;
@@ -109,6 +119,16 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
     );
 
     setLoading(false);
+  };
+
+  const onLogout = async () => {
+    await signOut();
+    onLogoutClose();
+  };
+
+  const onUnlink = async () => {
+    await unlink();
+    onUnlinkClose();
   };
 
   return (
@@ -264,14 +284,28 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
               </ScrollView>
               <Footer>
                 <View style={{ display: 'flex', flexDirection: 'row', padding: 5 }}>
-                  <Button style={{ marginRight: 10 }} onPress={() => areYouSure(signOut)}>
+                  <Button style={{ marginRight: 10 }} onPress={onLogoutOpen}>
                     <Text>Sign out</Text>
                   </Button>
-                  <Button danger bordered onPress={() => areYouSure(unlink)}>
+                  <Button danger bordered onPress={onUnlinkOpen}>
                     <Text>Delete local account</Text>
                   </Button>
                 </View>
               </Footer>
+
+              <ConfirmationActionsheet
+                isOpen={isLogoutOpen}
+                onClose={onLogoutClose}
+                onConfirm={onLogout}
+                message="Are you sure you want to logout?"
+              />
+
+              <ConfirmationActionsheet
+                isOpen={isUnlinkOpen}
+                onClose={onUnlinkClose}
+                onConfirm={onUnlink}
+                message="Are you sure you want to unlink this device? This will remove all local data."
+              />
             </Container>
           );
         }}

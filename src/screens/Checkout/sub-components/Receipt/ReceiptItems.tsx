@@ -6,13 +6,13 @@ import dayjs from 'dayjs';
 import { Formik } from 'formik';
 import { capitalize } from 'lodash';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import * as Yup from 'yup';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Modal } from '../../../../components/Modal/Modal';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { ActionSheet, Content, Form, Input, List } from '../../../../core';
+import { Actionsheet, Button, Content, Form, Icon, Input, List, ListItem, Left, Right, Text, useDisclose } from '../../../../core';
 import type { Bill, BillDiscount, BillItem, BillPayment, PaymentType } from '../../../../models';
 import type { BillSummary } from '../../../../utils';
 import { moderateScale } from '../../../../utils/scaling';
@@ -50,8 +50,12 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
 }) => {
   const refContentList = useRef<ScrollView>(null);
   const database = useDatabase();
-  const [selectedBillItem, setSelectedBillItem] = useState<BillItem>();
+  const [selectedBillItem, setSelectedBillItem] = useState<BillItem | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<BillPayment | BillDiscount | null>(null);
+  const [deleteItemHandler, setDeleteItemHandler] = useState<((item: BillPayment | BillDiscount) => void) | null>(null);
   const [action, setAction] = useState<ReceiptItemAction>();
+  const { isOpen: isBillItemActionOpen, onOpen: onBillItemActionOpen, onClose: onBillItemActionClose } = useDisclose();
+  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclose();
   const { organization } = useContext(OrganizationContext);
   const [printMessage, setPrintMessage] = useState('');
 
@@ -82,46 +86,14 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
   };
 
   const billItemDialog = (billItem: BillItem) => {
-    const options = ['Add Message', 'Make complimentary', 'Remove', 'Cancel'];
-    ActionSheet.show(
-      {
-        options,
-        destructiveButtonIndex: 2,
-        title: billItem.itemName,
-      },
-      index => {
-        if (index === 0) {
-          setSelectedBillItem(billItem);
-          setAction(ReceiptItemAction.message);
-        } else if (index === 1) {
-          setAction(ReceiptItemAction.comp);
-          setSelectedBillItem(billItem);
-        } else if (index === 2) {
-          const endOfGracePeriod = dayjs(billItem.createdAt).add(organization.gracePeriodMinutes, 'minute');
-          const hasGracePeriodExpired = dayjs().isAfter(endOfGracePeriod);
-          if (hasGracePeriodExpired) {
-            setAction(ReceiptItemAction.void);
-            setSelectedBillItem(billItem);
-          } else {
-            onRemoveBillItem(billItem);
-          }
-        }
-      },
-    );
+    setSelectedBillItem(billItem);
+    onBillItemActionOpen();
   };
 
   const areYouSureDialog = (item: BillPayment | BillDiscount, fn: (item: BillPayment | BillDiscount) => void) => {
-    const options = ['Remove', 'Cancel'];
-    ActionSheet.show(
-      {
-        options,
-        destructiveButtonIndex: 0,
-        title: 'Are you sure?',
-      },
-      index => {
-        index === 0 && fn(item);
-      },
-    );
+    setItemToDelete(item);
+    setDeleteItemHandler(() => fn);
+    onDeleteOpen();
   };
 
   const onCloseModalHandler = () => {
@@ -133,7 +105,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
   const isPrintMessageModalOpen = !!selectedBillItem && action === ReceiptItemAction.message;
 
   return (
-    <ScrollView ref={refContentList}>
+    <View style={styles.container}>
       <List style={styles.receiptItems}>
         <BillCalls bill={bill} />
         <ItemsBreakdown bill={bill} readonly={readonly} onSelect={billItemDialog} />
@@ -207,7 +179,43 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
           }}
         </Formik>
       </Modal>
-    </ScrollView>
+      {/* Bill Item Actions Actionsheet */}
+      <Actionsheet isOpen={isBillItemActionOpen} onClose={onBillItemActionClose}>
+        <Actionsheet.Content>
+          {selectedBillItem && (
+            <>
+              <Actionsheet.Item onPress={() => {
+                setAction(ReceiptItemAction.message);
+                onBillItemActionClose();
+              }}>Add Message</Actionsheet.Item>
+              <Actionsheet.Item onPress={() => {
+                setAction(ReceiptItemAction.comp);
+                onBillItemActionClose();
+              }}>Make complimentary</Actionsheet.Item>
+              <Actionsheet.Item onPress={() => {
+                const endOfGracePeriod = dayjs(selectedBillItem.createdAt).add(organization.gracePeriodMinutes, 'minute');
+                const hasGracePeriodExpired = dayjs().isAfter(endOfGracePeriod);
+                if (hasGracePeriodExpired) {
+                  setAction(ReceiptItemAction.void);
+                } else {
+                  onRemoveBillItem(selectedBillItem);
+                }
+                onBillItemActionClose();
+              }} _text={{ color: "red.500" }}>Remove</Actionsheet.Item>
+              <Actionsheet.Item onPress={onBillItemActionClose}>Cancel</Actionsheet.Item>
+            </>
+          )}
+        </Actionsheet.Content>
+      </Actionsheet>
+
+      {/* Delete Confirmation Actionsheet */}
+      <ConfirmationActionsheet
+        isOpen={isDeleteOpen}
+        onClose={onDeleteClose}
+        onConfirm={() => itemToDelete && deleteItemHandler && deleteItemHandler(itemToDelete)}
+        message="Remove this item?"
+      />
+    </View>
   );
 };
 
@@ -226,6 +234,9 @@ const enhance = component =>
 export const ReceiptItems = enhance(ReceiptItemsInner);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   receiptItems: {
     paddingBottom: moderateScale(60),
   },

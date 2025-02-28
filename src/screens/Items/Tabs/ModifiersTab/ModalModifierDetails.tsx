@@ -6,7 +6,8 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { ActionSheet, Form, Input } from '../../../../core';
+import { Form, Input, useDisclose } from '../../../../core';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import type { Modifier } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
 import { tableNames } from '../../../../models/tableNames';
@@ -19,12 +20,12 @@ type ModalModifierDetailsOuterProps = {
 type ModalModifierDetailsInnerProps = {
   itemsCount?: number;
 };
+
 const modifierSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short')
     .max(50, 'Too Long')
     .required('Required'),
-  // minItems: Yup.number().min(0, 'Must be a positive number'),
   minItems: Yup.number()
     .moreThan(-1)
     .required('This field is required.')
@@ -42,28 +43,14 @@ type FormValues = {
   maxItems: string;
 };
 
-const areYouSure = fn => {
-  const options = ['Remove', 'Cancel'];
-
-  ActionSheet.show(
-    {
-      options,
-      destructiveButtonIndex: 0,
-      title: 'Remove this modifier. Are you sure?',
-    },
-    index => {
-      index === 0 && fn();
-    },
-  );
-};
-
-export const ModalModifierDetailsInner: React.FC<ModalModifierDetailsOuterProps & ModalModifierDetailsInnerProps> = ({
+const ModalModifierDetailsInner: React.FC<ModalModifierDetailsOuterProps & ModalModifierDetailsInnerProps> = ({
   modifier,
   onClose,
   itemsCount,
 }) => {
   const [loading, setLoading] = useState(false);
   const database = useDatabase();
+  const { isOpen, onOpen, onClose: onCloseDelete } = useDisclose();
 
   const update = async (values: FormValues, modifier: Modifier) => {
     setLoading(true);
@@ -83,55 +70,66 @@ export const ModalModifierDetailsInner: React.FC<ModalModifierDetailsOuterProps 
     onClose();
   };
 
-  const initialValues = {
-    name: modifier?.name || '',
-    minItems: modifier?.minItems.toString() || '0',
-    maxItems: modifier?.maxItems.toString() || '1',
-  };
-
   const onDelete = async () => {
     await database.write(() => modifier.remove());
     onClose();
+    onCloseDelete();
+  };
+
+  const initialValues = {
+    name: modifier?.name || '',
+    minItems: modifier?.minItems.toString() || '0',
+    maxItems: modifier?.maxItems.toString() || '0',
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={modifierSchema}
-      onSubmit={values => update(values, modifier)}
-    >
-      {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => {
-        const { name, minItems, maxItems } = values;
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={modifierSchema}
+        onSubmit={values => update(values, modifier)}
+      >
+        {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => {
+          const { name, minItems, maxItems } = values;
 
-        const title = modifier ? `${capitalize(modifier.name)}` : 'New Modifier';
+          const title = modifier ? `${capitalize(modifier.name)}` : 'New Modifier';
 
-        return (
-          <ModalContentButton
-            primaryButtonText="Save"
-            onPressPrimaryButton={handleSubmit}
-            onPressSecondaryButton={onClose}
-            secondaryButtonText="Cancel"
-            title={title}
-            isPrimaryDisabled={loading}
-            isDeleteDisabled={itemsCount > 0}
-            onPressDelete={() => areYouSure(onDelete)}
-            size="small"
-          >
-            <Form style={commonStyles.form}>
-              <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
-                <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
-              </ItemField>
-              <ItemField label="Min Items" touched={touched.minItems} name="minItems" errors={errors.minItems}>
-                <Input onChangeText={handleChange('minItems')} onBlur={handleBlur('minItems')} value={minItems} />
-              </ItemField>
-              <ItemField label="Max Items" touched={touched.maxItems} name="maxItems" errors={errors.maxItems}>
-                <Input onChangeText={handleChange('maxItems')} onBlur={handleBlur('maxItems')} value={maxItems} />
-              </ItemField>
-            </Form>
-          </ModalContentButton>
-        );
-      }}
-    </Formik>
+          return (
+            <ModalContentButton
+              primaryButtonText="Save"
+              onPressPrimaryButton={handleSubmit}
+              onPressSecondaryButton={onClose}
+              secondaryButtonText="Cancel"
+              title={title}
+              isPrimaryDisabled={loading}
+              isDeleteDisabled={itemsCount > 0}
+              onPressDelete={onOpen}
+              size="small"
+            >
+              <Form style={commonStyles.form}>
+                <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
+                  <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
+                </ItemField>
+                <ItemField label="Min Items" touched={touched.minItems} name="minItems" errors={errors.minItems}>
+                  <Input onChangeText={handleChange('minItems')} onBlur={handleBlur('minItems')} value={minItems} keyboardType="numeric" />
+                </ItemField>
+                <ItemField label="Max Items" touched={touched.maxItems} name="maxItems" errors={errors.maxItems}>
+                  <Input onChangeText={handleChange('maxItems')} onBlur={handleBlur('maxItems')} value={maxItems} keyboardType="numeric" />
+                </ItemField>
+              </Form>
+            </ModalContentButton>
+          );
+        }}
+      </Formik>
+
+      <ConfirmationActionsheet
+        isOpen={isOpen}
+        onClose={onCloseDelete}
+        onConfirm={onDelete}
+        message="Remove this modifier. Are you sure?"
+        confirmText="Remove"
+      />
+    </>
   );
 };
 

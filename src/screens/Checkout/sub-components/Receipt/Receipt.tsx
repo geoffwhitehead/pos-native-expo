@@ -9,9 +9,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Loading } from '../../../../components/Loading/Loading';
 import { TimePicker } from '../../../../components/TimePicker/TimePicker';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { ActionSheet, Button, Col, Grid, Icon, Row, Spinner, Text, View } from '../../../../core';
+import { Actionsheet, useDisclose, Button, Col, Grid, Icon, Row, Spinner, Text, View } from '../../../../core';
 import type {
   Bill,
   BillCallLog,
@@ -27,7 +28,7 @@ import type {
 } from '../../../../models';
 import type { BillItem } from '../../../../models/BillItem';
 import { kitchenCall, kitchenReceipt } from '../../../../services/printer/kitchenReceipt';
-import { getNewBuilder, print } from '../../../../services/printer/printer';
+import { print } from '../../../../services/printer/printer';
 import { receiptBill } from '../../../../services/printer/receiptBill';
 import { buttons, fonts, spacing } from '../../../../theme';
 import type { MinimalBillSummary } from '../../../../utils';
@@ -250,12 +251,16 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
     setIsDatePickerVisible(false);
   };
 
+  // const { isOpen: isCallActionOpen, onOpen: onCallActionOpen, onClose: onCallActionClose } = useDisclose();
+  const { isOpen: isConfirmActionOpen, onOpen: onConfirmActionOpen, onClose: onConfirmActionClose } = useDisclose();
+
   if (!bill || !summary) {
     return <Loading />;
   }
 
   const createCallLog = async (message?: string) => {
     // TODO: pass message
+    onConfirmActionClose()
     await database.write(async () => {
       const billCallLog = database.collections.get<BillCallLog>(tableNames.billCallLogs).prepareCreate(record => {
         record.bill.set(bill);
@@ -285,18 +290,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
     });
   };
 
-  const callConfirmDialog = () => {
-    const options = ['Call', 'Cancel'];
-    ActionSheet.show(
-      {
-        options,
-        title: 'Are you sure?',
-      },
-      index => {
-        index === 0 && createCallLog();
-      },
-    );
-  };
+
+
 
   const { totalDiscount, total, totalPayable, balance } = summary;
 
@@ -321,7 +316,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
               <Button
                 full
                 {...resolveButtonState(isCallButtonDisabled, 'warning')}
-                onPress={callConfirmDialog}
+                onPress={onConfirmActionOpen}
                 style={styles.buttonLeft}
               >
                 <Icon name="notifications" size={24} color="white" />
@@ -413,6 +408,15 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
             value={bill.prepAt}
             title="Please select a preperation time"
             mode="time"
+          />
+
+          <ConfirmationActionsheet
+            isOpen={isConfirmActionOpen}
+            onClose={onConfirmActionClose}
+            onConfirm={createCallLog}
+            message="Confirm call?"
+            confirmText="Call"
+            cancelText="Cancel"
           />
         </Col>
       </Row>

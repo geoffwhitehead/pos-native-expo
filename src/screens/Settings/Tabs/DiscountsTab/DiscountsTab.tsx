@@ -3,9 +3,10 @@ import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { useContext, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { ActionSheet, Body, Button, Icon, Left, List, ListItem, Right, Spinner, Text, View } from '../../../../core';
+import { Button, Icon, Left, List, ListItem, Right, Spinner, Text, View, useDisclose } from '../../../../core';
 import type { Discount } from '../../../../models';
 import { formatNumber } from '../../../../utils';
 import { resolveButtonState } from '../../../../utils/helpers';
@@ -25,9 +26,12 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
   const { organization } = useContext(OrganizationContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDiscount, setSelectedDiscount] = useState<Discount>();
+  const { isOpen, onOpen, onClose } = useDisclose();
+  const [discountToDelete, setDiscountToDelete] = useState<Discount | null>(null);
 
   const onDelete = async (discount: Discount) => {
     await database.write(() => discount.markAsDeleted());
+    onClose();
   };
 
   const onCancelHandler = () => {
@@ -35,18 +39,7 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
     setIsModalOpen(false);
   };
 
-  const areYouSure = (fn, discount: Discount) => {
-    const options = ['Yes', 'Cancel'];
-    ActionSheet.show(
-      {
-        options,
-        title: 'Are you sure?',
-      },
-      index => {
-        index === 0 && fn(discount);
-      },
-    );
-  };
+
 
   if (!discounts) {
     return <Spinner />;
@@ -75,13 +68,17 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
         </ListItem>
         <ScrollView>
           {discounts.map(discount => {
-            const isSelected = selectedDiscount === discount;
             const amountString = discount.isPercent
               ? `${discount.amount}%`
               : formatNumber(discount.amount, organization.currency);
 
             return (
-              <ListItem key={discount.id} noIndent style={isSelected ? commonStyles.selectedRow : {}}>
+              <ListItem 
+                key={discount.id} 
+                noIndent
+                style={selectedDiscount === discount ? commonStyles.selectedRow : {}}
+                onPress={() => setSelectedDiscount(discount)}
+              >
                 <Left style={styles.rowText}>
                   <Text style={styles.text}>{discount.name}</Text>
                   <Text style={styles.text} note>
@@ -96,7 +93,10 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
                   danger
                   small
                   disabled={discounts.length === 1}
-                  onPress={() => areYouSure(onDelete, discount)}
+                  onPress={() => {
+                    setDiscountToDelete(discount);
+                    onOpen();
+                  }}
                 >
                   <Text>Delete</Text>
                 </Button>
@@ -109,6 +109,13 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
       <Modal isOpen={isModalOpen} onClose={onCancelHandler} style={{ maxWidth: 600 }}>
         <ModalDiscountDetails discount={selectedDiscount} onClose={onCancelHandler} />
       </Modal>
+
+      <ConfirmationActionsheet
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={() => discountToDelete && onDelete(discountToDelete)}
+        message="Are you sure?"
+      />
     </View>
   );
 };

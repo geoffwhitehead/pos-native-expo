@@ -7,7 +7,8 @@ import { ScrollView } from 'react-native';
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { ActionSheet, Button, Container, Icon, Left, List, ListItem, Right, Text } from '../../../../core';
+import { Button, Container, Icon, Left, List, ListItem, Right, Text, useDisclose } from '../../../../core';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import type { Category, Item, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
 import { PriceGroupDetails } from './PriceGroupDetails';
@@ -34,6 +35,8 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPricesModalOpen, setIsPricesModalOpen] = useState(false);
   const { organization } = useContext(OrganizationContext);
+  const { isOpen, onOpen, onClose } = useDisclose();
+  const [priceGroupToDelete, setPriceGroupToDelete] = useState<PriceGroup | null>(null);
 
   const onCancelHandler = () => {
     setSelectedPriceGroup(null);
@@ -45,25 +48,9 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
     setIsPricesModalOpen(false);
   };
 
-  const sortedItems = useMemo(() => {
-    return sortBy(items, item => item.name.toLowerCase());
-  }, [items]);
-
   const onDelete = async (priceGroup: PriceGroup) => {
     await priceGroup.remove(organization);
-  };
-
-  const areYouSure = (fn, priceGroup: PriceGroup) => {
-    const options = ['Remove', 'Cancel'];
-    ActionSheet.show(
-      {
-        options,
-        title: 'Permanently remove this price group and remove its prices for all items?',
-      },
-      index => {
-        index === 0 && fn(priceGroup);
-      },
-    );
+    onClose();
   };
 
   const onSelect = priceGroup => {
@@ -75,6 +62,10 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
     setSelectedPriceGroup(priceGroup);
     setIsPricesModalOpen(true);
   };
+
+  const sortedItems = useMemo(() => {
+    return sortBy(items, item => item.name.toLowerCase());
+  }, [items]);
 
   if (!priceGroups) {
     return <Loading />;
@@ -118,7 +109,10 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
                   danger
                   small
                   disabled={priceGroups.length === 1}
-                  onPress={() => areYouSure(onDelete, priceGroup)}
+                  onPress={() => {
+                    setPriceGroupToDelete(priceGroup);
+                    onOpen();
+                  }}
                 >
                   <Text>Delete</Text>
                 </Button>
@@ -145,6 +139,13 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
           />
         )}
       </Modal>
+
+      <ConfirmationActionsheet
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={() => priceGroupToDelete && onDelete(priceGroupToDelete)}
+        message="Permanently remove this price group and remove its prices for all items?"
+      />
     </Container>
   );
 };

@@ -1,11 +1,13 @@
 import type { Database } from '@nozbe/watermelondb';
 import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView } from 'react-native';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
-import { ActionSheet, Button, Container, Icon, Left, List, ListItem, Right, Text } from '../../../../core';
+import { OrganizationContext } from '../../../../contexts/OrganizationContext';
+import { Actionsheet, Button, Container, Icon, Left, List, ListItem, Right, Text, View, useDisclose } from '../../../../core';
 import type { PrinterGroup } from '../../../../models';
 import { ModalPrinterGroupDetails } from './ModalPrinterGroupDetails';
 import { PrinterGroupRow } from './PrinterGroupRow';
@@ -22,36 +24,21 @@ interface PrinterGroupsTabInnerProps {
 const PrinterGroupsTabInner: React.FC<PrinterGroupsTabOuterProps & PrinterGroupsTabInnerProps> = ({
   printerGroups,
 }) => {
-  const [selectedPrinterGroup, setSelectedPrinterGroup] = useState<PrinterGroup>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPrinterGroup, setSelectedPrinterGroup] = useState<PrinterGroup>();
+  const { isOpen, onOpen, onClose } = useDisclose();
+  const [printerGroupToDelete, setPrinterGroupToDelete] = useState<PrinterGroup | null>(null);
+
+  const onDelete = async (printerGroup: PrinterGroup) => {
+    await printerGroup.remove();
+    onClose();
+  };
 
   const onCancelHandler = () => {
     setSelectedPrinterGroup(null);
     setIsModalOpen(false);
   };
 
-  const onSelect = (printerGroup: PrinterGroup) => {
-    setSelectedPrinterGroup(printerGroup);
-    setIsModalOpen(true);
-  };
-
-  const onDelete = async (printerGroup: PrinterGroup) => {
-    await printerGroup.remove();
-  };
-
-  const areYouSure = (fn, printerGroup: PrinterGroup) => {
-    const options = ['Yes', 'Cancel'];
-    ActionSheet.show(
-      {
-        options,
-        title:
-          'This will permanently remove this printer group and remove this group from any items its assigned to. Are you sure?',
-      },
-      index => {
-        index === 0 && fn(printerGroup);
-      },
-    );
-  };
 
   if (!printerGroups) {
     return <Loading />;
@@ -76,15 +63,29 @@ const PrinterGroupsTabInner: React.FC<PrinterGroupsTabOuterProps & PrinterGroups
               key={printerGroup.id}
               isSelected={printerGroup === selectedPrinterGroup}
               printerGroup={printerGroup}
-              onSelect={onSelect}
-              onDelete={() => areYouSure(onDelete, printerGroup)}
+              onSelect={() => {
+                setSelectedPrinterGroup(printerGroup);
+                setIsModalOpen(true);
+              }}
+              onDelete={() => {
+                setPrinterGroupToDelete(printerGroup);
+                onOpen();
+              }}
             />
           ))}
         </ScrollView>
       </List>
+
       <Modal isOpen={isModalOpen} onClose={onCancelHandler} style={{ maxWidth: 800 }}>
         <ModalPrinterGroupDetails printerGroup={selectedPrinterGroup} onClose={onCancelHandler} />
       </Modal>
+
+      <ConfirmationActionsheet
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={() => printerGroupToDelete && onDelete(printerGroupToDelete)}
+        message="This will permanently remove this printer group and remove this group from any items its assigned to. Are you sure?"
+      />
     </Container>
   );
 };

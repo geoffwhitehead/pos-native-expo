@@ -9,13 +9,14 @@ import { KeyboardAvoidingView, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import envKey from '../../../../build.env';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { Button, Container, Form, Input, Item, Label, Spinner, Text } from '../../../core';
+import { Button, Container, Form, Input, Item, Label, Spinner, Text, useDisclose } from '../../../core';
 import type { Organization } from '../../../models';
 import type { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
-import { areYouSure, resolveButtonState } from '../../../utils/helpers';
+import { resolveButtonState } from '../../../utils/helpers';
 import { moderateScale } from '../../../utils/scaling';
 import { tableNames } from '../../../models/tableNames';
+import { ConfirmationActionsheet } from '../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 
 interface SignInOuterProps {
   navigation: StackNavigationProp<AuthStackParamList, 'SignIn'>;
@@ -37,6 +38,7 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
   const [email, setEmail] = useState(initialValues.email);
   const [password, setPassword] = useState(initialValues.password);
   const animation = useRef();
+  const { isOpen, onOpen, onClose } = useDisclose();
 
   useEffect(() => {
     const org = organizations?.[0];
@@ -51,8 +53,9 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
 
   const { signIn, unlink, isSignInLoading } = useContext(AuthContext);
 
-  const handleUnlink = () => {
-    unlink();
+  const handleUnlink = async () => {
+    await unlink();
+    onClose();
     navigation.navigate('SignIn');
   };
 
@@ -107,7 +110,7 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
                 full
                 style={{ ...styles.button, backgroundColor: 'white' }}
                 light
-                onPress={() => areYouSure(handleUnlink)}
+                onPress={onOpen}
               >
                 <Text>Unlink</Text>
               </Button>
@@ -120,6 +123,13 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
           </Form>
         </KeyboardAvoidingView>
       </ScrollView>
+
+      <ConfirmationActionsheet
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={handleUnlink}
+        message="Are you sure you want to unlink this device? This will remove all local data."
+      />
     </Container>
   );
 };

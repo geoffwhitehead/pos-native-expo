@@ -9,7 +9,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
 import {
-  ActionSheet,
   Button,
   Col,
   Container,
@@ -32,6 +31,8 @@ import { resolveButtonState } from '../../../../utils/helpers';
 import { ReportReceipt } from './ReportReceipt/ReportReceipt';
 import { tableNames } from '../../../../models/tableNames';
 import { StarXpandCommand } from 'react-native-star-io10';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
+import { useDisclose } from '../../../../core';
 
 interface ReportsTabInnerProps {
   billPeriods: BillPeriod[];
@@ -52,6 +53,8 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
   const { receiptPrinter } = useContext(ReceiptPrinterContext);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedBillPeriod, setSelectedBillPeriod] = useState<BillPeriod>(billPeriods[0]);
+  const { isOpen, onOpen, onClose } = useDisclose();
+  const [billPeriodToClose, setBillPeriodToClose] = useState<BillPeriod | null>(null);
 
   navigation.addListener('focus', () => setSelectedBillPeriod(null));
 
@@ -70,6 +73,7 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
     await billPeriod.closePeriod(organization);
     await onPrintPeriodReport(billPeriod);
     setIsLoading(false);
+    onClose();
   };
 
   const onPrintCorrectionReport = async (billPeriod: BillPeriod) => {
@@ -89,16 +93,8 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
         duration: 5000,
       });
     } else {
-      const options = ['Close bill period', 'Cancel'];
-      ActionSheet.show(
-        {
-          options,
-          title: 'Close current billing period and print report?',
-        },
-        async index => {
-          index === 0 && (await closePeriod(billPeriod, organization));
-        },
-      );
+      setBillPeriodToClose(billPeriod);
+    onOpen();
     }
   };
 
@@ -187,6 +183,14 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
           />
         )}
       </Grid>
+
+      <ConfirmationActionsheet
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={() => billPeriodToClose && closePeriod(billPeriodToClose, organization)}
+        message="Close current billing period and print report?"
+        confirmText="Close bill period"
+      />
     </Container>
   );
 };

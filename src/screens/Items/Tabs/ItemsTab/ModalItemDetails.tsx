@@ -11,7 +11,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { ActionSheet, Col, Form, Grid, H3, Icon, Input, List, ListItem, Picker, Row, Text } from '../../../../core';
+import { useDisclose, Col, Form, Grid, H3, Icon, Input, List, ListItem, Picker, Row, Text } from '../../../../core';
 import type {
   Category,
   Item as ItemModel,
@@ -24,6 +24,8 @@ import type {
 import { styles as commonStyles } from '../../../../styles';
 import { ModifierRow } from './ModifierRow';
 import { tableNames } from '../../../../models/tableNames';
+import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
+
 interface ItemDetailsOuterProps {
   item?: ItemModel;
   onClose: () => void;
@@ -84,6 +86,8 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
   const [loading, setLoading] = useState(false);
   const { organization } = useContext(OrganizationContext);
 
+  const { isOpen, onOpen, onClose: onCloseDelete } = useDisclose();
+
   const itemSchema = generateItemSchema(organization.shortNameLength);
   const keyedItemPricesByPriceGroup = keyBy(itemPrices, itemPrice => itemPrice.priceGroupId);
 
@@ -101,21 +105,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
     }
   };
 
-  const areYouSure = (fn, item: ItemModel) => {
-    const options = ['Remove', 'Cancel'];
-
-    ActionSheet.show(
-      {
-        options,
-        destructiveButtonIndex: 0,
-        title: 'Remove this item. Are you sure?',
-      },
-      index => {
-        index === 0 && fn(item);
-      },
-    );
-  };
-
+  
   const updateItem = async ({ prices, ...values }: FormValues) => {
     setLoading(true);
 
@@ -169,9 +159,10 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
     onClose();
   };
 
-  const handleDelete = async (item: ItemModel) => {
-    await item.remove();
+  const onDelete = async () => {
+    await item?.remove();
     onClose();
+    onCloseDelete();
   };
 
   const initialValues = {
@@ -213,8 +204,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
             isPrimaryDisabled={loading}
             onPressSecondaryButton={onClose}
             secondaryButtonText="Cancel"
-            onPressDelete={() => areYouSure(handleDelete, item)}
-            // size="medium"
+            onPressDelete={onOpen}
           >
             <Grid>
               <Row>
@@ -363,6 +353,14 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                 </Col>
               </Row>
             </Grid>
+            {/* Delete Confirmation Actionsheet */}
+            <ConfirmationActionsheet
+              isOpen={isOpen}
+              onClose={onCloseDelete}
+              onConfirm={onDelete}
+              message="Remove this item. Are you sure?"
+              confirmText="Remove"
+            />
           </ModalContentButton>
         );
       }}
