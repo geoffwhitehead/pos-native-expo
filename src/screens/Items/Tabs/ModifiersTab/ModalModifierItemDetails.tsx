@@ -80,7 +80,7 @@ export const ModalModifierItemDetailsInner: React.FC<ModalModifierItemDetailsOut
         };
       });
 
-      await modifierItem.updateItem({
+      await modifierItem.updateItemAndPrices({
         name,
         shortName,
         prices: reMappedPrices,

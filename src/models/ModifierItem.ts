@@ -28,9 +28,9 @@ export class ModifierItem extends Model {
 
   @children('modifier_item_prices') prices!: Query<ModifierItemPrice>;
 
-  @writer async updateItem(values: UpdateItemAndPricesValues) {
-    await this.update(record => Object.assign(record, values));
-  };
+  // @writer async updateItem(values: UpdateItemAndPricesValues) {
+  //   await this.update(record => Object.assign(record, values));
+  // };
 
   @writer async updateItemAndPrices(values: UpdateItemAndPricesValues) {
     const { name, prices, shortName } = values;
