@@ -52,7 +52,6 @@ export const EditDisplayModal: React.FC<EditDisplayModalProps> = ({
 }) => {
   const { recentColors, setRecentColors } = useContext(RecentColorsContext);
   const [loading, setLoading] = useState(false);
-  console.log('selectedCategory', selectedCategory);
 
   const onSubmit = async (values: FormValues) => {
     setLoading(true);

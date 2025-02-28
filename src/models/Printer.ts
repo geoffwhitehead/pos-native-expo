@@ -49,7 +49,6 @@ export class Printer extends Model {
     await this.database.batch(...toDelete);
   };
   @writer async _update(values: PrinterProps) {
-    console.log('values', values)
     await this.update(printer => {
       printer.name = values.name;
       printer.address = values.address;

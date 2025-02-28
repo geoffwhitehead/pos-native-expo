@@ -43,7 +43,6 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
   const { groupedItemPrices } = useContext(ItemPricesContext);
   const { categoryItems } = useContext(ItemsContext);
 
-  console.log('categoryItems', categoryItems)
   const [selectableItems, setSelectableItems] = useState<Dictionary<Item[]>>({});
   const [searchValue, setSearchValue] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -71,7 +70,6 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
       setSelectedItem(item);
       setModalOpen(true);
     } else {
-      console.log('ADDING ITEMS', { item: item.name, priceGroup: priceGroup.name, quantity: 1, selectedModifiers: [] })
       await currentBill.addItems({ item, priceGroup, quantity: 1, selectedModifiers: [] });
     }
   };
@@ -84,7 +82,6 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
        * do a lookup to see if this item has a price set. Rather than querying watermelon directly.
        */
       const filteredItems = items.filter(item => !!groupedItemPrices?.[priceGroup.id]?.[item.id]);
-      console.log('filteredItems', filteredItems)
       const isEmptyGroup = filteredItems.length === 0;
 
       if (isEmptyGroup) {
@@ -118,8 +115,6 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
 
   const isListType = itemListViewType === ItemListViewType.list || itemListViewType === ItemListViewType.listWithHeader;
 
-  console.log('itemsToDisplay', itemsToDisplay)
-  console.log('itemListViewType', itemListViewType)
   return (
     <>
       <ListItem itemHeader first>

@@ -74,11 +74,9 @@ type ReportProps = {
 };
 const itemsReport = async ({ builder, bills, corrections, printer, currency }: ReportProps) => {
 
-  console.log('c', corrections)
   // filter any bills that dont contain any voids
   const filteredBills = bills.filter(({ id }) => corrections.some(({ billId }) => billId === id));
 
-  console.log('f', filteredBills)
   const sortedBillsCreatedAsc = filteredBills.sort((bill1: Bill, bill2: Bill) => dayjs(bill2.createdAt).isBefore(bill1.createdAt) ? -1 : 1);
 
   const groupedVoidsByBillId = groupBy(corrections, item => item.billId);

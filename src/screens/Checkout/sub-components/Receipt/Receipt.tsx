@@ -236,15 +236,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
       organization,
     );
 
-    try {
-
-      await print({ printerBuilder, printer: receiptPrinter });
-    } catch (e){
-      console.log('Error printing', e)
-      setIsPrinting(false);
-    }
+    await print({ printerBuilder, printer: receiptPrinter });
     setIsPrinting(false);
-
   };
 
   const handleSetPrepTime = async (date: Date) => {

@@ -214,7 +214,6 @@ const enhance = c =>
     withObservables<ModalCategoryDetailsOuterProps, ModalCategoryDetailsInnerProps>(
       ['category'],
       ({ category, database }) => {
-        console.log('category ', category);
         if (category) {
           return {
             category,

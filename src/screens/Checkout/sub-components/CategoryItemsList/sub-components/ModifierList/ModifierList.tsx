@@ -38,15 +38,10 @@ export const ModifierListInner: React.FC<ModifierListOuterProps & ModifierListIn
   );
   const [selectedModifiers, setSelectedModifiers] = useState<KeyedModifierSelections>(keyedEmptyModifierSelections);
 
-  console.log('selectedModifiers', selectedModifiers);
   const isSelectionValid = Object.keys(selectedModifiers).every(key => {
     const { modifier, items } = selectedModifiers[key];
     const hasTooFewSelectedItems = items.length < modifier.minItems;
     const hasTooManySelectedItems = items.length > modifier.maxItems;
-    console.log('---------');
-
-    console.log('modifier', modifier);
-    console.log('items', items);
 
     const isValid = !hasTooFewSelectedItems && !hasTooManySelectedItems;
     return isValid;

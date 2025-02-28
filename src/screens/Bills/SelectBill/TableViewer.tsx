@@ -71,7 +71,6 @@ const elementMap: Record<TablePlanElementTypes, React.FC> = {
   'furniture:sofacorner': FurnSofaCorner,
 };
 
-console.log('elemenntMap', elementMap);
 
 const GRID_SPACING = 4;
 

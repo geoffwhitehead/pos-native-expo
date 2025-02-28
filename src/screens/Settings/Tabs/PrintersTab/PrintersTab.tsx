@@ -69,20 +69,16 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
 
             manager.onPrinterFound = async (printer: StarPrinter) => {
               setDiscoveredPrinters((printers) => [...printers, printer]);        
-                console.log(`Found printer: ${printer.connectionSettings.interfaceType} ${printer.connectionSettings.identifier}.`);
             };
     
             manager.onDiscoveryFinished = () => {
-                console.log(`Discovery finished.`);
                 setIsLoading(false);
 
             };
 
             try {
-              console.log(`Discovery start.`);
               setIsLoading(true);
                 await manager.startDiscovery();
-              console.log(`Discovery end.`);
 
             }
             catch(error) {
@@ -193,7 +189,6 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
               interfaceTypes.push(InterfaceType.Usb);
           }
 
-          console.log(`create manager with ${interfaceTypes}`);
           setManager(await StarDeviceDiscoveryManagerFactory.create(interfaceTypes));
 
       }
@@ -241,7 +236,6 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
             {discoveredPrinters.map(discoveredPrinter => {
               const isInstalled = printers.find(printer => printer.macAddress?.replace(/:/g, '').toUpperCase() === discoveredPrinter._information?._detail._lan._macAddress);
 
-              console.log('discoveredPrinter', discoveredPrinter);
               return (
                 <ListItem key={discoveredPrinter.connectionSettings.identifier}>
                   <Left>
