@@ -19,7 +19,8 @@
       "bundleIdentifier": "com.pos.app.expo",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "deploymentTarget": "15"
     },
     "android": {
       "adaptiveIcon": {
