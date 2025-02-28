@@ -65,7 +65,7 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
   };
 
   const handleDeleteSelectedTableElement = async () => {
-    await database.write(async () => {await selectedElement?.tablePlanElement?.markAsDeleted()});
+    await selectedElement?.tablePlanElement?.deleteElement();
     setSelectedElement(null);
   };
 
@@ -93,7 +93,7 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
   const shouldRenderPlanView = organization.billViewType === BillViewTypeEnum.plan;
 
   const onChangeViewType = async (value: BillViewTypeEnum) => {
-    await database.write(async () => { await organization.update(record => (record.billViewType = value))});
+    await organization.updateOrganization({ billViewType: value });
   };
 
   return (

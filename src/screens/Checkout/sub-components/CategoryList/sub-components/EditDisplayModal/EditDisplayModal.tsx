@@ -55,21 +55,16 @@ export const EditDisplayModal: React.FC<EditDisplayModalProps> = ({
 
   const onSubmit = async (values: FormValues) => {
     setLoading(true);
+
     const newCategory = categories.find(c => c.id === values.categoryId);
     if (newCategory) {
-      await database.write(async () => {
-        if (selectedCategory) {
-          await selectedCategory.update(record => {
-            Object.assign(record, { positionIndex: newCategory.positionIndex });
-          });
-        }
-        await newCategory.update(record => {
-          Object.assign(record, {
-            positionIndex: selectedPositionIndex,
-            backgroundColor: values.backgroundColor,
-            textColor: values.textColor,
-          });
-        });
+      if (selectedCategory) {
+        await selectedCategory.updateCategory({ positionIndex: newCategory.positionIndex });
+      }
+      await newCategory.updateCategory({
+        positionIndex: selectedPositionIndex,
+        backgroundColor: values.backgroundColor,
+        textColor: values.textColor,
       });
     }
 

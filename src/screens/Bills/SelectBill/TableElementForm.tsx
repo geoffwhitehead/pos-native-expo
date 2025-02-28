@@ -77,16 +77,12 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
       posY: y,
       rotation: parseInt(values.rotation),
     };
-
-    const tablePlanElementCollection = database.collections.get<TablePlanElement>(tableNames.tablePlanElements);
-
-    await database.write(() => {
-      if (tablePlanElement) {
-        return tablePlanElement.update(record => Object.assign(record, parsedValues));
-      } else {
-        return tablePlanElementCollection.create(record => Object.assign(record, parsedValues));
-      }
-    });
+    
+    if (tablePlanElement) {
+      await tablePlanElement.updateElement(parsedValues);
+    } else {
+      await database.write(() => database.collections.get<TablePlanElement>(tableNames.tablePlanElements).create(record => Object.assign(record, parsedValues)));
+    }
   };
 
   return (

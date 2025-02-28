@@ -77,7 +77,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
   };
 
   const addPrintMessage = async values => {
-    await database.write(() => selectedBillItem.update(record => Object.assign(record, values)));
+    await selectedBillItem?.updateBillItem(values);
     onCloseModalHandler();
   };
 

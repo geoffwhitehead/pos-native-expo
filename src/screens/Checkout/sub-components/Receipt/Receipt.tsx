@@ -241,11 +241,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
   };
 
   const handleSetPrepTime = async (date: Date) => {
-    await database.write(() =>
-      bill.update(record => {
-        record.prepAt = date;
-      }),
-    );
+    await bill.updateBill({ prepAt: date });
     setIsDatePickerVisible(false);
     handleOnStore();
   };

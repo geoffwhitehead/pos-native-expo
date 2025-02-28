@@ -53,7 +53,7 @@ const resolvePrice = (priceGroup: PriceGroup, prices: ItemPrice[] | ModifierItem
   prices.find(p => p.priceGroupId === priceGroup.id)?.price;
 
 export class Bill extends Model {
-  static table = 'bills';
+  static table = tableNames.bills;
 
   @field('reference') reference!: number;
   @field('is_closed') isClosed!: boolean;
@@ -64,7 +64,7 @@ export class Bill extends Model {
   @readonly @date('created_at') createdAt!: Date;
   @readonly @date('updated_at') updatedAt!: Date;
 
-  @immutableRelation('bill_periods', 'bill_period_id') billPeriod!: Relation<BillPeriod>;
+  @immutableRelation(tableNames.billPeriods, 'bill_period_id') billPeriod!: Relation<BillPeriod>;
 
   static associations = {
     bill_periods: { type: ASSOCIATION_TYPES.BELONGS_TO, key: 'bill_period_id' },
@@ -74,7 +74,7 @@ export class Bill extends Model {
     bill_call_logs: { type: ASSOCIATION_TYPES.HAS_MANY, foreignKey: 'bill_id' },
   };
 
-  @children('bill_payments') billPayments!: Query<BillPayment>;
+  @children(tableNames.billPayments) billPayments!: Query<BillPayment>;
   @children('bill_discounts') billDiscounts!: Query<BillDiscount>;
   @children('bill_items') billItems!: Query<BillItem>;
   @children('bill_call_logs') billCallLogs!: Query<BillCallLog>;
@@ -202,6 +202,13 @@ export class Bill extends Model {
         amount,
         isChange: isChange || false,
       });
+    });
+  }
+
+  @writer
+  async updateBill(values: Partial<Bill>) {
+    await this.update(record => {
+      Object.assign(record, values);
     });
   }
 

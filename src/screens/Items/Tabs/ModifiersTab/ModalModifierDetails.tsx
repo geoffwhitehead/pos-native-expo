@@ -70,16 +70,13 @@ export const ModalModifierDetailsInner: React.FC<ModalModifierDetailsOuterProps 
     const { name, minItems, maxItems } = values;
 
     if (modifier) {
-      await database.write(() =>
-        modifier.updateItem({
-          name,
-          minItems: parseInt(minItems),
-          maxItems: parseInt(maxItems),
-        }),
-      );
+      await modifier.updateItem({
+        name,
+        minItems: parseInt(minItems),
+        maxItems: parseInt(maxItems),
+      });
     } else {
-      const modifierCollection = database.collections.get<Modifier>(tableNames.modifiers);
-      await database.write(() => modifierCollection.create(record => Object.assign(record, values)));
+      await database.write(() => database.collections.get<Modifier>(tableNames.modifiers).create(record => Object.assign(record, values)));
     }
 
     setLoading(false);

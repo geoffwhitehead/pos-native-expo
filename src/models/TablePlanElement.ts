@@ -1,5 +1,6 @@
-import { Model, tableSchema } from '@nozbe/watermelondb';
-import { field } from '@nozbe/watermelondb/decorators';
+import { Database, Model, tableSchema } from '@nozbe/watermelondb';
+import { field, writer } from '@nozbe/watermelondb/decorators';
+import { tableNames } from './tableNames';
 
 export type TablePlanElementProps = {
   billReference?: number;
@@ -68,17 +69,28 @@ export enum TablePlanElementRotations {
 }
 
 export class TablePlanElement extends Model {
-  static table = 'table_plan_element';
+  static table = tableNames.tablePlanElements;
 
   @field('bill_reference') billReference?: number;
   @field('type') type!: string;
   @field('pos_x') posX!: number;
   @field('pos_y') posY!: number;
   @field('rotation') rotation!: number;
+
+  @writer
+  async deleteElement() {
+    this.markAsDeleted();
+  }
+
+  @writer async updateElement(values: Partial<TablePlanElement>) {
+    await this.update(tablePlanElement => {
+      Object.assign(tablePlanElement, values);
+    });
+  }
 }
 
 export const tablePlanElementSchema = tableSchema({
-  name: 'table_plan_element',
+  name: tableNames.tablePlanElements,
   columns: [
     { name: 'bill_reference', type: 'number', isOptional: true },
     { name: 'type', type: 'string' },

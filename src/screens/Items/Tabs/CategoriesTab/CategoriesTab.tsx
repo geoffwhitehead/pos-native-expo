@@ -50,13 +50,7 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
 
   const onPressCreate = () => setModalOpen(true);
 
-  const handleUpdateGridSize = async (size: number) => {
-    await database.write(() =>
-      organization.update(record => {
-        record.categoryGridSize = size;
-      }),
-    );
-  };
+  const handleUpdateGridSize = async (size: number) => organization.updateOrganization({ categoryGridSize: size });
 
   const keyedPrintCategories = useMemo(() => keyBy(printCategories, ({ id }) => id), [printCategories]);
   const minGridSize = categories.length ? Math.ceil(Math.sqrt(categories.length)) : 3;

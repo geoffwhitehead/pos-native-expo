@@ -86,6 +86,12 @@ export class BillItem extends Model {
     });
   }
 
+  @writer async updateBillItem(values: Partial<BillItem>) {
+    await this.update(billItem => {
+      Object.assign(billItem, values);
+    });
+  }
+
   static associations = {
     bills: { type: ASSOCIATION_TYPES.BELONGS_TO, key: 'bill_id' },
     items: { type: ASSOCIATION_TYPES.BELONGS_TO, key: 'item_id' },

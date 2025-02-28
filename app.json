@@ -16,14 +16,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pos.client"
+      "bundleIdentifier": "com.pos.app.expo",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.pos.client"
+      "package": "com.pos.app.expo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,13 +35,21 @@
       [
         "@morrowdigital/watermelondb-expo-plugin",
         {
-          "platforms": ["ios", "android"]
+          "platforms": [
+            "ios",
+            "android"
+          ]
         }
       ],
       "expo-asset",
       "expo-build-properties",
       "expo-font",
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ad189d29-99ed-4059-8b6a-e6c48d70c993"
+      }
+    }
   }
 }

@@ -121,6 +121,12 @@ export class Organization extends Model {
     });
     return billPeriod;
   }
+
+  @writer async updateOrganization(values: Partial<Organization>) {
+    await this.update(organization => {
+      Object.assign(organization, values);
+    });
+  }
 }
 
 export const organizationSchema = tableSchema({
