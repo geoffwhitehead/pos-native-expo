@@ -1,9 +1,10 @@
-import { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
+import type { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
 import type { Printer } from '../../models';
 import { toast } from '../../utils/toast';
 
+import type {
+  InterfaceType} from 'react-native-star-io10';
 import {
-  InterfaceType,
   StarConnectionSettings,
   StarXpandCommand,
   StarPrinter

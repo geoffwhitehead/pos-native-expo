@@ -28,7 +28,7 @@ import BlockWall from '../../../assets/wall.svg';
 import BlockWindow from '../../../assets/window.svg';
 import { Button, Col, Grid, Row, Text } from '../../../core';
 import type { Bill, TablePlanElement } from '../../../models';
-import { TablePlanElementTypes } from '../../../models/TablePlanElement';
+import type { TablePlanElementTypes } from '../../../models/TablePlanElement';
 import { fontSizes } from '../../../theme';
 
 type TableViewerProps = {

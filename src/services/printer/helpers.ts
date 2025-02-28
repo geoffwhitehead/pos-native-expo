@@ -1,6 +1,6 @@
-import { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
+import type { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
 import { StarXpandCommand } from 'react-native-star-io10';
-import { Organization } from '../../models';
+import type { Organization } from '../../models';
 
 export const alignLeftRight = (left: string, right: string = '', receiptWidth: number, rightWidth = 12) => {
   const leftWidth = Math.max(receiptWidth - rightWidth, 0);

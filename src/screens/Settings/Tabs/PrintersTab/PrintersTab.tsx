@@ -22,17 +22,17 @@ import {
   View,
 } from '../../../../core';
 import type { Printer } from '../../../../models';
-import { PrinterProps } from '../../../../models/Printer';
-import { portDiscovery } from '../../../../services/printer/printer';
+import type { PrinterProps } from '../../../../models/Printer';
 import { ModalPrinterDetails } from './ModalPrinterDetails';
 import { PrinterRow } from './PrinterRow';
 import { tableNames } from '../../../../models/tableNames';
+import type {
+  StarPrinter,
+  StarDeviceDiscoveryManager} from 'react-native-star-io10';
 import {
   InterfaceType,
   StarConnectionSettings,
   StarXpandCommand,
-  StarPrinter,
-  StarDeviceDiscoveryManager,
   StarDeviceDiscoveryManagerFactory
 } from 'react-native-star-io10';
 interface PrintersTabOuterProps {

@@ -5,7 +5,7 @@ import type { Bill, BillItem, BillPeriod, Organization, Printer } from '../../mo
 import { formatNumber } from '../../utils';
 import { addHeader, alignCenter, alignSpaceBetween, appendNewLine, starDivider } from './helpers';
 import { receiptTemplate } from './template';
-import { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
+import type { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
 import { StarXpandCommand } from 'react-native-star-io10';
 
 type CorrectionReportProps = {
