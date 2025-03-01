@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { SwitchSelector } from '../../../components/SwitchSelector/SwitchSelector';
 import { CurrentBillContext } from '../../../contexts/CurrentBillContext';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
-import { Button, Col, Footer, Grid, Icon, Item, List, Text } from '../../../core';
+import { Button, Footer, Grid, HStack, Icon, Item, List, Text, VStack } from '../../../core';
 import { database } from '../../../database';
 import type { Bill, BillPeriod, TablePlanElement } from '../../../models';
 import { BillViewTypeEnum } from '../../../models/Organization';
@@ -128,9 +128,8 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
           </Button>
         )}
       </Item>
-      <Grid>
+      <HStack>
         {shouldRenderPlanView && (
-          <Col>
             <TableViewer
               tableElements={tablePlanElements}
               onSelectElement={handleSelectElement}
@@ -139,9 +138,8 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
               openBills={openBills}
               isEditing={isEditing}
             />
-          </Col>
         )}
-        <Col style={{ width: shouldRenderPlanView ? moderateScale(500) : '100%' }}>
+        <VStack style={{ width: shouldRenderPlanView ? moderateScale(500) : '100%' }}>
           {isEditing && !selectedElement && (
             <Text style={{ padding: moderateScale(15) }}>Select a table element to edit...</Text>
           )}
@@ -169,8 +167,8 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
               </List>
             </ScrollView>
           )}
-        </Col>
-      </Grid>
+        </VStack>
+      </HStack>
       <Footer>
         <Text style={{ padding: 10 }} note>{`Open bills: ${openBills.length} / ${bills.length}`}</Text>
       </Footer>

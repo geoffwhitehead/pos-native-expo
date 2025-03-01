@@ -9,7 +9,7 @@ import { ModalContentButton } from '../../../../components/Modal/ModalContentBut
 import { ModalColorPickerContent } from '../../../../components/ModalColorPicker/ModalColorPicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { RecentColorsContext } from '../../../../contexts/RecentColorsContext';
-import { Body, Box, CheckBox, Form, Input, Text, View } from '../../../../core';
+import { Box, Checkbox, Form, HStack, Input, Text, View } from '../../../../core';
 import type {
   Item as ItemModel,
   ItemPrice,
@@ -144,17 +144,16 @@ export const PriceGroupDetails: React.FC<PriceGroupDetailsProps> = ({ priceGroup
                   <Input onChangeText={handleChange('shortName')} onBlur={handleBlur('shortName')} value={shortName} />
                 </ItemField>
 
-<Box>
-
-                  <CheckBox
-                    checked={isPrepTimeRequired}
-                    onPress={() => setFieldValue('isPrepTimeRequired', !isPrepTimeRequired)}
-                    onBlur={handleBlur('isPrepTimeRequired')}
-                    />
-                  <Body>
-                    <Text>Is prep time required</Text>
-                  </Body>
-                    </Box>
+                <HStack>
+                  <Checkbox
+                    isChecked={isPrepTimeRequired}
+                    onTouchEnd={() => {
+                      setFieldValue('isPrepTimeRequired', !isPrepTimeRequired);
+                      handleBlur('isPrepTimeRequired');
+                    }}
+                  />
+                  <Text>Is prep time required</Text>
+                </HStack>
 
                 <ItemField
                   style={styles.colorPickerItem}

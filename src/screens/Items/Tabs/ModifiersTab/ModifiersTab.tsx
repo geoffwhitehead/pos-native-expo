@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
-import { Col, Container, Grid, List, Row, Separator, Text } from '../../../../core';
+import { Box, Container, HStack, Separator, Text, VStack } from '../../../../core';
 import type { Modifier } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
 import { ModalModifierDetails, ModalModifierDetailsInner } from './ModalModifierDetails';
@@ -48,15 +48,15 @@ const ModifierTabInner: React.FC<ModifiersTabOuterProps & ModifiersTabInnerProps
 
   return (
     <Container>
-      <Grid>
-        <Row>
-          <Col>
+      <VStack>
+        <HStack>
+          <Box>
             <Separator style={styles.separator} bordered>
               <Text>Modifiers</Text>
             </Separator>
             <SearchBar value={searchValue} onPressCreate={handleCreate} onSearch={value => setSearchValue(value)} />
             <ScrollView>
-              <List>
+              <VStack>
                 {modifiers
                   .filter(modifier => searchFilter(modifier, searchValue))
                   .map((modifier, index) => {
@@ -72,10 +72,10 @@ const ModifierTabInner: React.FC<ModifiersTabOuterProps & ModifiersTabInnerProps
                       />
                     );
                   })}
-              </List>
+              </VStack>
             </ScrollView>
-          </Col>
-          <Col>
+          </Box>
+          <Box>
             <Separator style={styles.separator} bordered>
               <Text>Modifier Items</Text>
             </Separator>
@@ -90,9 +90,9 @@ const ModifierTabInner: React.FC<ModifiersTabOuterProps & ModifiersTabInnerProps
                 <ModifierItems key={selectedModifier.id} modifier={selectedModifier} />
               </ScrollView>
             )}
-          </Col>
-        </Row>
-      </Grid>
+          </Box>
+        </HStack>
+      </VStack>
       <Modal isOpen={modalOpen} onClose={onCloseHandler}>
         {selectedModifier ? (
           <ModalModifierDetails modifier={selectedModifier} onClose={onCloseHandler} />

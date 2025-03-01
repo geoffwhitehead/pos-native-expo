@@ -4,7 +4,7 @@ import { Loading } from '../../components/Loading/Loading';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
 import { BillPeriodContext } from '../../contexts/BillPeriodContext';
 import { CurrentBillContext } from '../../contexts/CurrentBillContext';
-import { Col, Container, Grid } from '../../core';
+import {  Container, HStack, Box } from '../../core';
 import { CheckoutItemNavigator } from '../../navigators/CheckoutItemNavigator';
 import type { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { RECEIPT_PANEL_BUTTONS_WIDTH, RECEIPT_PANEL_WIDTH } from '../../utils/consts';
@@ -69,10 +69,10 @@ export const Checkout: React.FC<CheckoutProps> = ({ navigation }) => {
   return (
     <Container>
       <SidebarHeader title="Checkout" onOpen={openDrawer} disableNav={mode === Modes.Complete} />
-      <Grid>
-        <Col>{renderMainPanel()}</Col>
+      <HStack>
+        {renderMainPanel()}
         {!isSelectBillMode && (
-          <Col
+          <Box
             style={{
               width: mode === Modes.Payments ? RECEIPT_PANEL_WIDTH - RECEIPT_PANEL_BUTTONS_WIDTH : RECEIPT_PANEL_WIDTH,
             }}
@@ -86,9 +86,9 @@ export const Checkout: React.FC<CheckoutProps> = ({ navigation }) => {
                 hideFunctionButtons={mode === Modes.Payments}
               />
             )}
-          </Col>
+          </Box>
         )}
-      </Grid>
+      </HStack>
     </Container>
   );
 };

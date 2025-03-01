@@ -11,7 +11,7 @@ import { SearchHeader } from '../../../../components/SearchHeader/SearchHeader';
 import { ItemsContext } from '../../../../contexts/ItemsContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { PriceGroupContext } from '../../../../contexts/PriceGroupContext';
-import { Body, Button, Col, Container, Grid, HStack, Icon, ListItem, Row, Text } from '../../../../core';
+import { Box, Button, Container, Divider, HStack, Icon, Text, VStack } from '../../../../core';
 import type { Category, PriceGroup } from '../../../../models';
 import { CategoryViewTypeEnum } from '../../../../models/Organization';
 import type { CheckoutItemStackParamList } from '../../../../navigators/CheckoutItemNavigator';
@@ -84,7 +84,7 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
   return (
     <Container>
       <SearchHeader onChangeText={onSearchHandler} value={searchValue} showPriceGroup />
-      <ListItem itemHeader first style={styles.itemHeader}>
+      <HStack style={styles.itemHeader}>
         <Text style={{ fontWeight: 'bold' }}>Categories</Text>
         {isGridView && (
           <Button style={styles.editButton} success={isEditing} small info={!isEditing} onPress={handleSetEditing}>
@@ -92,37 +92,38 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
             {isEditing && <Icon name="checkmark" size={20} color="white" />}
           </Button>
         )}
-      </ListItem>
+      </HStack>
+      <Divider/>
 
       {isListView && (
         <ScrollView>
-          <List>
+          <VStack>
             {searchedCategories.map(category => {
               return (
-                <ListItem key={category.id} onPress={() => onPressCategoryFactory({ category, priceGroup })} selected={selectedCategory?.id === category.id}>
+                <HStack key={category.id} onTouchEnd={() => onPressCategoryFactory({ category, priceGroup })}>
                   <HStack flex={1} alignItems="center" justifyContent="space-between">
                     <HStack flex={1}>
                       <Text>{category.name}</Text>
                     </HStack>
                   </HStack>
-                </ListItem>
+                </HStack>
               );
             })}
-          </List>
+          </VStack>
         </ScrollView>
       )}
 
       {isGridView && (
-        <Grid style={styles.grid}>
+        <VStack style={styles.grid}>
           {times(gridSize, row => {
             return (
-              <Row key={row} style={styles.row}>
+              <HStack key={row} style={styles.row}>
                 {times(gridSize, column => {
                   const position = gridSize * row + column;
                   const group = groupedCategoriesByPosition[position];
                   const category = group && group[0];
                   return (
-                    <Col key={`${row}-${column}`} style={styles.col}>
+                    <Box key={`${row}-${column}`} style={styles.col}>
                       {category && (
                         <Button
                           style={{ ...styles.button, backgroundColor: category.backgroundColor }}
@@ -154,13 +155,13 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
                           ></Text>
                         </Button>
                       )}
-                    </Col>
+                    </Box>
                   );
                 })}
-              </Row>
+              </HStack>
             );
           })}
-        </Grid>
+        </VStack>
       )}
       <Modal isOpen={modalOpen} onClose={onCloseHandler}>
         <EditDisplayModal

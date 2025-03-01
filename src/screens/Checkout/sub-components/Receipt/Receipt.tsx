@@ -12,7 +12,7 @@ import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Actionsheet, useDisclose, Button, Col, Grid, Icon, Row, Spinner, Text, View } from '../../../../core';
+import { Box, HStack, useDisclose, Button, Icon, Spinner, Text, View, VStack } from '../../../../core';
 import type {
   Bill,
   BillCallLog,
@@ -302,17 +302,17 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
   const hasDiscount = totalDiscount > 0;
 
   return (
-    <Grid style={styles.grid}>
-      <Row>
+    <VStack style={styles.grid}>
+      <HStack>
         {!(isComplete || hideFunctionButtons) && (
-          <Col style={styles.columnMainButtons}>
-            <Row style={{ height: buttons.large }}>
+          <Box style={styles.columnMainButtons}>
+            <Box style={{ height: buttons.large }}>
               <Button style={styles.buttonLeft} full info onPress={onStore}>
                 <Icon name="layers" size={24} color="white" />
                 <Text>Bills</Text>
               </Button>
-            </Row>
-            <Row style={{ height: buttons.large }}>
+            </Box>
+            <Box style={{ height: buttons.large }}>
               <Button
                 full
                 {...resolveButtonState(isCallButtonDisabled, 'warning')}
@@ -322,24 +322,24 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
                 <Icon name="notifications" size={24} color="white" />
                 <Text>Call </Text>
               </Button>
-            </Row>
-            <Row />
-            <Row>
+            </Box>
+            <Box />
+            <Box>
               <Button full success onPress={onCheckout} style={styles.buttonLeft}>
                 <Icon name="cart" size={24}  color="white"/>
                 <Text>Pay</Text>
               </Button>
-            </Row>
-            <Row style={{}}>
+            </Box>
+            <Box style={{}}>
               <Button block onPress={handleOnStore} full style={styles.buttonLeft}>
                 <Icon name="download" size={24}  color="white"/>
                 <Text>Store</Text>
               </Button>
-            </Row>
-          </Col>
+            </Box>
+          </Box>
         )}
-        <Col style={styles.colummMain}>
-          <Row style={styles.rowDetails}>
+        <Box style={styles.colummMain}>
+          <Box style={styles.rowDetails}>
             <View style={styles.billDetail}>
               <Text style={styles.detailLabel} note>
                 Open
@@ -362,8 +362,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
               </Text>
               <Text style={styles.textTimes}>{bill.reference}</Text>
             </View>
-          </Row>
-          <Row style={styles.itemsRow}>
+          </Box>
+          <Box style={styles.itemsRow}>
             <ReceiptItems
               bill={bill}
               readonly={isComplete}
@@ -371,8 +371,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
               billPayments={billPayments}
               billDiscounts={billDiscounts}
             />
-          </Row>
-          <Row style={styles.subTotalRow}>
+          </Box>
+          <Box style={styles.subTotalRow}>
             <Text>{`Subtotal: ${formatNumber(total, currency)}`}</Text>
 
             {hasDiscount && <Text>{`Discount: ${formatNumber(0 - totalDiscount, currency)}`}</Text>}
@@ -385,8 +385,8 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
               )}`}</Text>
             )}
             <Text style={fonts.h2}>{`Balance: ${formatNumber(balance, currency)}`}</Text>
-          </Row>
-          <Row style={styles.printRow}>
+          </Box>
+          <Box style={styles.printRow}>
             <Button
               disabled={!receiptPrinter}
               {...resolveButtonState(!receiptPrinter || isPrinting, 'info')}
@@ -399,7 +399,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
               {isPrinting && <Spinner color="white" />}
               <Text>Print</Text>
             </Button>
-          </Row>
+          </Box>
 
           <TimePicker
             isVisible={isDatePickerVisible}
@@ -418,9 +418,9 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
             confirmText="Call"
             cancelText="Cancel"
           />
-        </Col>
-      </Row>
-    </Grid>
+        </Box>
+      </HStack>
+    </VStack>
   );
 };
 

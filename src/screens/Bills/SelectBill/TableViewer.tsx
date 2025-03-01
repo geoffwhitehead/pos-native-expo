@@ -26,7 +26,7 @@ import BlockWallCorner from '../../../assets/wall-corner.svg';
 import BlockWallSquare from '../../../assets/wall-square.svg';
 import BlockWall from '../../../assets/wall.svg';
 import BlockWindow from '../../../assets/window.svg';
-import { Button, Col, Grid, Row, Text } from '../../../core';
+import { Button, HStack, Text, VStack } from '../../../core';
 import type { Bill, TablePlanElement } from '../../../models';
 import type { TablePlanElementTypes } from '../../../models/TablePlanElement';
 import { fontSizes } from '../../../theme';
@@ -98,10 +98,10 @@ export const TableViewerInner: React.FC<TableViewerProps> = ({
   }, [openBills]);
 
   return (
-    <Grid style={styles.grid}>
+    <VStack style={styles.grid}>
       {times(gridSize, row => {
         return (
-          <Row key={row} style={styles.row}>
+          <HStack key={row} style={styles.row}>
             {times(gridSize, column => {
               // TODO: refactor these
               const el = groupedByXY?.[row]?.[column];
@@ -114,7 +114,7 @@ export const TableViewerInner: React.FC<TableViewerProps> = ({
               const shouldRenderButton = isEditing && (!el || !SVGComponent);
               const shouldRenderSVG = el && SVGComponent;
               return (
-                <Col key={`${row}-${column}`} style={{ ...styles.col, ...selectedStyles }}>
+                <VStack key={`${row}-${column}`} style={{ ...styles.col, ...selectedStyles }}>
                   <TouchableOpacity
                     onPress={() => {
                       onSelectElement({ x: row, y: column, tablePlanElement: el || null });
@@ -134,13 +134,13 @@ export const TableViewerInner: React.FC<TableViewerProps> = ({
                     )}
                     {shouldRenderButton && <Button light style={{ ...styles.button, backgroundColor: 'white' }} />}
                   </TouchableOpacity>
-                </Col>
+                </VStack>
               );
             })}
-          </Row>
+          </HStack>
         );
       })}
-    </Grid>
+    </VStack>
   );
 };
 

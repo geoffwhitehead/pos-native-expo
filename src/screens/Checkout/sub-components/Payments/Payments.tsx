@@ -5,7 +5,7 @@ import { capitalize } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, Col, Grid, Input, Item, Label, Row, Text } from '../../../../core';
+import { Box, Button, HStack, Input, Item, Label, Text, VStack } from '../../../../core';
 import type { Bill, BillDiscount, BillItem, BillPayment, Discount, PaymentType } from '../../../../models';
 import type { MinimalBillSummary } from '../../../../utils';
 import { formatNumber, getDefaultCashDenominations, minimalBillSummary } from '../../../../utils';
@@ -90,15 +90,13 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
   const addDiscount = async (discount: Discount) => bill.addDiscount({ discount });
 
   return (
-    <Grid>
-      <Col style={styles.leftPanel} />
-      <Col style={styles.rightPanel}>
-        <Row style={styles.backRow}>
-          <Button small bordered info onPress={onBack}>
-            <Text style={{ fontWeight: 'bold' }}>Back</Text>
-          </Button>
-        </Row>
-        <Row style={styles.rowCustomAmount}>
+    <HStack>
+      <Box style={styles.leftPanel} />
+      <VStack style={styles.rightPanel}>
+        <Button small bordered info onPress={onBack} style={styles.backRow}>
+          <Text style={{ fontWeight: 'bold' }}>Back</Text>
+        </Button>
+        <Box style={styles.rowCustomAmount}>
           <Item stackedLabel style={{ width: '100%', height: moderateScale(120) }}>
             <Label>Custom amount</Label>
             <Input
@@ -108,9 +106,9 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
               style={{ lineHeight: moderateScale(100), fontSize: moderateScale(80) }}
             />
           </Item>
-        </Row>
-        <Row style={styles.row}>
-          <Col style={styles.buttonColumn}>
+        </Box>
+        <HStack style={styles.row}>
+          <Box style={styles.buttonColumn}>
             <Label style={styles.columnLabel}>Discounts</Label>
             {discounts.map(discount => {
               return (
@@ -124,8 +122,8 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
                 </Button>
               );
             })}
-          </Col>
-          <Col style={styles.denomButtonColumn}>
+          </Box>
+          <Box style={styles.denomButtonColumn}>
             {denominations.map(amt => {
               return (
                 <Button key={amt} full info style={styles.button} onPress={() => addPayment(cashType, amt)}>
@@ -133,8 +131,8 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
                 </Button>
               );
             })}
-          </Col>
-          <Col style={styles.buttonColumn}>
+          </Box>
+          <Box style={styles.buttonColumn}>
             {paymentTypes.map(paymentType => {
               return (
                 <Button
@@ -147,10 +145,10 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
                 </Button>
               );
             })}
-          </Col>
-        </Row>
-      </Col>
-    </Grid>
+          </Box>
+        </HStack>
+      </VStack>
+    </HStack>
   );
 };
 
