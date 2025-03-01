@@ -1,6 +1,6 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
-import { Button, Left, ListItem, Right, Text } from '../../../../core';
+import { HStack, VStack, ListItem, Text, Button } from '../../../../core';
 import type { Modifier } from '../../../../models';
 
 type ModifierRowOuterProps = {
@@ -26,15 +26,17 @@ const ModifierRowInner: React.FC<ModifierRowOuterProps & ModifierRowInnerProps> 
 }) => {
   return (
     <ListItem {...props} onPress={() => onSelect(modifier)} selected={selected}>
-      <Left style={{ flexDirection: 'column' }}>
-        <Text style={{ alignSelf: 'flex-start' }}>{`${index + 1}: ${modifier.name}`}</Text>
-        <Text style={{ alignSelf: 'flex-start' }} note>{`Assigned: ${itemsCount} Items`}</Text>
-      </Left>
-      <Right>
-        <Button bordered info small onPress={() => onView(modifier)} transparent>
-          <Text>Edit</Text>
-        </Button>
-      </Right>
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <VStack flex={1}>
+          <Text style={{ alignSelf: 'flex-start' }}>{`${index + 1}: ${modifier.name}`}</Text>
+          <Text style={{ alignSelf: 'flex-start' }} note>{`Assigned: ${itemsCount} Items`}</Text>
+        </VStack>
+        <HStack w="80px" justifyContent="flex-end">
+          <Button bordered info small onPress={() => onView(modifier)} transparent>
+            <Text>Edit</Text>
+          </Button>
+        </HStack>
+      </HStack>
     </ListItem>
   );
 };

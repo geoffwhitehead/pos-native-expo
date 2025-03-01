@@ -1,21 +1,19 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Body, Left, ListItem, Right, Text } from '../../../core';
+import { HStack, ListItem, Text } from '../../../core';
 import { fontSizes } from '../../../theme';
 
 interface BillRowEmptyProps {
-  reference: number;
-  onCreateSelectBill: (reference: number) => void;
+  onCreateSelectBill: (reference: string) => void;
+  reference: string;
 }
 
 export const BillRowEmpty: React.FC<BillRowEmptyProps> = ({ onCreateSelectBill, reference }) => {
   return (
     <ListItem noIndent style={styles.closedBill} key={reference} onPress={() => onCreateSelectBill(reference)}>
-      <Left>
+      <HStack flex={1} alignItems="flex-start">
         <Text style={styles.rowText}>{reference}</Text>
-      </Left>
-      <Body />
-      <Right />
+      </HStack>
     </ListItem>
   );
 };
@@ -28,4 +26,4 @@ const styles = StyleSheet.create({
   rowText: {
     fontSize: fontSizes[3],
   },
-} as const);
+});

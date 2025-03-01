@@ -2,7 +2,7 @@ import withObservables from '@nozbe/with-observables';
 import { capitalize } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { Badge, Left, ListItem, Right, Text, View } from '../../../../../core';
+import { Badge, HStack, ListItem, Text, View } from '../../../../../core';
 import type { BillItem, BillItemModifierItem, BillItemPrintLog } from '../../../../../models';
 import type { CurrencyEnum } from '../../../../../models/Organization';
 import { formatNumber } from '../../../../../utils';
@@ -80,48 +80,50 @@ const ItemBreakdownInner: React.FC<ItemBreakdownOuterProps & ItemBreakdownInnerP
       disabled={isDisabled}
       onPress={() => onSelect(billItem)}
     >
-      <Left style={{ padding: 0 }}>
-        <View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={style}>{`${capitalize(billItem.itemName)}`}</Text>
-            {isVoided && (
-              <Badge danger style={{ marginLeft: 10 }}>
-                <Text>Voiding</Text>
-              </Badge>
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <HStack flex={1}>
+          <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={style}>{`${capitalize(billItem.itemName)}`}</Text>
+              {isVoided && (
+                <Badge danger style={{ marginLeft: 10 }}>
+                  <Text>Voiding</Text>
+                </Badge>
+              )}
+              {isComp && (
+                <Badge info style={{ marginLeft: 10 }}>
+                  <Text>Comp</Text>
+                </Badge>
+              )}
+            </View>
+            {billItemModifierItems.length > 0 && (
+              <View style={{ paddingTop: 5 }}>
+                {billItemModifierItems.map(m => (
+                  <Text note style={style} key={`${m.id}-name`}>{`- ${m.modifierItemName}`}</Text>
+                ))}
+              </View>
             )}
-            {isComp && (
-              <Badge info style={{ marginLeft: 10 }}>
-                <Text>Comp</Text>
-              </Badge>
-            )}
+            {billItem.printMessage ? (
+              <Text note style={{ ...style, fontWeight: 'bold' }}>{`msg: ${billItem.printMessage}`}</Text>
+            ) : null}
           </View>
+        </HStack>
+        <HStack flex={1} justifyContent="flex-end">
+          <Text style={style}>{itemDisplayPrice}</Text>
           {billItemModifierItems.length > 0 && (
             <View style={{ paddingTop: 5 }}>
-              {billItemModifierItems.map(m => (
-                <Text note style={style} key={`${m.id}-name`}>{`- ${m.modifierItemName}`}</Text>
-              ))}
+              {billItemModifierItems.map(m => {
+                const modifierItemDisplayPrice = formatNumber(isChargable ? m.modifierItemPrice : 0, currency);
+                return (
+                  <Text note style={style} key={`${m.id}-price`}>
+                    {modifierItemDisplayPrice}
+                  </Text>
+                );
+              })}
             </View>
           )}
-          {billItem.printMessage ? (
-            <Text note style={{ ...style, fontWeight: 'bold' }}>{`msg: ${billItem.printMessage}`}</Text>
-          ) : null}
-        </View>
-      </Left>
-      <Right>
-        <Text style={style}>{itemDisplayPrice}</Text>
-        {billItemModifierItems.length > 0 && (
-          <View style={{ paddingTop: 5 }}>
-            {billItemModifierItems.map(m => {
-              const modifierItemDisplayPrice = formatNumber(isChargable ? m.modifierItemPrice : 0, currency);
-              return (
-                <Text note style={style} key={`${m.id}-price`}>
-                  {modifierItemDisplayPrice}
-                </Text>
-              );
-            })}
-          </View>
-        )}
-      </Right>
+        </HStack>
+      </HStack>
     </ListItem>
   );
 };

@@ -12,7 +12,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Modal } from '../../../../components/Modal/Modal';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Actionsheet, Button, Content, Form, Icon, Input, List, ListItem, Left, Right, Text, useDisclose } from '../../../../core';
+import { Actionsheet, Button, Content, Form, Icon, Input, List, ListItem, Text, useDisclose } from '../../../../core';
 import type { Bill, BillDiscount, BillItem, BillPayment, PaymentType } from '../../../../models';
 import type { BillSummary } from '../../../../utils';
 import { moderateScale } from '../../../../utils/scaling';

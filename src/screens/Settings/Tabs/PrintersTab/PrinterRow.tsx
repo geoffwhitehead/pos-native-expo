@@ -1,5 +1,5 @@
 import withObservables from '@nozbe/with-observables';
-import { Body, Button, Left, ListItem, Text } from 'native-base';
+import { HStack, Button, ListItem, Text, Icon } from '../../../../core';
 import React from 'react';
 import type { Printer } from '../../../../models';
 import { commonStyles } from '../styles';
@@ -20,21 +20,29 @@ const PrinterRowInner: React.FC<PrinterRowOuterProps & PrinterRowInnerProps> = (
   onDelete,
 }) => {
   return (
-    <ListItem key={printer.id} noIndent style={isSelected ? commonStyles.selectedRow : {}}>
-      <Left>
-        <Text>{printer.name}</Text>
-      </Left>
-      <Body>
-        <Text note>{'Lan'}</Text>
-        <Text note>{printer.address}</Text>
-        <Text note>{printer.macAddress}</Text>
-      </Body>
-      <Button style={{ marginRight: 10 }} bordered danger small onPress={() => onDelete(printer)}>
-        <Text>Delete</Text>
-      </Button>
-      <Button bordered info small onPress={() => onSelect(printer)}>
-        <Text>Edit</Text>
-      </Button>
+    <ListItem
+      key={printer.id}
+      onPress={() => onSelect(printer)}
+      style={isSelected ? commonStyles.selectedRow : {}}
+    >
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <HStack w="80px" justifyContent="flex-start">
+          <Text>{printer.name}</Text>
+        </HStack>
+        <HStack flex={1} justifyContent="flex-start">
+          <Text note>{'Lan'}</Text>
+          <Text note>{printer.address}</Text>
+          <Text note>{printer.macAddress}</Text>
+        </HStack>
+        <HStack w="40px" justifyContent="flex-end">
+          <Button small transparent onPress={() => onDelete(printer)}>
+            <Icon name="trash-outline" size={24} />
+          </Button>
+          <Button small transparent onPress={() => onSelect(printer)}>
+            <Icon name="pencil-outline" size={24} />
+          </Button>
+        </HStack>
+      </HStack>
     </ListItem>
   );
 };

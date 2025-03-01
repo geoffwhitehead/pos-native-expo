@@ -2,7 +2,7 @@ import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import type { Modifier } from '../../../../models';
 import { styles } from '../../../../styles';
-import { Body, Icon, Left, ListItem, Right, Text } from '../../../../core';
+import { HStack, Icon, ListItem, Text } from '../../../../core';
 
 interface ModifierRowInnerProps {}
 
@@ -21,22 +21,28 @@ const ModifierRowInner: React.FC<ModifierRowOuterProps & ModifierRowInnerProps> 
 }) => {
   return isLeft ? (
     <ListItem key={modifier.id} noIndent style={isSelected && styles.selectedRow} onPress={() => onSelect(modifier)}>
-      <Left>
-        <Text>{modifier.name}</Text>
-      </Left>
-      <Body />
-      <Right>
-        <Icon name="arrow-forward" size={24} color="grey"/>
-      </Right>
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <HStack w="80px" justifyContent="flex-start">
+          <Text>{modifier.name}</Text>
+        </HStack>
+        <HStack flex={1} />
+        <HStack w="80px" justifyContent="flex-end">
+          <Icon name="arrow-forward" size={24} color="grey"/>
+        </HStack>
+      </HStack>
     </ListItem>
   ) : (
     <ListItem key={modifier.id} noIndent style={isSelected && styles.selectedRow} onPress={() => onSelect(modifier)}>
-      <Left>
-        <Icon name="arrow-back" size={24} color="grey" />
-        <Text>{modifier.name}</Text>
-      </Left>
-      <Body />
-      <Right />
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <HStack w="80px" justifyContent="flex-start">
+          <Icon name="arrow-back" size={24} color="grey" />
+        </HStack>
+        <HStack flex={1} justifyContent="flex-start">
+          <Text>{modifier.name}</Text>
+        </HStack>
+        <HStack w="80px" justifyContent="flex-end">
+        </HStack>
+      </HStack>
     </ListItem>
   );
 };

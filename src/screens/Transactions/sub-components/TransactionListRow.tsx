@@ -2,9 +2,9 @@ import { useDatabase } from '@nozbe/watermelondb/hooks';
 import withObservables from '@nozbe/with-observables';
 import dayjs from 'dayjs';
 import { capitalize, keyBy } from 'lodash';
-import { Body, Left, ListItem, Right, Spinner, Text } from 'native-base';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { HStack, VStack, ListItem, Spinner, Text } from '../../../core';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
 import type { Bill, BillDiscount, BillItem, BillPayment, PaymentType } from '../../../models';
 import type { TransactionSummary } from '../../../utils';
@@ -59,32 +59,26 @@ const TransactionListRowInner: React.FC<TransactionListRowOuterProps & Transacti
 
   return (
     <ListItem {...props} noIndent style={isSelected ? styles.selected : {}} onPress={() => onSelectBill(bill)}>
-      <Left
-        style={{
-          flexDirection: 'column',
-        }}
-      >
-        {showBillRef && (
-          <Text
-            style={{ alignSelf: 'flex-start', fontWeight: 'bold', fontSize: 20 }}
-          >{`Table: ${bill.reference}`}</Text>
-        )}
-        <Text style={{ alignSelf: 'flex-start' }}>{`Closed at: ${dayjs(bill.closedAt)
-          .format('HH:mm')
-          .toString()}`}</Text>
-      </Left>
-      <Body>
-        <Text>{`Total: ${formatNumber(summary.total, currency)}`}</Text>
-        {hasDiscount && <Text>{`Discount: ${formatNumber(summary.discountTotal, currency)}`}</Text>}
-      </Body>
-      <Right>
-        {summary.paymentBreakdown.map(type => {
-          const paymentTypeName = keyedPaymentTypes[type.paymentTypeId].name;
-          const key = `${bill.id}-${type.paymentTypeId}`;
-          const amount = formatNumber(type.totalPayed, currency);
-          return <Text key={key}>{`${capitalize(paymentTypeName)}: ${amount}`}</Text>;
-        })}
-      </Right>
+      <HStack flex={1} alignItems="flex-start" justifyContent="space-between">
+        <VStack flex={1} space={1}>
+          {showBillRef && (
+            <Text style={styles.billRef}>{`Table: ${bill.reference}`}</Text>
+          )}
+          <Text>{`Closed at: ${dayjs(bill.closedAt).format('HH:mm').toString()}`}</Text>
+        </VStack>
+        <VStack flex={1} space={1}>
+          <Text>{`Total: ${formatNumber(summary.total, currency)}`}</Text>
+          {hasDiscount && <Text>{`Discount: ${formatNumber(summary.discountTotal, currency)}`}</Text>}
+        </VStack>
+        <VStack w="120px" alignItems="flex-end" space={1}>
+          {summary.paymentBreakdown.map(type => {
+            const paymentTypeName = keyedPaymentTypes[type.paymentTypeId].name;
+            const key = `${bill.id}-${type.paymentTypeId}`;
+            const amount = formatNumber(type.totalPayed, currency);
+            return <Text key={key}>{`${capitalize(paymentTypeName)}: ${amount}`}</Text>;
+          })}
+        </VStack>
+      </HStack>
     </ListItem>
   );
 };
@@ -98,5 +92,12 @@ const enhance = withObservables<TransactionListRowOuterProps, TransactionListRow
 export const TransactionListRow = enhance(TransactionListRowInner);
 
 const styles = StyleSheet.create({
-  selected: { backgroundColor: '#cde1f9' },
+  selected: {
+    backgroundColor: '#cde1f9',
+  },
+  billRef: {
+    alignSelf: 'flex-start',
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
 });

@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import { FieldArray, Formik } from 'formik';
 import { capitalize, keyBy } from 'lodash';
-import { Button, Form, Icon, Input, Left, List, ListItem, Right, Text } from 'native-base';
+import { Button, Form, Icon, Input, HStack, List, ListItem, Text } from 'native-base';
 import React, { useMemo } from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
@@ -36,10 +36,10 @@ export const PriceGroupItemsInner: React.FC<PriceGroupItemsOuterProps & PriceGro
   //   return (
   //     <>
   //       <ListItem itemDivider>
-  //         <Left>
+  //         <HStack>
   //           <Text>Price Groups</Text>
-  //         </Left>
-  //         <Right />
+  //         </HStack>
+  //         <HStack />
   //       </ListItem>
   //       <Text note style={{ padding: 15 }}>
   //         Select a price group to bulk edit item prices...
@@ -77,15 +77,15 @@ export const PriceGroupItemsInner: React.FC<PriceGroupItemsOuterProps & PriceGro
         return (
           <>
             <ListItem itemDivider>
-              <Left>
+              <HStack>
                 <Text>Price Groups</Text>
-              </Left>
-              <Right>
+              </HStack>
+              <HStack>
                 <Button iconLeft success small onPress={() => {}}>
                   <Icon name="add-circle-outline" size={24} color="white" />
                   <Text>Save</Text>
                 </Button>
-              </Right>
+              </HStack>
             </ListItem>
             {!priceGroup && (
               <Text note style={{ padding: 15 }}>

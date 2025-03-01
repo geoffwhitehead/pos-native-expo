@@ -13,10 +13,9 @@ import {
   Col,
   Container,
   Grid,
-  Left,
+  HStack,
   List,
   ListItem,
-  Right,
   Spinner,
   Text,
   Toast,
@@ -110,7 +109,7 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
               {billPeriods.map(billPeriod => {
                 return (
                   <ListItem key={billPeriod.id} style={billPeriod.id === selectedBillPeriod?.id ? { marginLeft: 0, paddingLeft: 14, backgroundColor: 'lightblue' } : {}} selected={billPeriod.id === selectedBillPeriod?.id} onPress={() => setSelectedBillPeriod(billPeriod)}>
-                    <Left>
+                    <HStack flex={1} alignItems="center" justifyContent="space-between">
                       <View style={{ display: 'flex' }}>
                         <Text>{`Opened: ${dayjs(billPeriod.createdAt).format('ddd DD/MM/YYYY HH:mm:ss')}`}</Text>
                         <Text>
@@ -119,52 +118,52 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
                           }`}
                         </Text>
                       </View>
-                    </Left>
-                    <Right>
-                      {!billPeriod.closedAt && (
-                        <View style={{width: 200}}>
-                          <Button
-                            small
-                            full
-                            {...resolveButtonState(isLoading, 'info')}
-                            style={{ marginBottom: 2 }}
-                            onPress={() => onPrintPeriodReport(billPeriod)}
-                          >
-                            <Text>Print Status Report</Text>
-                          </Button>
-                          <Button
-                            full
-                            small
-                            {...resolveButtonState(isLoading, 'danger')}
-                            onPress={() => confirmClosePeriod(billPeriod, organization)}
-                          >
-                            <Text>Close Period</Text>
-                          </Button>
-                        </View>
-                      )}
-                      {billPeriod.closedAt && (
-                        <View style={{width: 200}}>
-                          <Button
-                            small
-                            full
-                            {...resolveButtonState(isLoading, 'primary')}
-                            onPress={() => onPrintPeriodReport(billPeriod)}
-                            style={{ marginBottom: 2 }}
-                          >
-                            <Text>Print End Period Report</Text>
-                          </Button>
-                          <Button
-                            small
-                            full
-                            {...resolveButtonState(isLoading, 'info')}
-                            style={{ marginRight: 2 }}
-                            onPress={() => onPrintCorrectionReport(billPeriod)}
-                          >
-                            <Text>Print Correction Report</Text>
-                          </Button>
-                        </View>
-                      )}
-                    </Right>
+                      <HStack w="200px" justifyContent="flex-end">
+                        {!billPeriod.closedAt && (
+                          <View>
+                            <Button
+                              small
+                              full
+                              {...resolveButtonState(isLoading, 'info')}
+                              style={{ marginBottom: 2 }}
+                              onPress={() => onPrintPeriodReport(billPeriod)}
+                            >
+                              <Text>Print Status Report</Text>
+                            </Button>
+                            <Button
+                              full
+                              small
+                              {...resolveButtonState(isLoading, 'danger')}
+                              onPress={() => confirmClosePeriod(billPeriod, organization)}
+                            >
+                              <Text>Close Period</Text>
+                            </Button>
+                          </View>
+                        )}
+                        {billPeriod.closedAt && (
+                          <View>
+                            <Button
+                              small
+                              full
+                              {...resolveButtonState(isLoading, 'primary')}
+                              onPress={() => onPrintPeriodReport(billPeriod)}
+                              style={{ marginBottom: 2 }}
+                            >
+                              <Text>Print End Period Report</Text>
+                            </Button>
+                            <Button
+                              small
+                              full
+                              {...resolveButtonState(isLoading, 'info')}
+                              style={{ marginRight: 2 }}
+                              onPress={() => onPrintCorrectionReport(billPeriod)}
+                            >
+                              <Text>Print Correction Report</Text>
+                            </Button>
+                          </View>
+                        )}
+                      </HStack>
+                    </HStack>
                   </ListItem>
                 );
               })}

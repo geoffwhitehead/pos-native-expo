@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Body, Icon, Left, ListItem, Right, Text } from '../../../../../core';
+import { HStack, Icon, ListItem, Text } from '../../../../../core';
 import type { Item, ItemPrice } from '../../../../../models';
 import { formatNumber } from '../../../../../utils';
 
@@ -36,13 +36,17 @@ const CategoryItemRowInner: React.FC<CategoryItemRowOuterProps & CategoryItemRow
       key={item.id}
       onPress={onPress}
     >
-      <Left>
-        <Text>{item.name}</Text>
-      </Left>
-      <Body>{modifierCount > 0 ? <Icon style={{ color: 'lightgrey' }} size={24} name="arrow-forward" /> : null}</Body>
-      <Right>
-        <Text style={{ color: 'grey' }}>{formatNumber(itemPrice.price, currency)}</Text>
-      </Right>
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <HStack flex={1}>
+          <Text>{item.name}</Text>
+        </HStack>
+        <HStack flex={1} justifyContent="center">
+          {modifierCount > 0 ? <Icon style={{ color: 'lightgrey' }} size={24} name="arrow-forward" /> : null}
+        </HStack>
+        <HStack flex={1} justifyContent="flex-end">
+          <Text style={{ color: 'grey' }}>{formatNumber(itemPrice.price, currency)}</Text>
+        </HStack>
+      </HStack>
     </ListItem>
   );
 };

@@ -1,49 +1,49 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Left, ListItem, Right, Text, View } from '../../../../core';
+import { Button, HStack, VStack, ListItem, Text, View } from '../../../../core';
 import type { Category, PrintCategory } from '../../../../models';
 
 type CategoryRowOuterProps = {
+  category: Category;
   onSelect: (category: Category) => void;
   index: number;
-  key: string;
-  category: Category;
-  printCategory?: PrintCategory;
 };
 
 type CategoryRowInnerProps = {
   itemsCount: number;
+  printCategory: PrintCategory | null;
 };
 
 const CategoryRowInner: React.FC<CategoryRowOuterProps & CategoryRowInnerProps> = ({
-  onSelect,
-  index,
-  itemsCount,
   category,
+  onSelect,
+  itemsCount,
   printCategory,
+  index,
   ...props
 }) => {
   return (
     <ListItem {...props}>
-      <Left style={{ flexDirection: 'column' }}>
-        <View style={{ ...styles.name, backgroundColor: category.backgroundColor }}>
-          <Text
-            style={{
-              ...styles.text,
-
-              color: category.textColor,
-            }}
-          >{`${index + 1}: ${category.name}`}</Text>
-        </View>
-        <Text style={styles.text} note>{`Assigned: ${itemsCount} Items`}</Text>
-        <Text style={styles.text} note>{`Print Category: ${printCategory?.shortName || 'None'}`}</Text>
-      </Left>
-      <Right>
-        <Button bordered info small onPress={() => onSelect(category)} transparent>
-          <Text>Edit</Text>
-        </Button>
-      </Right>
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <VStack flex={1}>
+          <View style={{ ...styles.name, backgroundColor: category.backgroundColor }}>
+            <Text
+              style={{
+                ...styles.text,
+                color: category.textColor,
+              }}
+            >{`${index + 1}: ${category.name}`}</Text>
+          </View>
+          <Text style={styles.text} note>{`Assigned: ${itemsCount} Items`}</Text>
+          <Text style={styles.text} note>{`Print Category: ${printCategory?.shortName || 'None'}`}</Text>
+        </VStack>
+        <HStack w="80px" justifyContent="flex-end">
+          <Button bordered info small onPress={() => onSelect(category)} transparent>
+            <Text>Edit</Text>
+          </Button>
+        </HStack>
+      </HStack>
     </ListItem>
   );
 };
@@ -53,6 +53,7 @@ const enhance = c =>
     return {
       category,
       itemsCount: category.items.observeCount(),
+      printCategory: category.printCategory,
     };
   })(c);
 

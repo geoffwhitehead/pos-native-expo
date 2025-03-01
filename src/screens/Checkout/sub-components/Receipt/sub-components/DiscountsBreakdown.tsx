@@ -1,5 +1,5 @@
 import { capitalize } from 'lodash';
-import { Left, ListItem, Right, Separator, Text } from 'native-base';
+import { HStack, ListItem, Separator, Text } from 'native-base';
 import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
@@ -44,12 +44,14 @@ export const DiscountsBreakdown: React.FC<DiscountBreakdownProps> = ({
             onPress={() => !readonly && onSelect(billDiscount)}
             style={styles.listItem}
           >
-            <Left>
-              <Text>{discountText(breakdown)}</Text>
-            </Left>
-            <Right>
-              <Text>{`-${formatNumber(breakdown.calculatedDiscount, currency)}`}</Text>
-            </Right>
+            <HStack flex={1} alignItems="center" justifyContent="space-between">
+              <HStack flex={1}>
+                <Text>{discountText(breakdown)}</Text>
+              </HStack>
+              <HStack flex={1} justifyContent="flex-end">
+                <Text>{`-${formatNumber(breakdown.calculatedDiscount, currency)}`}</Text>
+              </HStack>
+            </HStack>
           </ListItem>
         );
       })}

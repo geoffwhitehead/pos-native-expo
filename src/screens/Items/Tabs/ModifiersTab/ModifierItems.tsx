@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React, { useState } from 'react';
 import { Modal } from '../../../../components/Modal/Modal';
-import { Button, Icon, Left, ListItem, Right, Text } from '../../../../core';
+import { Button, HStack, Icon, ListItem, Text } from '../../../../core';
 import type { Modifier, ModifierItem } from '../../../../models';
 import { ModalModifierItemDetails } from './ModalModifierItemDetails';
 
@@ -48,14 +48,14 @@ const ModifierItemsInner: React.FC<ModifierItemsOuterProps & ModifierItemsInnerP
       {modifierItems.map((modifierItem, index) => {
         return (
           <ListItem key={modifierItem.id} {...props} onPress={() => onSelect(modifierItem)}>
-            <Left>
+            <HStack flex={1} alignItems="center" justifyContent="space-between">
               <Text>{`${index + 1}: ${modifierItem.name}`}</Text>
-            </Left>
-            <Right>
-              <Button bordered info small onPress={() => onView(modifierItem)} transparent>
-                <Text>Edit</Text>
-              </Button>
-            </Right>
+              <HStack w="80px" justifyContent="flex-end">
+                <Button bordered info small onPress={() => onView(modifierItem)} transparent>
+                  <Text>Edit</Text>
+                </Button>
+              </HStack>
+            </HStack>
           </ListItem>
         );
       })}

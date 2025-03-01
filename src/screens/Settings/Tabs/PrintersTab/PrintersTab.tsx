@@ -11,12 +11,8 @@ import { ConfirmationActionsheet } from '../../../../components/ConfirmationActi
 import {
   Button,
   Container,
+  HStack,
   Icon,
-  Left,
-  List,
-  ListItem,
-  Right,
-  Spinner,
   Text,
   View,
   useDisclose,
@@ -191,9 +187,9 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
     <Container>
       <List>
         <ListItem itemDivider>
-          <Left>
+          <HStack flex={1} alignItems="center" justifyContent="space-between">
             <Text>Installed Printers</Text>
-          </Left>
+          </HStack>
         </ListItem>
         <ScrollView>
           {printers.map(p => (
@@ -203,8 +199,8 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
               printer={p}
               onSelect={setSelectedPrinter}
               onDelete={() => {
-                setPrinterToDelete(p);
-                onOpen();
+                    setPrinterToDelete(p);
+                    onOpen();
               }}
             />
           ))}
@@ -213,14 +209,14 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
 
       <List>
         <ListItem itemDivider>
-          <Left>
+          <HStack flex={1} alignItems="center" justifyContent="space-between">
             <Text>Discover Printers</Text>
-          </Left>
-          <Right>
-            <Button small disabled={isLoading} onPress={discoverPrinters}>
-              <Text>Discover Printers</Text>
-            </Button>
-          </Right>
+            <HStack justifyContent="flex-end">
+              <Button small disabled={isLoading} onPress={discoverPrinters}>
+                <Text>Discover Printers</Text>
+              </Button>
+            </HStack>
+          </HStack>
         </ListItem>
         { discoveredPrinters.length === 0 ? (
           <Text style={{ padding: 10 }}> No printers found</Text>
@@ -231,25 +227,27 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
 
               return (
                 <ListItem key={discoveredPrinter.connectionSettings.identifier}>
-                  <Left>
-                    <Text>{discoveredPrinter.information?._model}</Text>
-                  </Left>
-                  <Body>
-                    <Text note>{discoveredPrinter.connectionSettings.interfaceType}</Text>
-                    <Text note>{discoveredPrinter.information?._detail?._lan?._ipAddress}</Text>
-                    <Text note>{discoveredPrinter.information?._detail?._lan?._macAddress}</Text>
-                  </Body>
-                  <Right>
-                    {isInstalled ? (
-                      <Button small onPress={() => updatePrinter(discoveredPrinter)}>
-                        <Text>Update</Text>
-                      </Button>
-                    ) : (
-                      <Button small onPress={() => addPrinter(discoveredPrinter)}>
-                        <Text>Add</Text>
-                      </Button>
-                    )}
-                  </Right>
+                  <HStack flex={1} alignItems="center" justifyContent="space-between">
+                    <HStack flex={1}>
+                      <Text>{discoveredPrinter.information?._model}</Text>
+                    </HStack>
+                    <HStack flex={1} justifyContent="flex-end">
+                      <Text note>{discoveredPrinter.connectionSettings.interfaceType}</Text>
+                      <Text note>{discoveredPrinter.information?._detail?._lan?._ipAddress}</Text>
+                      <Text note>{discoveredPrinter.information?._detail?._lan?._macAddress}</Text>
+                    </HStack>
+                    <HStack flex={1} justifyContent="flex-end">
+                      {isInstalled ? (
+                        <Button small onPress={() => updatePrinter(discoveredPrinter)}>
+                          <Text>Update</Text>
+                        </Button>
+                      ) : (
+                        <Button small onPress={() => addPrinter(discoveredPrinter)}>
+                          <Text>Add</Text>
+                        </Button>
+                      )}
+                    </HStack>
+                  </HStack>
                 </ListItem>
               );
             })}

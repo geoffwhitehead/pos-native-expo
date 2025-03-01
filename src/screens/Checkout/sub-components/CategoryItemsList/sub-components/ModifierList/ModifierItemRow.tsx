@@ -1,5 +1,5 @@
 import withObservables from '@nozbe/with-observables';
-import { Body, Left, ListItem, Right, Text } from 'native-base';
+import { HStack, ListItem, Text } from '../../../../../../core';
 import React, { useContext } from 'react';
 import { OrganizationContext } from '../../../../../../contexts/OrganizationContext';
 import type { ModifierItem, ModifierItemPrice } from '../../../../../../models';
@@ -30,14 +30,15 @@ const ModifierItemRowInner: React.FC<ModifierItemRowOuterProps & ModifierItemRow
 
   return (
     <ListItem selected={selected} onPress={() => onPress(modifierItem)} disabled={isDisabled}>
-      <Left>
-        <Text>{modifierItem.name}</Text>
-        <Body />
-        <Right>
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <HStack flex={1}>
+          <Text>{modifierItem.name}</Text>
+        </HStack>
+        <HStack flex={1} justifyContent="flex-end">
           {hasPriceSet && <Text style={{ color: 'grey' }}>{formatNumber(modifierItemPrice.price, currency)}</Text>}
           {!hasPriceSet && <Text note>No price set</Text>}
-        </Right>
-      </Left>
+        </HStack>
+      </HStack>
     </ListItem>
   );
 };

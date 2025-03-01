@@ -12,7 +12,7 @@ import { CurrentBillContext } from '../../../../contexts/CurrentBillContext';
 import { ItemPricesContext } from '../../../../contexts/ItemPricesContext';
 import { ItemsContext } from '../../../../contexts/ItemsContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, Left, List, ListItem, Text, View } from '../../../../core';
+import { Button, HStack, List, ListItem, Text, View } from '../../../../core';
 import type { Item, ItemPrice, Modifier, PriceGroup } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import type { CheckoutItemStackParamList } from '../../../../navigators/CheckoutItemNavigator';
@@ -118,11 +118,11 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
   return (
     <>
       <ListItem itemHeader first>
-        <Left>
+        <HStack flex={1} alignItems="center" justifyContent="space-between">
           <Button small bordered info onPress={goBack} iconLeft>
             <Text style={{ fontWeight: 'bold' }}>Back</Text>
           </Button>
-        </Left>
+        </HStack>
       </ListItem>
       <SearchHeader onChangeText={onSearchHandler} value={searchValue} />
       <ScrollView>
@@ -137,7 +137,9 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
                 <View key={`${key}-divider`}>
                   {itemListViewType === ItemListViewType.listWithHeader && (
                     <ListItem itemDivider style={{ backgroundColor: 'lightgrey' }}>
-                      <Text>{key}</Text>
+                      <HStack flex={1} alignItems="center" justifyContent="space-between">
+                        <Text>{key}</Text>
+                      </HStack>
                     </ListItem>
                   )}
                   {items.map(item => {

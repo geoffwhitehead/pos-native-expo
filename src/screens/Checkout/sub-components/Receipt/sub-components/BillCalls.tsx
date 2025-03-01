@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import dayjs from 'dayjs';
 import { groupBy } from 'lodash';
-import { Left, ListItem, Right, Separator, Text } from 'native-base';
+import { HStack, ListItem, Separator, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import type { Bill, BillCallLog, BillCallPrintLog } from '../../../../../models';
@@ -51,11 +51,14 @@ export const BillCallsInner: React.FC<BillCallOuterProps & BillCallInnerProps> =
 
         return (
           <ListItem noIndent key={billCallLog.id} style={status ? styles[status] : {}}>
-            <Left>
-              <Text style={{ paddingRight: 10 }}>{dayjs(billCallLog.createdAt).format('HH:mm')}</Text>
-              <Text note>{`Msg: ${billCallLog.printMessage || 'none'}`}</Text>
-            </Left>
-            <Right />
+            <HStack flex={1} alignItems="center" justifyContent="space-between">
+              <HStack flex={1}>
+                <Text style={{ paddingRight: 10 }}>{dayjs(billCallLog.createdAt).format('HH:mm')}</Text>
+              </HStack>
+              <HStack flex={1} justifyContent="flex-end">
+                <Text note>{`Msg: ${billCallLog.printMessage || 'none'}`}</Text>
+              </HStack>
+            </HStack>
           </ListItem>
         );
       })}

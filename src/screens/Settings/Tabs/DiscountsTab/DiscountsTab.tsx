@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, Icon, Left, List, ListItem, Right, Spinner, Text, View, useDisclose } from '../../../../core';
+import { Button, HStack, Icon, Spinner, Text, useDisclose, VStack } from '../../../../core';
 import type { Discount } from '../../../../models';
 import { formatNumber } from '../../../../utils';
 import { resolveButtonState } from '../../../../utils/helpers';
@@ -51,20 +51,20 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
     <View>
       <List>
         <ListItem itemDivider>
-          <Left>
+          <HStack flex={1} alignItems="center" justifyContent="space-between">
             <Text>Discount</Text>
-          </Left>
-          <Right>
-            <Button
-              {...resolveButtonState(isCreateDisabled, 'success')}
-              iconLeft
-              small
-              onPress={() => setIsModalOpen(true)}
-            >
-              <Icon name="add-circle-outline" size={24} color="white"/>
-              <Text>Create</Text>
-            </Button>
-          </Right>
+            <HStack justifyContent="flex-end">
+              <Button
+                {...resolveButtonState(isCreateDisabled, 'success')}
+                iconLeft
+                small
+                onPress={() => setIsModalOpen(true)}
+              >
+                <Icon name="add-circle-outline" size={24} color="white"/>
+                <Text>Create</Text>
+              </Button>
+            </HStack>
+          </HStack>
         </ListItem>
         <ScrollView>
           {discounts.map(discount => {
@@ -75,31 +75,33 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
             return (
               <ListItem 
                 key={discount.id} 
-                noIndent
-                style={selectedDiscount === discount ? commonStyles.selectedRow : {}}
                 onPress={() => setSelectedDiscount(discount)}
               >
-                <Left style={styles.rowText}>
-                  <Text style={styles.text}>{discount.name}</Text>
-                  <Text style={styles.text} note>
-                    {amountString}
-                  </Text>
-                </Left>
-                <Body></Body>
-
-                <Button
-                  style={{ marginRight: 10 }}
-                  bordered
-                  danger
-                  small
-                  disabled={discounts.length === 1}
-                  onPress={() => {
-                    setDiscountToDelete(discount);
-                    onOpen();
-                  }}
-                >
-                  <Text>Delete</Text>
-                </Button>
+                <HStack flex={1} alignItems="center" justifyContent="space-between">
+                  <HStack flex={1} style={selectedDiscount === discount ? commonStyles.selectedRow : {}}>
+                    <VStack>
+                      <Text>{discount.name}</Text>
+                      <Text note>
+                        {amountString}
+                      </Text>
+                    </VStack>
+                  </HStack>
+                  <HStack justifyContent="flex-end">
+                    <Button
+                      style={{ marginRight: 10 }}
+                      bordered
+                      danger
+                      small
+                      disabled={discounts.length === 1}
+                      onPress={() => {
+                        setDiscountToDelete(discount);
+                        onOpen();
+                      }}
+                    >
+                      <Text>Delete</Text>
+                    </Button>
+                  </HStack>
+                </HStack>
               </ListItem>
             );
           })}

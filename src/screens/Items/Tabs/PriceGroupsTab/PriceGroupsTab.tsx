@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native';
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, Container, Icon, Left, List, ListItem, Right, Text, useDisclose } from '../../../../core';
+import { Button, Container, HStack, Icon, Text, useDisclose } from '../../../../core';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import type { Category, Item, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
@@ -75,53 +75,55 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
     <Container>
       <List>
         <ListItem itemDivider>
-          <Left>
+          <HStack flex={1} alignItems="center" justifyContent="space-between">
             <Text>Price Groups</Text>
-          </Left>
-          <Right>
-            <Button iconLeft success small onPress={() => setIsModalOpen(true)}>
-              <Icon name="add-circle-outline" size={24}  color="white"/>
-              <Text>Create</Text>
-            </Button>
-          </Right>
+            <HStack justifyContent="flex-end">
+              <Button iconLeft success small onPress={() => setIsModalOpen(true)}>
+                <Icon name="add-circle-outline" size={24} color="white"/>
+                <Text>Create</Text>
+              </Button>
+            </HStack>
+          </HStack>
         </ListItem>
         <ScrollView>
-          {priceGroups.map(priceGroup => {
-            const isSelected = priceGroup === selectedPriceGroup;
-            return (
-              <ListItem
-                key={priceGroup.id}
-                onPress={() => setSelectedPriceGroup(priceGroup)}
-                noIndent
-                style={isSelected ? commonStyles.selectedRow : {}}
-              >
-                <Left>
+          {priceGroups.map(priceGroup => (
+            <ListItem key={priceGroup.id} onPress={() => setSelectedPriceGroup(priceGroup)}
+            style={priceGroup === selectedPriceGroup ? commonStyles.selectedRow : {}}>
+            noIndent
+              <HStack flex={1} alignItems="center" justifyContent="space-between">
+                <HStack flex={1}>
                   <Text>{priceGroup.name}</Text>
-                </Left>
-
-                <Button style={{ marginRight: 10 }} bordered info small onPress={() => onSelectPrices(priceGroup)}>
-                  <Text>Bulk Edit Prices</Text>
-                </Button>
-
-                <Button
-                  style={{ marginRight: 10 }}
-                  bordered
-                  danger
-                  small
-                  disabled={priceGroups.length === 1}
-                  onPress={() => {
-                    setPriceGroupToDelete(priceGroup);
-                    onOpen();
-                  }}
-                >
-                  <Text>Delete</Text>
-                </Button>
-                <Button bordered info small onPress={() => onSelect(priceGroup)}>
-                  <Text>Edit</Text>
-                </Button>
-              </ListItem>
-            );
-          })}
+                </HStack>
+                <HStack flex={1} justifyContent="flex-end">
+                  <Button
+                    style={{ marginRight: 10 }}
+                    bordered
+                    info
+                    small
+                    onPress={() => onSelectPrices(priceGroup)}
+                  >
+                    <Text>Bulk Edit Prices</Text>
+                  </Button>
+                  <Button
+                    style={{ marginRight: 10 }}
+                    bordered
+                    danger
+                    small
+                    disabled={priceGroups.length === 1}
+                    onPress={() => {
+                      setPriceGroupToDelete(priceGroup);
+                      onOpen();
+                    }}
+                  >
+                    <Text>Delete</Text>
+                  </Button>
+                  <Button bordered info small onPress={() => onSelect(priceGroup)}>
+                    <Text>Edit</Text>
+                  </Button>
+                </HStack>
+              </HStack>
+            </ListItem>
+          ))}
         </ScrollView>
       </List>
 

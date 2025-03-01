@@ -1,7 +1,7 @@
 import LottieView from 'lottie-react-native';
 import React, { useContext, useEffect, useRef } from 'react';
 import { LastSyncedAtContext } from '../../contexts/LastSyncedAtContext';
-import { Body, Button, Header, Icon, Left, Right, Text, Title } from '../../core';
+import { Button, Header, HStack, Text, Title } from '../../core';
 import { useSync } from '../../hooks/useSync';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -28,28 +28,32 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ title, onOpen, dis
 
   return (
     <Header>
-      <Left>
-        {!disableNav && (
-          <Button transparent onPress={onOpen}>
-            <Ionicons name="menu" size={24}/>
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <HStack w="80px" justifyContent="flex-start">
+          {!disableNav && (
+            <Button transparent onPress={onOpen}>
+              <Ionicons name="menu" size={24}/>
+            </Button>
+          )}
+        </HStack>
+        
+        <HStack flex={1} justifyContent="center">
+          <Title>{title}</Title>
+        </HStack>
+        
+        <HStack w="200px" alignItems="center" justifyContent="flex-end">
+          <Text style={{ lineHeight: 40 }} note>{`Last Sync: ${lastSyncedAtText}`}</Text>
+          <Button transparent onPress={doSync}>
+            <LottieView
+              style={{ height: 40, width: 40 }}
+              source={require('../../animations/1703-sync-icon.json')}
+              autoPlay={false}
+              loop={true}
+              ref={animation}
+            />
           </Button>
-        )}
-      </Left>
-      <Body>
-        <Title>{title}</Title>
-      </Body>
-      <Right style={{ alignItems: 'center' }}>
-        <Text style={{ lineHeight: 40 }} note>{`Last Sync: ${lastSyncedAtText}`}</Text>
-        <Button transparent onPress={doSync}>
-          <LottieView
-            style={{ height: 40, width: 40 }}
-            source={require('../../animations/1703-sync-icon.json')}
-            autoPlay={false}
-            loop={true}
-            ref={animation}
-          />
-        </Button>
-      </Right>
+        </HStack>
+      </HStack>
     </Header>
   );
 };

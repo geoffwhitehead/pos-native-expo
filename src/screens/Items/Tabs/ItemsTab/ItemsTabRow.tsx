@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Body, Button, Left, ListItem, Right, Text } from '../../../../core';
+import { HStack, ListItem, Text } from '../../../../core';
 import type { Item } from '../../../../models';
 
 interface ItemsTabRowOuterProps {
@@ -25,21 +25,18 @@ const ItemsTabRowInner: React.FC<ItemsTabRowOuterProps & ItemsTabRowInnerProps> 
   index,
 }) => {
   return (
-    <ListItem>
-      <Left style={styles.item}>
-        <Text style={{ alignSelf: 'flex-start' }}>{`${index + 1}: ${title}`}</Text>
-        {!!subtitle && (
-          <Text style={{ alignSelf: 'flex-start' }} note>
-            {subtitle}
-          </Text>
-        )}
-      </Left>
-      <Body />
-      <Right>
-        <Button bordered info small onPress={() => onPressItem(item)} transparent>
+    <ListItem onPress={() => onPressItem(item)} style={[item.isActive && styles.activeRow]}>
+      <HStack flex={1} alignItems="center" justifyContent="space-between">
+        <HStack flex={1} style={styles.item}>
+          <Text>{`${index + 1}: ${title}`}</Text>
+          {!!subtitle && (
+            <Text note>{subtitle}</Text>
+          )}
+        </HStack>
+        <HStack w="80px" justifyContent="flex-end">
           <Text>Edit</Text>
-        </Button>
-      </Right>
+        </HStack>
+      </HStack>
     </ListItem>
   );
 };
@@ -54,5 +51,6 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: 'column',
+    alignItems: 'flex-start',
   },
 });

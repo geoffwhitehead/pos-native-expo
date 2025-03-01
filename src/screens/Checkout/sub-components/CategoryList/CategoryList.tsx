@@ -11,7 +11,7 @@ import { SearchHeader } from '../../../../components/SearchHeader/SearchHeader';
 import { ItemsContext } from '../../../../contexts/ItemsContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { PriceGroupContext } from '../../../../contexts/PriceGroupContext';
-import { Body, Button, Col, Container, Grid, Icon, Left, List, ListItem, Right, Row, Text } from '../../../../core';
+import { Body, Button, Col, Container, Grid, HStack, Icon, ListItem, Row, Text } from '../../../../core';
 import type { Category, PriceGroup } from '../../../../models';
 import { CategoryViewTypeEnum } from '../../../../models/Organization';
 import type { CheckoutItemStackParamList } from '../../../../navigators/CheckoutItemNavigator';
@@ -99,14 +99,12 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
           <List>
             {searchedCategories.map(category => {
               return (
-                <ListItem key={category.id} icon onPress={onPressCategoryFactory({ category, priceGroup })}>
-                  <Left>
-                    <Text>{category.name}</Text>
-                  </Left>
-                  <Body>
-                    <Icon name="arrow-forward" size={24} color="white"/>
-                  </Body>
-                  <Right />
+                <ListItem key={category.id} onPress={() => onPressCategoryFactory({ category, priceGroup })} selected={selectedCategory?.id === category.id}>
+                  <HStack flex={1} alignItems="center" justifyContent="space-between">
+                    <HStack flex={1}>
+                      <Text>{category.name}</Text>
+                    </HStack>
+                  </HStack>
                 </ListItem>
               );
             })}
