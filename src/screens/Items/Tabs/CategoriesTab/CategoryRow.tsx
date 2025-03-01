@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, HStack, VStack, ListItem, Text, View } from '../../../../core';
+import { Button, HStack, VStack, Text, View } from '../../../../core';
 import type { Category, PrintCategory } from '../../../../models';
 
 type CategoryRowOuterProps = {
@@ -24,27 +24,25 @@ const CategoryRowInner: React.FC<CategoryRowOuterProps & CategoryRowInnerProps> 
   ...props
 }) => {
   return (
-    <ListItem {...props}>
-      <HStack flex={1} alignItems="center" justifyContent="space-between">
-        <VStack flex={1}>
-          <View style={{ ...styles.name, backgroundColor: category.backgroundColor }}>
-            <Text
-              style={{
-                ...styles.text,
-                color: category.textColor,
-              }}
-            >{`${index + 1}: ${category.name}`}</Text>
-          </View>
-          <Text style={styles.text} note>{`Assigned: ${itemsCount} Items`}</Text>
-          <Text style={styles.text} note>{`Print Category: ${printCategory?.shortName || 'None'}`}</Text>
-        </VStack>
-        <HStack w="80px" justifyContent="flex-end">
-          <Button bordered info small onPress={() => onSelect(category)} transparent>
-            <Text>Edit</Text>
-          </Button>
-        </HStack>
+    <HStack flex={1} alignItems="center" justifyContent="space-between" {...props}>
+      <VStack flex={1}>
+        <View style={{ ...styles.name, backgroundColor: category.backgroundColor }}>
+          <Text
+            style={{
+              ...styles.text,
+              color: category.textColor,
+            }}
+          >{`${index + 1}: ${category.name}`}</Text>
+        </View>
+        <Text style={styles.text} note>{`Assigned: ${itemsCount} Items`}</Text>
+        <Text style={styles.text} note>{`Print Category: ${printCategory?.shortName || 'None'}`}</Text>
+      </VStack>
+      <HStack w="80px" justifyContent="flex-end">
+        <Button bordered info small onPress={() => onSelect(category)} transparent>
+          <Text>Edit</Text>
+        </Button>
       </HStack>
-    </ListItem>
+    </HStack>
   );
 };
 

@@ -7,7 +7,7 @@ import { ConfirmationActionsheet } from '../../../../components/ConfirmationActi
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Actionsheet, Button, Container, HStack, Icon, ListItem, Text, View, useDisclose } from '../../../../core';
+import { Button, Container, Divider, HStack, Icon, Text, useDisclose, VStack } from '../../../../core';
 import type { PrinterGroup } from '../../../../models';
 import { ModalPrinterGroupDetails } from './ModalPrinterGroupDetails';
 import { PrinterGroupRow } from './PrinterGroupRow';
@@ -45,18 +45,17 @@ const PrinterGroupsTabInner: React.FC<PrinterGroupsTabOuterProps & PrinterGroups
   }
   return (
     <Container>
-      <List>
-        <ListItem itemDivider>
-          <HStack flex={1} alignItems="center" justifyContent="space-between">
-            <Text>Printer Groups</Text>
-            <HStack justifyContent="flex-end">
-              <Button iconLeft success small onPress={() => setIsModalOpen(true)}>
-                <Icon name="add-circle-outline" size={24} color="white"/>
-                <Text>Create</Text>
-              </Button>
-            </HStack>
+      <VStack>
+        <HStack flex={1} alignItems="center" justifyContent="space-between">
+          <Text>Printer Groups</Text>
+          <HStack justifyContent="flex-end">
+            <Button iconLeft success small onPress={() => setIsModalOpen(true)}>
+              <Icon name="add-circle-outline" size={24} color="white"/>
+              <Text>Create</Text>
+            </Button>
           </HStack>
-        </ListItem>
+        </HStack>
+        <Divider/>
         <ScrollView>
           {printerGroups.map(printerGroup => (
             <PrinterGroupRow
@@ -74,7 +73,7 @@ const PrinterGroupsTabInner: React.FC<PrinterGroupsTabOuterProps & PrinterGroups
             />
           ))}
         </ScrollView>
-      </List>
+      </VStack>
 
       <Modal isOpen={isModalOpen} onClose={onCancelHandler} style={{ maxWidth: 800 }}>
         <ModalPrinterGroupDetails printerGroup={selectedPrinterGroup} onClose={onCancelHandler} />

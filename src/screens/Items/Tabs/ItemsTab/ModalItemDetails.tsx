@@ -11,7 +11,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { useDisclose, Col, Form, Grid, H3, Icon, Input, List, ListItem, Picker, Row, Text } from '../../../../core';
+import { useDisclose, Form, Grid, H3, Icon, Input, Picker, Text, HStack, VStack, Divider } from '../../../../core';
 import type {
   Category,
   Item as ItemModel,
@@ -207,8 +207,8 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
             onPressDelete={onOpen}
           >
             <Grid>
-              <Row>
-                <Col style={styles.column}>
+              <HStack>
+                <VStack style={styles.column}>
                   <ScrollView>
                     <Form>
                       <H3 style={styles.heading}>Details</H3>
@@ -286,8 +286,8 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                       </ItemField>
                     </Form>
                   </ScrollView>
-                </Col>
-                <Col style={styles.column}>
+                </VStack>
+                <VStack style={styles.column}>
                   <Form>
                     <H3 style={styles.heading}>Prices</H3>
                     <ScrollView>
@@ -315,14 +315,13 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                       />
                     </ScrollView>
                   </Form>
-                </Col>
-                <Col style={{ ...styles.column, ...styles.modifierRow }}>
+                </VStack>
+                <VStack style={{ ...styles.column, ...styles.modifierRow }}>
                   <H3 style={styles.heading}>Modifiers</H3>
-                  <Row style={commonStyles.row}>
-                    <Col>
-                      <ListItem itemDivider>
-                        <Text>Assigned</Text>
-                      </ListItem>
+                  <HStack style={commonStyles.row}>
+                    <VStack>
+                      <Text>Assigned</Text>
+                      <Divider />
                       <ScrollView>
                         <List>
                           {selectedModifiers.map(m => (
@@ -330,11 +329,10 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                           ))}
                         </List>
                       </ScrollView>
-                    </Col>
-                    <Col>
-                      <ListItem itemDivider>
-                        <Text>Available</Text>
-                      </ListItem>
+                    </VStack>
+                    <VStack>
+                      <Text>Available</Text>
+                      <Divider />
                       <ScrollView>
                         <List>
                           {modifiers
@@ -348,10 +346,10 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                             ))}
                         </List>
                       </ScrollView>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+                    </VStack>
+                  </HStack>
+                </VStack>
+              </HStack>
             </Grid>
             {/* Delete Confirmation Actionsheet */}
             <ConfirmationActionsheet

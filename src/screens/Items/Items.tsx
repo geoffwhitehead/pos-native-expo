@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Loading } from '../../components/Loading/Loading';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
-import { Container, Icon, Label, ListItem, Picker, Tab, Tabs, Text } from '../../core';
+import { Container, Divider, HStack, Icon, Label, Picker, Tab, Tabs, Text } from '../../core';
 import type { Category } from '../../models';
 import type { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { CategoriesTab } from './Tabs/CategoriesTab/CategoriesTab';
@@ -36,7 +36,7 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
       <SidebarHeader title="Items" onOpen={() => navigation.openDrawer()} />
       <Tabs tabBarUnderlineStyle={styles.tabBarUnderline}>
         <Tab heading="Items" tabStyle={styles.tab} textStyle={styles.tabText} activeTabStyle={styles.activeTab} activeTextStyle={styles.activeTabText}>
-          <ListItem itemDivider style={styles.categoryPickerItem}>
+          <HStack style={styles.categoryPickerItem}>
             <Label>
               <Text style={styles.categoryPickerText}>Category: </Text>
             </Label>
@@ -56,7 +56,8 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
                 return <Picker.Item key={category.id} label={category.name} value={category} />;
               })}
             </Picker>
-          </ListItem>
+            <Divider/>
+          </HStack>
           {selectedCategory && <ItemsTab category={selectedCategory} />}
           {!selectedCategory && <Text>Select a category to show items...</Text>}
         </Tab>

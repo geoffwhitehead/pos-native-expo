@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native';
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, Container, HStack, Icon, Text, useDisclose } from '../../../../core';
+import { Button, Container, Divider, HStack, Icon, Text, useDisclose, VStack } from '../../../../core';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import type { Category, Item, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
@@ -73,8 +73,7 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
 
   return (
     <Container>
-      <List>
-        <ListItem itemDivider>
+      <VStack>
           <HStack flex={1} alignItems="center" justifyContent="space-between">
             <Text>Price Groups</Text>
             <HStack justifyContent="flex-end">
@@ -84,13 +83,10 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
               </Button>
             </HStack>
           </HStack>
-        </ListItem>
+          <Divider/>  
         <ScrollView>
           {priceGroups.map(priceGroup => (
-            <ListItem key={priceGroup.id} onPress={() => setSelectedPriceGroup(priceGroup)}
-            style={priceGroup === selectedPriceGroup ? commonStyles.selectedRow : {}}>
-            noIndent
-              <HStack flex={1} alignItems="center" justifyContent="space-between">
+              <HStack flex={1} alignItems="center" justifyContent="space-between" key={priceGroup.id} onTouchEnd={() => setSelectedPriceGroup(priceGroup)} style={priceGroup === selectedPriceGroup ? commonStyles.selectedRow : {}}>
                 <HStack flex={1}>
                   <Text>{priceGroup.name}</Text>
                 </HStack>
@@ -122,10 +118,9 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
                   </Button>
                 </HStack>
               </HStack>
-            </ListItem>
           ))}
         </ScrollView>
-      </List>
+      </VStack>
 
       <Modal isOpen={isModalOpen} onClose={onCancelHandler}>
         <PriceGroupDetails priceGroup={selectedPriceGroup} onClose={onCancelHandler} />

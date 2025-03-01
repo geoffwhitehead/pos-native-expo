@@ -11,9 +11,12 @@ import { ConfirmationActionsheet } from '../../../../components/ConfirmationActi
 import {
   Button,
   Container,
+  Divider,
   HStack,
   Icon,
+  Spinner,
   Text,
+  VStack,
   View,
   useDisclose,
 } from '../../../../core';
@@ -185,12 +188,11 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
 
   return (
     <Container>
-      <List>
-        <ListItem itemDivider>
-          <HStack flex={1} alignItems="center" justifyContent="space-between">
-            <Text>Installed Printers</Text>
-          </HStack>
-        </ListItem>
+      <VStack>
+        <HStack flex={1} alignItems="center" justifyContent="space-between">
+          <Text>Installed Printers</Text>
+        </HStack>
+        <Divider/>
         <ScrollView>
           {printers.map(p => (
             <PrinterRow
@@ -205,19 +207,18 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
             />
           ))}
         </ScrollView>
-      </List>
+      </VStack>
 
-      <List>
-        <ListItem itemDivider>
-          <HStack flex={1} alignItems="center" justifyContent="space-between">
-            <Text>Discover Printers</Text>
-            <HStack justifyContent="flex-end">
-              <Button small disabled={isLoading} onPress={discoverPrinters}>
-                <Text>Discover Printers</Text>
-              </Button>
-            </HStack>
+      <VStack>
+        <HStack flex={1} alignItems="center" justifyContent="space-between">
+          <Text>Discover Printers</Text>
+          <HStack justifyContent="flex-end">
+            <Button small disabled={isLoading} onPress={discoverPrinters}>
+              <Text>Discover Printers</Text>
+            </Button>
           </HStack>
-        </ListItem>
+        </HStack>
+        <Divider/>
         { discoveredPrinters.length === 0 ? (
           <Text style={{ padding: 10 }}> No printers found</Text>
         ) : (
@@ -226,29 +227,25 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
               const isInstalled = printers.find(printer => printer.macAddress?.replace(/:/g, '').toUpperCase() === discoveredPrinter._information?._detail._lan._macAddress);
 
               return (
-                <ListItem key={discoveredPrinter.connectionSettings.identifier}>
-                  <HStack flex={1} alignItems="center" justifyContent="space-between">
-                    <HStack flex={1}>
-                      <Text>{discoveredPrinter.information?._model}</Text>
-                    </HStack>
-                    <HStack flex={1} justifyContent="flex-end">
-                      <Text note>{discoveredPrinter.connectionSettings.interfaceType}</Text>
-                      <Text note>{discoveredPrinter.information?._detail?._lan?._ipAddress}</Text>
-                      <Text note>{discoveredPrinter.information?._detail?._lan?._macAddress}</Text>
-                    </HStack>
-                    <HStack flex={1} justifyContent="flex-end">
-                      {isInstalled ? (
-                        <Button small onPress={() => updatePrinter(discoveredPrinter)}>
-                          <Text>Update</Text>
-                        </Button>
-                      ) : (
-                        <Button small onPress={() => addPrinter(discoveredPrinter)}>
-                          <Text>Add</Text>
-                        </Button>
-                      )}
-                    </HStack>
-                  </HStack>
-                </ListItem>
+                <HStack flex={1} alignItems="center" justifyContent="space-between" key={discoveredPrinter.connectionSettings.identifier}>
+                  <Text>{discoveredPrinter.information?._model}</Text>
+                  <VStack flex={1} justifyContent="flex-end">
+                    <Text note>{discoveredPrinter.connectionSettings.interfaceType}</Text>
+                    <Text note>{discoveredPrinter.information?._detail?._lan?._ipAddress}</Text>
+                    <Text note>{discoveredPrinter.information?._detail?._lan?._macAddress}</Text>
+                  </VStack>
+                  <VStack flex={1} justifyContent="flex-end">
+                    {isInstalled ? (
+                      <Button small onPress={() => updatePrinter(discoveredPrinter)}>
+                        <Text>Update</Text>
+                      </Button>
+                    ) : (
+                      <Button small onPress={() => addPrinter(discoveredPrinter)}>
+                        <Text>Add</Text>
+                      </Button>
+                    )}
+                  </VStack>
+                </HStack>
               );
             })}
           </ScrollView>
@@ -256,7 +253,7 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
         {isLoading && (
           <Spinner />
         )}
-      </List>
+      </VStack>
 
       <Modal isOpen={!!selectedPrinter} onClose={onCancelHandler} style={{ maxWidth: 800 }}>
         <ModalPrinterDetails printer={selectedPrinter} onSave={onSave} onClose={onCancelHandler} isLoading={isSaving} />

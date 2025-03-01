@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, HStack, Icon, Spinner, Text, useDisclose, VStack } from '../../../../core';
+import { Box, Button, Divider, HStack, Icon, Spinner, Text, useDisclose, VStack } from '../../../../core';
 import type { Discount } from '../../../../models';
 import { formatNumber } from '../../../../utils';
 import { resolveButtonState } from '../../../../utils/helpers';
@@ -48,24 +48,23 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
   const isCreateDisabled = discounts.length >= organization.maxDiscounts;
 
   return (
-    <View>
-      <List>
-        <ListItem itemDivider>
-          <HStack flex={1} alignItems="center" justifyContent="space-between">
-            <Text>Discount</Text>
-            <HStack justifyContent="flex-end">
-              <Button
-                {...resolveButtonState(isCreateDisabled, 'success')}
-                iconLeft
-                small
-                onPress={() => setIsModalOpen(true)}
-              >
-                <Icon name="add-circle-outline" size={24} color="white"/>
-                <Text>Create</Text>
-              </Button>
-            </HStack>
+    <Box>
+      <VStack>
+        <HStack flex={1} alignItems="center" justifyContent="space-between">
+          <Text>Discount</Text>
+          <HStack justifyContent="flex-end">
+            <Button
+              {...resolveButtonState(isCreateDisabled, 'success')}
+              iconLeft
+              small
+              onPress={() => setIsModalOpen(true)}
+            >
+              <Icon name="add-circle-outline" size={24} color="white"/>
+              <Text>Create</Text>
+            </Button>
           </HStack>
-        </ListItem>
+        </HStack>
+        <Divider/>
         <ScrollView>
           {discounts.map(discount => {
             const amountString = discount.isPercent
@@ -73,11 +72,7 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
               : formatNumber(discount.amount, organization.currency);
 
             return (
-              <ListItem 
-                key={discount.id} 
-                onPress={() => setSelectedDiscount(discount)}
-              >
-                <HStack flex={1} alignItems="center" justifyContent="space-between">
+                <HStack flex={1} alignItems="center" justifyContent="space-between"  key={discount.id} onTouchEnd={() => setSelectedDiscount(discount)}>
                   <HStack flex={1} style={selectedDiscount === discount ? commonStyles.selectedRow : {}}>
                     <VStack>
                       <Text>{discount.name}</Text>
@@ -102,12 +97,11 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
                     </Button>
                   </HStack>
                 </HStack>
-              </ListItem>
             );
           })}
           {isCreateDisabled && <Text>Max discounts reached</Text>}
         </ScrollView>
-      </List>
+      </VStack>
       <Modal isOpen={isModalOpen} onClose={onCancelHandler} style={{ maxWidth: 600 }}>
         <ModalDiscountDetails discount={selectedDiscount} onClose={onCancelHandler} />
       </Modal>
@@ -118,7 +112,7 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
         onConfirm={() => discountToDelete && onDelete(discountToDelete)}
         message="Are you sure?"
       />
-    </View>
+    </Box>
   );
 };
 

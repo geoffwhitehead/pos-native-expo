@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { HStack, Icon, ListItem, Text } from '../../../../../core';
+import { HStack, Icon, Text } from '../../../../../core';
 import type { Item, ItemPrice } from '../../../../../models';
 import { formatNumber } from '../../../../../utils';
 
@@ -29,14 +29,7 @@ const CategoryItemRowInner: React.FC<CategoryItemRowOuterProps & CategoryItemRow
   const onPress = () => onPressItem(item, modifierCount);
 
   return (
-    <ListItem
-      {...props}
-      style={isActive ? styles.activeRow : { backgroundColor: 'white' }}
-      icon
-      key={item.id}
-      onPress={onPress}
-    >
-      <HStack flex={1} alignItems="center" justifyContent="space-between">
+      <HStack flex={1} alignItems="center" justifyContent="space-between" style={isActive ? styles.activeRow : { backgroundColor: 'white' }} key={item.id} onTouchEnd={onPress} {...props}>
         <HStack flex={1}>
           <Text>{item.name}</Text>
         </HStack>
@@ -47,7 +40,6 @@ const CategoryItemRowInner: React.FC<CategoryItemRowOuterProps & CategoryItemRow
           <Text style={{ color: 'grey' }}>{formatNumber(itemPrice.price, currency)}</Text>
         </HStack>
       </HStack>
-    </ListItem>
   );
 };
 

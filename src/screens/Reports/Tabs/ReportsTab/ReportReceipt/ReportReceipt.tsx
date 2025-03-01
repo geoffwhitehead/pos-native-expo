@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Loading } from '../../../../../components/Loading/Loading';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
-import { Col, Content, HStack, List, ListItem, Separator, Text } from '../../../../../core';
+import { Content, Divider, HStack, Separator, Text, VStack, Box } from '../../../../../core';
 import type { BillPeriod } from '../../../../../models';
 import type { PeriodReportData} from '../../../../../services/printer/periodReport';
 import { periodReportData } from '../../../../../services/printer/periodReport';
@@ -65,10 +65,8 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
   } = reportData;
 
   return (
-    <Col style={styles.rightColumn}>
-      <Row>
-        <Content>
-          <List>
+        <Content style={styles.rightColumn}>
+          <VStack>
             <Separator bordered>
               <Text>Category Totals</Text>
             </Separator>
@@ -78,65 +76,54 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
                 return null;
               }
               return (
-                <ListItem key={categoryId}>
-                  <HStack flex={1} alignItems="center" justifyContent="space-between">
+                  <HStack flex={1} alignItems="center" justifyContent="space-between" key={categoryId}>
                     <Text>{category.name}</Text>
                     <Text style={styles.listItemRight}>{`${count} / ${formatNumber(total, currency)}`}</Text>
                   </HStack>
-                </ListItem>
               );
             })}
-            <ListItem>
-              <HStack flex={1} alignItems="center" justifyContent="space-between">
-                <Text>Total</Text>
-                <Text style={styles.listItemRight}>{`${categoryTotals.count} / ${formatNumber(categoryTotals.total, currency)}`}</Text>
-              </HStack>
-            </ListItem>
+
+            <HStack flex={1} alignItems="center" justifyContent="space-between">
+              <Text>Total</Text>
+              <Text style={styles.listItemRight}>{`${categoryTotals.count} / ${formatNumber(categoryTotals.total, currency)}`}</Text>
+            </HStack>
             <Separator bordered>
               <Text>Modifier Totals</Text>
             </Separator>
             {modifierTotals.breakdown.map(({ modifierName, breakdown, total, count }) => {
               return (
-                <>
-                  <ListItem itemDivider key={modifierName}>
+                <Box key={modifierName}>
                     <HStack flex={1} alignItems="center" justifyContent="space-between">
                       <Text>{modifierName}</Text>
                       <Text style={styles.listItemRight}>{`${count} / ${formatNumber(total, currency)}`}</Text>
                     </HStack>
-                  </ListItem>
+                    <Divider/>
                   {breakdown.map(({ modifierItemName, total, count }) => {
                     return (
-                      <ListItem key={modifierName + modifierItemName}>
-                        <HStack flex={1} alignItems="center" justifyContent="space-between">
+                        <HStack flex={1} alignItems="center" justifyContent="space-between" key={modifierName + modifierItemName}>
                           <Text>{modifierItemName}</Text>
                           <Text style={styles.listItemRight}>{`${count} / ${formatNumber(total, currency)}`}</Text>
                         </HStack>
-                      </ListItem>
                     );
                   })}
-                </>
+                </Box>
               );
             })}
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Total</Text>
                 <Text style={styles.listItemRight}>{`${modifierTotals.count} / ${formatNumber(modifierTotals.total, currency)}`}</Text>
               </HStack>
-            </ListItem>
             <Separator bordered>
               <Text>Price Group Totals (excl discounts)</Text>
             </Separator>
             {priceGroupTotals.map(({ name, total, count }) => {
               return (
-                <ListItem key={name}>
-                  <HStack flex={1} alignItems="center" justifyContent="space-between">
+                  <HStack flex={1} alignItems="center" justifyContent="space-between" key={name}>
                     <Text>{name}</Text>
                     <Text style={styles.listItemRight}>{`${count} / ${formatNumber(total, currency)}`}</Text>
                   </HStack>
-                </ListItem>
               );
             })}
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Total</Text>
                 <Text style={styles.listItemRight}>{`${sumBy(priceGroupTotals, ({ count }) => count)} / ${formatNumber(
@@ -144,30 +131,24 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
                   currency,
                 )}`}</Text>
               </HStack>
-            </ListItem>
             <Separator bordered>
               <Text>Discount Totals</Text>
             </Separator>
             {discountTotals.breakdown.map(({ name, total, count }) => {
               return (
-                <ListItem key={name}>
-                  <HStack flex={1} alignItems="center" justifyContent="space-between">
+                  <HStack flex={1} alignItems="center" justifyContent="space-between" key={name}>
                     <Text>{name}</Text>
                     <Text style={styles.listItemRight}>{`${count} / ${formatNumber(total, currency)}`}</Text>
                   </HStack>
-                </ListItem>
               );
             })}
             <Separator bordered>
               <Text>Complimentary Totals</Text>
             </Separator>
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Items</Text>
                 <Text style={styles.listItemRight}>{`${compBillItems.length} / ${formatNumber(sumBy(compBillItems, 'itemPrice'), currency)}`}</Text>
               </HStack>
-            </ListItem>
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Modifiers</Text>
                 <Text style={styles.listItemRight}>{`${compBillItemModifierItems.length} / ${formatNumber(
@@ -175,60 +156,45 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
                   currency,
                 )}`}</Text>
               </HStack>
-            </ListItem>
 
             <Separator bordered>
               <Text>Payment Totals</Text>
             </Separator>
             {paymentTotals.breakdown.map(({ name, total, count }) => {
               return (
-                <ListItem key={name}>
-                  <HStack flex={1} alignItems="center" justifyContent="space-between">
+                  <HStack flex={1} alignItems="center" justifyContent="space-between" key={name}>
                     <Text>{capitalize(name)}</Text>
                     <Text style={styles.listItemRight}>{`${count} / ${formatNumber(total, currency)}`}</Text>
                   </HStack>
-                </ListItem>
               );
             })}
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Total</Text>
                 <Text style={styles.listItemRight}>{`${paymentTotals.count} / ${formatNumber(paymentTotals.total, currency)}`}</Text>
               </HStack>
-            </ListItem>
 
             {/* BILLS */}
             <Separator bordered>
               <Text>Total</Text>
             </Separator>
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Number of bills</Text>
                 <Text style={styles.listItemRight}>{bills.length.toString()}</Text>
               </HStack>
-            </ListItem>
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Voids</Text>
                 <Text style={styles.listItemRight}>{`${voidCount} / ${formatNumber(voidTotal, currency)}`}</Text>
               </HStack>
-            </ListItem>
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Discounts: </Text>
                 <Text style={styles.listItemRight}>{`${discountTotals.count} / ${formatNumber(discountTotals.total, currency)}`}</Text>
               </HStack>
-            </ListItem>
-            <ListItem>
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Sales Total: </Text>
                 <Text style={styles.listItemRight}>{formatNumber(salesTotal, currency)}</Text>
               </HStack>
-            </ListItem>
-          </List>
+          </VStack>
         </Content>
-      </Row>
-    </Col>
   );
 };
 

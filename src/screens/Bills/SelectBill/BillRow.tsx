@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
-import { Badge, HStack, ListItem, Text, View } from '../../../core';
+import { Badge, HStack, Text } from '../../../core';
 import type {
   Bill,
   BillCallLog,
@@ -125,25 +125,23 @@ export const WrappedBillRow: React.FC<BillRowInnerProps & BillRowOuterProps> = (
   const badgeType = hasPrintErrors ? 'danger' : hasUnsentItems ? 'warning' : hasPendingPrintItems ? 'info' : null;
 
   return (
-    <ListItem noIndent style={styles.openBill} key={bill.id} onPress={() => onSelectBill(bill)}>
-      <HStack flex={1} alignItems="center" justifyContent="space-between">
-        <HStack w="120px" alignItems="center" space={2}>
-          <Text style={styles.rowText}>{rowText}</Text>
-          {badgeType && (
-            <Badge {...{ [badgeType]: true }} style={{ marginBottom: 5 }}>
-              <Text note style={{ color: 'white' }}>
-                {text}
-              </Text>
-            </Badge>
-          )}
+        <HStack style={styles.openBill} flex={1} alignItems="center" justifyContent="space-between" key={bill.id} onTouchEnd={() => onSelectBill(bill)}>
+          <HStack w="120px" alignItems="center" space={2}>
+            <Text style={styles.rowText}>{rowText}</Text>
+            {badgeType && (
+              <Badge {...{ [badgeType]: true }} style={{ marginBottom: 5 }}>
+                <Text note style={{ color: 'white' }}>
+                  {text}
+                </Text>
+              </Badge>
+            )}
+          </HStack>
+          <HStack flex={1} justifyContent="flex-end" space={2}>
+            <Text note>{`Opened: ${dayjs(bill.createdAt).format('h:mm a')}`}</Text>
+            <Text note>{`Last Called: ${lastCalledAt ? lastCalledAt.format('h:mm a') : ''}`}</Text>
+            <Text style={styles.totalText}>{totalText}</Text>
+          </HStack>
         </HStack>
-        <HStack flex={1} justifyContent="flex-end" space={2}>
-          <Text note>{`Opened: ${dayjs(bill.createdAt).format('h:mm a')}`}</Text>
-          <Text note>{`Last Called: ${lastCalledAt ? lastCalledAt.format('h:mm a') : ''}`}</Text>
-          <Text style={styles.totalText}>{totalText}</Text>
-        </HStack>
-      </HStack>
-    </ListItem>
   );
 };
 

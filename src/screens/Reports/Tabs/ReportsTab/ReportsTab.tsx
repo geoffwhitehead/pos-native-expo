@@ -10,16 +10,15 @@ import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
 import {
   Button,
-  Col,
   Container,
+  Divider,
   Grid,
   HStack,
-  List,
-  ListItem,
   Spinner,
   Text,
   Toast,
   View,
+  VStack,
 } from '../../../../core';
 import type { BillPeriod, Organization, PaymentType, Printer } from '../../../../models';
 import type { SidebarDrawerStackParamList } from '../../../../navigators/SidebarNavigator';
@@ -99,17 +98,15 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
 
   return (
     <Container>
-      <Grid>
-        <Col>
-          <ListItem itemHeader first>
+      <HStack>
+        <VStack>
             <Text style={{ fontWeight: 'bold' }}>Recent bill periods</Text>
-          </ListItem>
+            <Divider/>
           <ScrollView>
-            <List>
+            <VStack>
               {billPeriods.map(billPeriod => {
                 return (
-                  <ListItem key={billPeriod.id} style={billPeriod.id === selectedBillPeriod?.id ? { marginLeft: 0, paddingLeft: 14, backgroundColor: 'lightblue' } : {}} selected={billPeriod.id === selectedBillPeriod?.id} onPress={() => setSelectedBillPeriod(billPeriod)}>
-                    <HStack flex={1} alignItems="center" justifyContent="space-between">
+                    <HStack flex={1} alignItems="center" justifyContent="space-between" key={billPeriod.id} style={billPeriod.id === selectedBillPeriod?.id ? { marginLeft: 0, paddingLeft: 14, backgroundColor: 'lightblue' } : {}} onTouchEnd={() => setSelectedBillPeriod(billPeriod)}>
                       <View style={{ display: 'flex' }}>
                         <Text>{`Opened: ${dayjs(billPeriod.createdAt).format('ddd DD/MM/YYYY HH:mm:ss')}`}</Text>
                         <Text>
@@ -164,13 +161,12 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
                         )}
                       </HStack>
                     </HStack>
-                  </ListItem>
                 );
               })}
-            </List>
+            </VStack>
             {isLoading && <Spinner />}
           </ScrollView>
-        </Col>
+        </VStack>
         {selectedBillPeriod && (
           <ReportReceipt
             billPeriod={selectedBillPeriod}
@@ -181,7 +177,7 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
             // onPressPrint={() => onPrintPeriodReport(selectedBillPeriod)}
           />
         )}
-      </Grid>
+      </HStack>
 
       <ConfirmationActionsheet
         isOpen={isOpen}

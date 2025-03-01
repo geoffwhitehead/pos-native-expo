@@ -12,7 +12,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Modal } from '../../../../components/Modal/Modal';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Actionsheet, Button, Content, Form, Icon, Input, List, ListItem, Text, useDisclose } from '../../../../core';
+import { Actionsheet, Button, Content, Form, Icon, Input, List, Text, useDisclose, VStack } from '../../../../core';
 import type { Bill, BillDiscount, BillItem, BillPayment, PaymentType } from '../../../../models';
 import type { BillSummary } from '../../../../utils';
 import { moderateScale } from '../../../../utils/scaling';
@@ -106,7 +106,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
 
   return (
     <View style={styles.container}>
-      <List style={styles.receiptItems}>
+      <VStack style={styles.receiptItems}>
         <BillCalls bill={bill} />
         <ItemsBreakdown bill={bill} readonly={readonly} onSelect={billItemDialog} />
         <DiscountsBreakdown
@@ -121,7 +121,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
           payments={billPayments}
           paymentTypes={paymentTypes}
         />
-      </List>
+      </VStack>
       <Modal onClose={onCloseModalHandler} isOpen={isReasonModalOpen}>
         <ModalReason
           onClose={onCloseModalHandler}

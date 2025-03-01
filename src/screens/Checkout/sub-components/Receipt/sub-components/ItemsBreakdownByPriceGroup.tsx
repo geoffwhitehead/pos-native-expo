@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React, { useContext } from 'react';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
-import { ListItem, Text, View } from '../../../../../core';
+import { Divider, HStack, Text, View } from '../../../../../core';
 import type { Bill, BillItem, PriceGroup } from '../../../../../models';
 import { ItemBreakdown } from './ItemBreakdown';
 
@@ -26,10 +26,11 @@ export const ItemsBreakdownByPriceGroupInner: React.FC<ItemsBreakdownByPriceGrou
 
   return (
     <View {...props}>
-      <ListItem itemDivider first style={{ backgroundColor: priceGroup.color || '#f4f4f4' }}>
+      <HStack style={{ backgroundColor: priceGroup.color || '#f4f4f4' }}>
         <Text style={{ fontWeight: 'bold' }}>{priceGroup.name}</Text>
         <Text>{` (${billItemsCount} items) `}</Text>
-      </ListItem>
+        <Divider/>
+      </HStack>
       {billItems.map(billItem => (
         <ItemBreakdown
           key={billItem.id}

@@ -4,7 +4,7 @@ import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import { keyBy } from 'lodash';
 import React from 'react';
-import { ListItem, Text } from '../../../../../../core';
+import { Divider, Text } from '../../../../../../core';
 import type { Modifier, ModifierItem, ModifierItemPrice, PriceGroup } from '../../../../../../models';
 import { ModifierItemRow } from './ModifierItemRow';
 import { tableNames } from '../../../../../../models/tableNames';
@@ -52,9 +52,8 @@ const WrappedModifierGroup: React.FC<ModifierGroupInnerProps & ModifierGroupOute
 
   return (
     <>
-      <ListItem itemHeader>
-        <Text>{name}</Text>
-      </ListItem>
+      <Text>{name}</Text>
+      <Divider />
       {hasNoPricesSet && (
         <Text style={{ paddingTop: 15, paddingBottom: 15 }} note>
           No prices have been set for this modifier in this price group. You can set modifier item prices by navigating

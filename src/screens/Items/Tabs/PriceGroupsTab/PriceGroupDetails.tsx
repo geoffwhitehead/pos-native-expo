@@ -9,7 +9,7 @@ import { ModalContentButton } from '../../../../components/Modal/ModalContentBut
 import { ModalColorPickerContent } from '../../../../components/ModalColorPicker/ModalColorPicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { RecentColorsContext } from '../../../../contexts/RecentColorsContext';
-import { Body, CheckBox, Form, Input, ListItem, Text, View } from '../../../../core';
+import { Body, Box, CheckBox, Form, Input, Text, View } from '../../../../core';
 import type {
   Item as ItemModel,
   ItemPrice,
@@ -144,16 +144,17 @@ export const PriceGroupDetails: React.FC<PriceGroupDetailsProps> = ({ priceGroup
                   <Input onChangeText={handleChange('shortName')} onBlur={handleBlur('shortName')} value={shortName} />
                 </ItemField>
 
-                <ListItem>
+<Box>
+
                   <CheckBox
                     checked={isPrepTimeRequired}
                     onPress={() => setFieldValue('isPrepTimeRequired', !isPrepTimeRequired)}
                     onBlur={handleBlur('isPrepTimeRequired')}
-                  />
+                    />
                   <Body>
                     <Text>Is prep time required</Text>
                   </Body>
-                </ListItem>
+                    </Box>
 
                 <ItemField
                   style={styles.colorPickerItem}

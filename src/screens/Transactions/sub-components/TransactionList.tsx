@@ -7,7 +7,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { SwitchSelector } from '../../../components/SwitchSelector/SwitchSelector';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
-import { List, ListItem, Text } from '../../../core';
+import { Divider, HStack, Text, VStack } from '../../../core';
 import type { Bill, PaymentType } from '../../../models';
 import { TransactionGroupingEnum, TransactionOrderEnum } from '../../../models/Organization';
 import { TransactionListRow } from './TransactionListRow';
@@ -55,8 +55,8 @@ export const TransactionListInner: React.FC<TransactionListOuterProps & Transact
   const isGrouped = transactionGrouping === TransactionGroupingEnum.grouped;
 
   return (
-    <List>
-      <ListItem style={{}}>
+    <VStack>
+      <HStack style={{}}>
         <SwitchSelector
           options={[
             { label: 'Descending', value: TransactionOrderEnum.descending },
@@ -75,32 +75,33 @@ export const TransactionListInner: React.FC<TransactionListOuterProps & Transact
           onPress={value => setTransactionGrouping(value)}
           style={{ paddingRight: 10, width: 300 }}
         />
-      </ListItem>
+      </HStack>
 
       {hasNoTransactions ? (
         <Text style={{ padding: 15 }}>There aren't any completed transactions ...</Text>
       ) : isGrouped ? (
         <ScrollView>
           {Object.entries(sortedBillsGrouped).map(([billReference, sortedBillsByReference = []]) => {
-            return [
-              <ListItem key={`${billReference}-seperator`} itemDivider>
+            return (
+              <VStack key={`${billReference}-seperator`} itemDivider>
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{`Bill: ${billReference}`}</Text>
-              </ListItem>,
-              ...sortedBillsByReference.map(bill => {
-                const isSelected = selectedBill && bill.id === selectedBill.id;
-
-                return (
-                  <TransactionListRow
+                <Divider/>
+                {sortedBillsByReference.map(bill => {
+                  const isSelected = selectedBill && bill.id === selectedBill.id;
+                  return (
+                    <TransactionListRow
                     key={bill.id}
                     paymentTypes={paymentTypes}
                     bill={bill}
                     isSelected={isSelected}
                     onSelectBill={onSelectBill}
                     showBillRef={false}
-                  />
-                );
-              }),
-            ];
+                    />
+                  );
+                })}
+              </VStack>
+            )
+            
           })}
         </ScrollView>
       ) : (
@@ -119,7 +120,7 @@ export const TransactionListInner: React.FC<TransactionListOuterProps & Transact
           })}
         </ScrollView>
       )}
-    </List>
+    </VStack>
   );
 };
 

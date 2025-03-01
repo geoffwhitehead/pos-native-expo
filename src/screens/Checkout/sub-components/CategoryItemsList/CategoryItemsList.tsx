@@ -12,7 +12,7 @@ import { CurrentBillContext } from '../../../../contexts/CurrentBillContext';
 import { ItemPricesContext } from '../../../../contexts/ItemPricesContext';
 import { ItemsContext } from '../../../../contexts/ItemsContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, HStack, List, ListItem, Text, View } from '../../../../core';
+import { Button, HStack, Text, View, VStack } from '../../../../core';
 import type { Item, ItemPrice, Modifier, PriceGroup } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import type { CheckoutItemStackParamList } from '../../../../navigators/CheckoutItemNavigator';
@@ -117,17 +117,15 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
 
   return (
     <>
-      <ListItem itemHeader first>
-        <HStack flex={1} alignItems="center" justifyContent="space-between">
-          <Button small bordered info onPress={goBack} iconLeft>
-            <Text style={{ fontWeight: 'bold' }}>Back</Text>
-          </Button>
-        </HStack>
-      </ListItem>
+      <HStack flex={1} alignItems="center" justifyContent="flex-start">
+        <Button small bordered info onPress={goBack} iconLeft>
+          <Text style={{ fontWeight: 'bold' }}>Back</Text>
+        </Button>
+      </HStack>
       <SearchHeader onChangeText={onSearchHandler} value={searchValue} />
       <ScrollView>
         {isListType && (
-          <List>
+          <VStack>
             {Object.entries(itemsToDisplay).map(([key, items]) => {
               if (items.length === 0) {
                 return null;
@@ -136,12 +134,10 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
               return (
                 <View key={`${key}-divider`}>
                   {itemListViewType === ItemListViewType.listWithHeader && (
-                    <ListItem itemDivider style={{ backgroundColor: 'lightgrey' }}>
-                      <HStack flex={1} alignItems="center" justifyContent="space-between">
-                        <Text>{key}</Text>
-                      </HStack>
-                    </ListItem>
-                  )}
+                    <HStack flex={1} alignItems="center" justifyContent="space-between" style={{ backgroundColor: 'lightgrey' }}>
+                      <Text>{key}</Text>
+                    </HStack>
+                )}
                   {items.map(item => {
                     const itemPrice = groupedItemPrices[priceGroup.id][item.id];
                     return (
@@ -158,7 +154,7 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
                 </View>
               );
             })}
-          </List>
+          </VStack>
         )}
       </ScrollView>
       <Modal onClose={onCancelHandler} isOpen={modalOpen}>

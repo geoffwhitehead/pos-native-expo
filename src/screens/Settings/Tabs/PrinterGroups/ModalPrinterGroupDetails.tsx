@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { Col, Form, Input, List, ListItem, Row, Text } from '../../../../core';
+import { Divider, Form, HStack, Input, Text, VStack } from '../../../../core';
 import type { PrinterGroup, PrinterGroupPrinter } from '../../../../models';
 import type { Printer } from '../../../../models/Printer';
 import { PrinterRowChoice } from '../PrintersTab/PrinterRowChoice';
@@ -115,39 +115,29 @@ const ModalPrinterGroupDetailsInner: React.FC<ModalPrinterGroupDetailsOuterProps
             size="medium"
           >
             <ScrollView>
-              <Row>
-                <Col>
-                  <Form style={commonStyles.form}>
-                    <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
-                      <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
-                    </ItemField>
-                  </Form>
-                </Col>
-              </Row>
-              <Row>
-                <Col style={s.pl}>
-                  <List>
-                    <ListItem itemDivider>
-                      <Text>Assigned</Text>
-                    </ListItem>
-                    {selectedPrinters.map(p => (
-                      <PrinterRowChoice arrowDir="right" printer={p} onSelect={() => togglePrinter(p)} />
-                    ))}
-                  </List>
-                </Col>
-                <Col style={s.pr}>
-                  <List>
-                    <ListItem itemDivider>
-                      <Text>Available</Text>
-                    </ListItem>
+              <Form style={commonStyles.form}>
+                <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
+                  <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
+                </ItemField>
+              </Form>
+              <HStack>
+                <VStack style={s.pl}>
+                  <Text>Assigned</Text>
+                  <Divider/>
+                  {selectedPrinters.map(p => (
+                    <PrinterRowChoice arrowDir="right" printer={p} onSelect={() => togglePrinter(p)} />
+                  ))}
+                </VStack>
+                  <VStack style={s.pr}> 
+                    <Text>Available</Text>
+                    <Divider/>
                     {printers
                       .filter(p => !selectedPrinters.includes(p))
                       .map(p => (
                         <PrinterRowChoice arrowDir="left" printer={p} onSelect={() => togglePrinter(p)} />
                       ))}
-                  </List>
-                </Col>
-              </Row>
+                  </VStack>
+              </HStack>
             </ScrollView>
           </ModalContentButton>
         );

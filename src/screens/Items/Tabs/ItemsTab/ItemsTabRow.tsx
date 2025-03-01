@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { HStack, ListItem, Text } from '../../../../core';
+import { HStack, Text } from '../../../../core';
 import type { Item } from '../../../../models';
 
 interface ItemsTabRowOuterProps {
@@ -23,21 +23,20 @@ const ItemsTabRowInner: React.FC<ItemsTabRowOuterProps & ItemsTabRowInnerProps> 
   subtitle,
   onPressItem,
   index,
+  isActive
 }) => {
   return (
-    <ListItem onPress={() => onPressItem(item)} style={[item.isActive && styles.activeRow]}>
-      <HStack flex={1} alignItems="center" justifyContent="space-between">
-        <HStack flex={1} style={styles.item}>
-          <Text>{`${index + 1}: ${title}`}</Text>
-          {!!subtitle && (
-            <Text note>{subtitle}</Text>
-          )}
-        </HStack>
-        <HStack w="80px" justifyContent="flex-end">
-          <Text>Edit</Text>
-        </HStack>
+    <HStack flex={1} alignItems="center" justifyContent="space-between" onTouchEnd={() => onPressItem(item)} style={[isActive && styles.activeRow]}>
+      <HStack flex={1} style={styles.item}>
+        <Text>{`${index + 1}: ${title}`}</Text>
+        {!!subtitle && (
+          <Text note>{subtitle}</Text>
+        )}
       </HStack>
-    </ListItem>
+      <HStack w="80px" justifyContent="flex-end">
+        <Text>Edit</Text>
+      </HStack>
+    </HStack>
   );
 };
 

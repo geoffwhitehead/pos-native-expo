@@ -6,7 +6,7 @@ import SwitchSelector from 'react-native-switch-selector';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { Form, Input, ListItem, View } from '../../../../core';
+import { Form, Input, View } from '../../../../core';
 import type { Discount } from '../../../../models';
 import { commonStyles } from '../styles';
 import { tableNames } from '../../../../models/tableNames';
@@ -98,17 +98,15 @@ export const ModalDiscountDetails: React.FC<ModalDiscountDetailsProps> = ({ disc
                   <Input onChangeText={handleChange('amount')} onBlur={handleBlur('amount')} value={amount} />
                 </ItemField>
 
-                <ListItem>
-                  <SwitchSelector
-                    options={[
-                      { label: 'Fixed Amount', value: 0 },
-                      { label: 'Percentage', value: 1 },
-                    ]}
-                    initial={isPercent ? 1 : 0}
-                    onPress={value => setFieldValue('isPercent', !!value)}
-                    style={{ paddingRight: 10 }}
-                  />
-                </ListItem>
+                <SwitchSelector
+                  options={[
+                    { label: 'Fixed Amount', value: 0 },
+                    { label: 'Percentage', value: 1 },
+                  ]}
+                  initial={isPercent ? 1 : 0}
+                  onPress={value => setFieldValue('isPercent', !!value)}
+                  style={{ paddingRight: 10 }}
+                />
               </Form>
             </View>
           </ModalContentButton>

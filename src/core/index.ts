@@ -39,6 +39,8 @@ export {
   Title,
   Toast,
   View,
+  Divider,
+  Box
 } from 'native-base';
 
 export { Ionicons as Icon} from '@expo/vector-icons';

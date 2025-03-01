@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { Form, Icon, Input, Label, List, ListItem, Picker, Text, View } from '../../../../core';
+import { Form, HStack, Icon, Input, Label, Picker, Text, View, VStack } from '../../../../core';
 import { database } from '../../../../database';
 import type { Category, Item, ItemPrice, PriceGroup } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
@@ -115,7 +115,7 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
             <>
               {pricesUpdatedSucessfully && <Text style={styles.pricesUpdatedText}>Prices updated successfully</Text>}
 
-              <ListItem first style={styles.categoryPickerItem}>
+              <HStack style={styles.categoryPickerItem}>
                 <Label>
                   <Text style={styles.categoryPickerText}>Category: </Text>
                 </Label>
@@ -133,12 +133,12 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
                     return <Picker.Item key={category.id} label={category.name} value={category} iosIcon={<Icon name="chevron-forward-outline" color="white" size={24} />} />;
                   })}
                 </Picker>
-              </ListItem>
+              </HStack>
               {!selectedCategory && <Text>Select a category to show items...</Text>}
               {selectedCategory && (
                 <ScrollView>
                   <Form>
-                    <List>
+                    <VStack>
                       <FieldArray
                         name="prices"
                         render={() => {
@@ -167,7 +167,7 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
                           });
                         }}
                       />
-                    </List>
+                    </VStack>
                   </Form>
                 </ScrollView>
               )}

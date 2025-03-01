@@ -16,7 +16,7 @@ import { SwitchSelector } from '../../../../components/SwitchSelector/SwitchSele
 import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Button, Form, Icon, Item, Label, ListItem, Picker, Spinner, Text, View } from '../../../../core';
+import { Button, Form, HStack, Icon, Item, Label, Picker, Spinner, Text, VStack, Box } from '../../../../core';
 import type { BillItem, Category, PriceGroup } from '../../../../models';
 import { print } from '../../../../services/printer/printer';
 import { stockReport } from '../../../../services/printer/stockReport';
@@ -153,7 +153,7 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
   const chartHeight = 200 + 20 * graphData.length;
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Box style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text style={{ marginBottom: 20 }}>I disabled this section, need to spend more time updating it.</Text>
       <LottieView
         style={{ height: 250, width: 250 }}
@@ -161,158 +161,158 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
         autoPlay={true}
         loop={true}
       />
-    </View>
+    </Box>
   )
-  return (
-    <>
-      <ListItem itemHeader first>
-        <Text style={{ fontWeight: 'bold' }}>Item Sales over range</Text>
-      </ListItem>
-      <ListItem style={{ flexDirection: 'row', width: '100%' }}>
-        <Form style={{ flexDirection: 'row' }}>
-          <Item stackedLabel style={{ borderBottomWidth: 0, width: moderateScale(200) }} onPress={handlePressStartDate}>
-            <Label>Start Date</Label>
-            <Text style={styles.dateLabel}>{`${dayjs(startDate).format('DD/MM/YYYY')}`}</Text>
-          </Item>
-          <Item stackedLabel style={{ borderBottomWidth: 0, width: moderateScale(200) }} onPress={handlePressEndDate}>
-            <Label>End Date</Label>
-            <Text style={styles.dateLabel}>{`${dayjs(endDate).format('DD/MM/YYYY')}`}</Text>
-          </Item>
-        </Form>
-        <Button
-          small
-          style={{ margin: 10, alignSelf: 'flex-end' }}
-          onPress={onPrintStockReport}
-          disabled={isLoading}
-          {...resolveButtonState(isLoading, 'info')}
-        >
-          <Text>Print Report</Text>
-        </Button>
-      </ListItem>
-      <ListItem itemDivider style={styles.categoryPickerItem}>
-        <Label>
-          <Text style={styles.categoryPickerText}>Price Group: </Text>
-        </Label>
-        <Picker
-          mode="dropdown"
-          iosHeader="Select a price group"
-          iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
-          placeholder="Select a price group"
-          selectedValue={selectedPriceGroup}
-          onValueChange={pg => setSelectedPriceGroup(pg)}
-          textStyle={{
-            paddingLeft: 0,
-            paddingRight: 0,
-          }}
-        >
-          {[
-            <Picker.Item key="all-pricegroups" label="All" value={null} />,
-            ...priceGroups.map(priceGroup => {
-              return <Picker.Item key={priceGroup.id} label={priceGroup.name} value={priceGroup} />;
-            }),
-          ]}
-        </Picker>
-        <Label>
-          <Text style={styles.categoryPickerText}>Category: </Text>
-        </Label>
-        <Picker
-          mode="dropdown"
-          iosHeader="Select a category"
-          iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
-          placeholder="Select a category"
-          selectedValue={selectedCategory}
-          onValueChange={c => setSelectedCategory(c)}
-          textStyle={{
-            paddingLeft: 0,
-            paddingRight: 0,
-          }}
-        >
-          {[
-            <Picker.Item key="all-categories" label="All" value={null} />,
-            ...categories.map(category => {
-              return <Picker.Item key={category.id} label={category.name} value={category} />;
-            }),
-          ]}
-        </Picker>
-        <SwitchSelector
-          options={[
-            { label: 'Alpha', value: SortTypeEnum.alphabetical },
-            { label: 'Ascending', value: SortTypeEnum.ascending },
-            { label: 'Descending', value: SortTypeEnum.descending },
-          ]}
-          initial={sortType}
-          onPress={value => setSortType(value as SortTypeEnum)}
-          style={{ width: moderateScale(400), marginRight: 5 }}
-        />
-      </ListItem>
-      {isGraphLoading && <Spinner />}
+  // return (
+  //   <>
+  //     <ListItem itemHeader first>
+  //       <Text style={{ fontWeight: 'bold' }}>Item Sales over range</Text>
+  //     </ListItem>
+  //     <ListItem style={{ flexDirection: 'row', width: '100%' }}>
+  //       <Form style={{ flexDirection: 'row' }}>
+  //         <Item stackedLabel style={{ borderBottomWidth: 0, width: moderateScale(200) }} onPress={handlePressStartDate}>
+  //           <Label>Start Date</Label>
+  //           <Text style={styles.dateLabel}>{`${dayjs(startDate).format('DD/MM/YYYY')}`}</Text>
+  //         </Item>
+  //         <Item stackedLabel style={{ borderBottomWidth: 0, width: moderateScale(200) }} onPress={handlePressEndDate}>
+  //           <Label>End Date</Label>
+  //           <Text style={styles.dateLabel}>{`${dayjs(endDate).format('DD/MM/YYYY')}`}</Text>
+  //         </Item>
+  //       </Form>
+  //       <Button
+  //         small
+  //         style={{ margin: 10, alignSelf: 'flex-end' }}
+  //         onPress={onPrintStockReport}
+  //         disabled={isLoading}
+  //         {...resolveButtonState(isLoading, 'info')}
+  //       >
+  //         <Text>Print Report</Text>
+  //       </Button>
+  //     </ListItem>
+  //     <ListItem itemDivider style={styles.categoryPickerItem}>
+  //       <Label>
+  //         <Text style={styles.categoryPickerText}>Price Group: </Text>
+  //       </Label>
+  //       <Picker
+  //         mode="dropdown"
+  //         iosHeader="Select a price group"
+  //         iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+  //         placeholder="Select a price group"
+  //         selectedValue={selectedPriceGroup}
+  //         onValueChange={pg => setSelectedPriceGroup(pg)}
+  //         textStyle={{
+  //           paddingLeft: 0,
+  //           paddingRight: 0,
+  //         }}
+  //       >
+  //         {[
+  //           <Picker.Item key="all-pricegroups" label="All" value={null} />,
+  //           ...priceGroups.map(priceGroup => {
+  //             return <Picker.Item key={priceGroup.id} label={priceGroup.name} value={priceGroup} />;
+  //           }),
+  //         ]}
+  //       </Picker>
+  //       <Label>
+  //         <Text style={styles.categoryPickerText}>Category: </Text>
+  //       </Label>
+  //       <Picker
+  //         mode="dropdown"
+  //         iosHeader="Select a category"
+  //         iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+  //         placeholder="Select a category"
+  //         selectedValue={selectedCategory}
+  //         onValueChange={c => setSelectedCategory(c)}
+  //         textStyle={{
+  //           paddingLeft: 0,
+  //           paddingRight: 0,
+  //         }}
+  //       >
+  //         {[
+  //           <Picker.Item key="all-categories" label="All" value={null} />,
+  //           ...categories.map(category => {
+  //             return <Picker.Item key={category.id} label={category.name} value={category} />;
+  //           }),
+  //         ]}
+  //       </Picker>
+  //       <SwitchSelector
+  //         options={[
+  //           { label: 'Alpha', value: SortTypeEnum.alphabetical },
+  //           { label: 'Ascending', value: SortTypeEnum.ascending },
+  //           { label: 'Descending', value: SortTypeEnum.descending },
+  //         ]}
+  //         initial={sortType}
+  //         onPress={value => setSortType(value as SortTypeEnum)}
+  //         style={{ width: moderateScale(400), marginRight: 5 }}
+  //       />
+  //     </ListItem>
+  //     {isGraphLoading && <Spinner />}
 
-      <Icon name="print-outline" />
-      {/* {!isGraphLoading && graphData.length === 0 && <Text style={{ padding: 10 }}>No results found... </Text>} */}
-      {/* {!isGraphLoading && graphData.length > 0 && (
-        <ScrollView>
-          <VictoryChart
-            height={chartHeight}
-            padding={{ left: yPadding, top: 50, right: 50, bottom: 50 }}
-            theme={VictoryTheme.material}
-            horizontal
-            domainPadding={{ x: 20 }}
-            animate={{
-              duration: 500,
-              easing: "cubic",
-              onLoad: { duration: 250 }
-            }}
-          >
-            <VictoryBar
-              barWidth={15}
-              alignment="middle"
-              style={{
-                data: { fill: colors.highlightBlue },
-                labels: { fill: "black", fontSize: 12 }
-              }}
-              data={graphData}
-              labels={({ datum }) => datum.y}
-            />
-            <VictoryAxis
-              dependentAxis
-              label={`Items sold (${dayjs(startDate).format('DD/MM/YYYY')} - ${dayjs(endDate).format('DD/MM/YYYY')})`}
-              style={{
-                axisLabel: { padding: 30, fontWeight: "bold" },
-                grid: { stroke: "none" },
-                ticks: { stroke: "none" }
-              }}
-            />
-            <VictoryAxis
-              label="Item"
-              style={{
-                axisLabel: { padding: yPadding - LABEL_PADDING, fontWeight: "bold" },
-                grid: { stroke: "none" },
-                ticks: { stroke: "none" }
-              }}
-            />
-          </VictoryChart>
-        </ScrollView>
-      )} */}
-      <View>
-        <TimePicker
-          isVisible={visibleDatePicker === 'start'}
-          onCancel={handleCancel}
-          onConfirm={handleConfirm}
-          value={startDate}
-          title="Please select an start date"
-          mode="date"
-        />
-        <TimePicker
-          isVisible={visibleDatePicker === 'end'}
-          onCancel={handleCancel}
-          onConfirm={handleConfirm}
-          value={endDate}
-          title="Please select an end date"
-          mode="date"
-        />
-      </View>
-    </>
-  );
+  //     <Icon name="print-outline" />
+  //     {/* {!isGraphLoading && graphData.length === 0 && <Text style={{ padding: 10 }}>No results found... </Text>} */}
+  //     {/* {!isGraphLoading && graphData.length > 0 && (
+  //       <ScrollView>
+  //         <VictoryChart
+  //           height={chartHeight}
+  //           padding={{ left: yPadding, top: 50, right: 50, bottom: 50 }}
+  //           theme={VictoryTheme.material}
+  //           horizontal
+  //           domainPadding={{ x: 20 }}
+  //           animate={{
+  //             duration: 500,
+  //             easing: "cubic",
+  //             onLoad: { duration: 250 }
+  //           }}
+  //         >
+  //           <VictoryBar
+  //             barWidth={15}
+  //             alignment="middle"
+  //             style={{
+  //               data: { fill: colors.highlightBlue },
+  //               labels: { fill: "black", fontSize: 12 }
+  //             }}
+  //             data={graphData}
+  //             labels={({ datum }) => datum.y}
+  //           />
+  //           <VictoryAxis
+  //             dependentAxis
+  //             label={`Items sold (${dayjs(startDate).format('DD/MM/YYYY')} - ${dayjs(endDate).format('DD/MM/YYYY')})`}
+  //             style={{
+  //               axisLabel: { padding: 30, fontWeight: "bold" },
+  //               grid: { stroke: "none" },
+  //               ticks: { stroke: "none" }
+  //             }}
+  //           />
+  //           <VictoryAxis
+  //             label="Item"
+  //             style={{
+  //               axisLabel: { padding: yPadding - LABEL_PADDING, fontWeight: "bold" },
+  //               grid: { stroke: "none" },
+  //               ticks: { stroke: "none" }
+  //             }}
+  //           />
+  //         </VictoryChart>
+  //       </ScrollView>
+  //     )} */}
+  //     <View>
+  //       <TimePicker
+  //         isVisible={visibleDatePicker === 'start'}
+  //         onCancel={handleCancel}
+  //         onConfirm={handleConfirm}
+  //         value={startDate}
+  //         title="Please select an start date"
+  //         mode="date"
+  //       />
+  //       <TimePicker
+  //         isVisible={visibleDatePicker === 'end'}
+  //         onCancel={handleCancel}
+  //         onConfirm={handleConfirm}
+  //         value={endDate}
+  //         title="Please select an end date"
+  //         mode="date"
+  //       />
+  //     </View>
+  //   </>
+  // );
 };
 
 const styles = StyleSheet.create({
