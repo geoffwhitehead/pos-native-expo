@@ -1,5 +1,5 @@
 import withObservables from '@nozbe/with-observables';
-import { HStack, ListItem, Text } from '../../../../../../core';
+import { HStack, Text } from '../../../../../../core';
 import React, { useContext } from 'react';
 import { OrganizationContext } from '../../../../../../contexts/OrganizationContext';
 import type { ModifierItem, ModifierItemPrice } from '../../../../../../models';
@@ -29,17 +29,15 @@ const ModifierItemRowInner: React.FC<ModifierItemRowOuterProps & ModifierItemRow
   const hasPriceSet = modifierItemPrice.price !== null;
 
   return (
-    <ListItem selected={selected} onPress={() => onPress(modifierItem)} disabled={isDisabled}>
-      <HStack flex={1} alignItems="center" justifyContent="space-between">
-        <HStack flex={1}>
-          <Text>{modifierItem.name}</Text>
-        </HStack>
-        <HStack flex={1} justifyContent="flex-end">
-          {hasPriceSet && <Text style={{ color: 'grey' }}>{formatNumber(modifierItemPrice.price, currency)}</Text>}
-          {!hasPriceSet && <Text note>No price set</Text>}
-        </HStack>
+    <HStack flex={1} alignItems="center" justifyContent="space-between" onTouchEnd={() => onPress(modifierItem)} isFocused={selected} isDisabled={isDisabled}>
+      <HStack flex={1}>
+        <Text>{modifierItem.name}</Text>
       </HStack>
-    </ListItem>
+      <HStack flex={1} justifyContent="flex-end">
+        {hasPriceSet && <Text style={{ color: 'grey' }}>{formatNumber(modifierItemPrice.price, currency)}</Text>}
+        {!hasPriceSet && <Text note>No price set</Text>}
+      </HStack>
+    </HStack>
   );
 };
 

@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ModalContentButton } from '../../../../../../components/Modal/ModalContentButton';
 import { NumberPicker } from '../../../../../../components/NumberPicker/NumberPicker';
-import { Container, List } from '../../../../../../core';
+import { Container, VStack } from '../../../../../../core';
 import type { Bill, Item, Modifier, ModifierItem, PriceGroup } from '../../../../../../models';
 import { ModifierGroup } from './ModifierGroup';
 
@@ -81,7 +81,7 @@ export const ModifierListInner: React.FC<ModifierListOuterProps & ModifierListIn
     >
       <Container>
         <ScrollView>
-          <List>
+          <VStack>
             {modifiers.map(modifier => {
               const selectedItems = selectedModifiers[modifier.id].items;
               return (
@@ -94,7 +94,7 @@ export const ModifierListInner: React.FC<ModifierListOuterProps & ModifierListIn
                 />
               );
             })}
-          </List>
+          </VStack>
         </ScrollView>
         <NumberPicker onPress={v => setQuantity(v)} />
       </Container>

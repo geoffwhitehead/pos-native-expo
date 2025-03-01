@@ -2,7 +2,7 @@ import withObservables from '@nozbe/with-observables';
 import { capitalize } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { Badge, HStack, ListItem, Text, View } from '../../../../../core';
+import { Badge, HStack, Text, View } from '../../../../../core';
 import type { BillItem, BillItemModifierItem, BillItemPrintLog } from '../../../../../models';
 import type { CurrencyEnum } from '../../../../../models/Organization';
 import { formatNumber } from '../../../../../utils';
@@ -73,14 +73,7 @@ const ItemBreakdownInner: React.FC<ItemBreakdownOuterProps & ItemBreakdownInnerP
   const statusStyles = printStatus ? styles[printStatus] : {};
 
   return (
-    <ListItem
-      style={{ ...statusStyles, ...styles.listItem }}
-      noIndent
-      key={billItem.id}
-      disabled={isDisabled}
-      onPress={() => onSelect(billItem)}
-    >
-      <HStack flex={1} alignItems="center" justifyContent="space-between">
+      <HStack flex={1} alignItems="center" justifyContent="space-between" style={{ ...statusStyles, ...styles.listItem }} key={billItem.id} isDisabled={isDisabled} onTouchEnd={() => onSelect(billItem)}>
         <HStack flex={1}>
           <View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -124,7 +117,6 @@ const ItemBreakdownInner: React.FC<ItemBreakdownOuterProps & ItemBreakdownInnerP
           )}
         </HStack>
       </HStack>
-    </ListItem>
   );
 };
 

@@ -2,7 +2,7 @@ import { capitalize, keyBy } from 'lodash';
 import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
-import { HStack, ListItem, Separator, Text } from '../../../../../core';
+import { HStack, Separator, Text } from '../../../../../core';
 import type { BillPayment, PaymentType } from '../../../../../models';
 import { formatNumber } from '../../../../../utils';
 import { ITEM_SPACING } from '../../../../../utils/consts';
@@ -35,16 +35,14 @@ const PaymentsBreakdown: React.FC<PaymentsBreakdownProps> = ({ payments, readonl
         .map(payment => {
           const paymentType = keyedPaymentTypes[payment.paymentTypeId];
           return (
-            <ListItem key={payment.id} onPress={() => !readonly && onSelect(payment)} style={styles.listItem}>
-              <HStack flex={1} alignItems="center" justifyContent="space-between">
-                <HStack flex={1}>
-                  <Text>{`Payment: ${capitalize(paymentType.name)}`}</Text>
-                </HStack>
-                <HStack flex={1} justifyContent="flex-end">
-                  <Text note>{`${formatNumber(payment.amount, currency)}`}</Text>
-                </HStack>
+            <HStack flex={1} alignItems="center" justifyContent="space-between" key={payment.id} onTouchEnd={() => !readonly && onSelect(payment)} style={styles.listItem}>
+              <HStack flex={1}>
+                <Text>{`Payment: ${capitalize(paymentType.name)}`}</Text>
               </HStack>
-            </ListItem>
+              <HStack flex={1} justifyContent="flex-end">
+                <Text note>{`${formatNumber(payment.amount, currency)}`}</Text>
+              </HStack>
+            </HStack>
           );
         })}
     </>
