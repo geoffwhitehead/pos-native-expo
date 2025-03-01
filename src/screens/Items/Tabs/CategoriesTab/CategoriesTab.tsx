@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Box, Container, Icon, Label, Picker, Text, VStack } from '../../../../core';
+import { Box, Container, FormControl, Icon, Picker, Text, VStack } from '../../../../core';
 import type { Category, PrintCategory } from '../../../../models';
 import { MAX_GRID_SIZE } from '../../../../utils/consts';
 import { moderateScale } from '../../../../utils/scaling';
@@ -71,9 +71,9 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
         onSearch={value => setSearchValue(value)}
         isCreateDisabled={categories.length === maxCategories}
       >
-        <Label>
+        <FormControl.Label>
           <Text style={{ color: 'grey' }}>Category Grid Size: </Text>
-        </Label>
+        </FormControl.Label>
         <Picker
           mode="dropdown"
           iosHeader="Select a grid size"

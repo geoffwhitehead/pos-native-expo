@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Loading } from '../../components/Loading/Loading';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
-import { Container, Divider, HStack, Icon, Label, Picker, Tab, Tabs, Text } from '../../core';
+import { Container, Divider, FormControl, HStack, Icon, Picker, Tab, Tabs, Text } from '../../core';
 import type { Category } from '../../models';
 import type { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { CategoriesTab } from './Tabs/CategoriesTab/CategoriesTab';
@@ -37,9 +37,9 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
       <Tabs tabBarUnderlineStyle={styles.tabBarUnderline}>
         <Tab heading="Items" tabStyle={styles.tab} textStyle={styles.tabText} activeTabStyle={styles.activeTab} activeTextStyle={styles.activeTabText}>
           <HStack style={styles.categoryPickerItem}>
-            <Label>
+            <FormControl.Label>
               <Text style={styles.categoryPickerText}>Category: </Text>
-            </Label>
+            </FormControl.Label>
             <Picker
               mode="dropdown"
               iosHeader="Select a category"

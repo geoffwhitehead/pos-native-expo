@@ -5,7 +5,7 @@ import { capitalize } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Box, Button, HStack, Input, Label, Text, VStack } from '../../../../core';
+import { Box, Button, FormControl, HStack, Input, Text, VStack } from '../../../../core';
 import type { Bill, BillDiscount, BillItem, BillPayment, Discount, PaymentType } from '../../../../models';
 import type { MinimalBillSummary } from '../../../../utils';
 import { formatNumber, getDefaultCashDenominations, minimalBillSummary } from '../../../../utils';
@@ -98,7 +98,7 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
         </Button>
         <Box style={styles.rowCustomAmount}>
           <Box style={{ width: '100%', height: moderateScale(120) }}>
-            <Label>Custom amount</Label>
+            <FormControl.Label>Custom amount</FormControl.Label>
             <Input
               value={value}
               onChangeText={onValueChange}
@@ -109,7 +109,7 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
         </Box>
         <HStack style={styles.row}>
           <Box style={styles.buttonColumn}>
-            <Label style={styles.columnLabel}>Discounts</Label>
+            <FormControl.Label style={styles.columnLabel}>Discounts</FormControl.Label>
             {discounts.map(discount => {
               return (
                 <Button

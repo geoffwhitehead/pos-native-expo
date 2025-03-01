@@ -16,7 +16,7 @@ import { SwitchSelector } from '../../../../components/SwitchSelector/SwitchSele
 import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Button, FormControl, HStack, Icon, Label, Picker, Spinner, Text, VStack, Box } from '../../../../core';
+import { Button, FormControl, HStack, Icon, Picker, Spinner, Text, VStack, Box } from '../../../../core';
 import type { BillItem, Category, PriceGroup } from '../../../../models';
 import { print } from '../../../../services/printer/printer';
 import { stockReport } from '../../../../services/printer/stockReport';

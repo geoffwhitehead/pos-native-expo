@@ -11,8 +11,6 @@ export {
   FormControl,
   Stack,
   Input,
-  Item,
-  Label,
   Left,
   List,
   ListItem,

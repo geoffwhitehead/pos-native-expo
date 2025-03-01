@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Box, HStack, Input, Label } from '../../core';
+import { Box, HStack, Input, FormControl } from '../../core';
 import { moderateScale } from '../../utils/scaling';
 
 const InputPasscode: React.FC<{ value: string; onChange: any }> = ({ value, onChange }) => {
   return (
     <Box style={styles.content}>
       <HStack style={styles.item}>
-        <Label>Enter passcode</Label>
+        <FormControl.Label>Enter passcode</FormControl.Label>
         <Input value={value} onChangeText={onChange} secureTextEntry />
       </HStack>
     </Box>

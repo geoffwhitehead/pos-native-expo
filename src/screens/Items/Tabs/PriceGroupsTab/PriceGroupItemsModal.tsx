@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { FormControl, HStack, Icon, Input, Label, Picker, Text, View, VStack } from '../../../../core';
+import { FormControl, HStack, Icon, Input, Picker, Text, View, VStack } from '../../../../core';
 import { database } from '../../../../database';
 import type { Category, Item, ItemPrice, PriceGroup } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
@@ -30,7 +30,7 @@ const schema = Yup.object().shape({
         price: Yup.string(),
       }),
     )
-    .required(),
+    .required(),  
 });
 
 type FormValues = {
@@ -116,9 +116,9 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
               {pricesUpdatedSucessfully && <Text style={styles.pricesUpdatedText}>Prices updated successfully</Text>}
 
               <HStack style={styles.categoryPickerItem}>
-                <Label>
+                <FormControl.Label>
                   <Text style={styles.categoryPickerText}>Category: </Text>
-                </Label>
+                </FormControl.Label>
                 <Picker
                   mode="dropdown"
                   iosHeader="Select a category"
