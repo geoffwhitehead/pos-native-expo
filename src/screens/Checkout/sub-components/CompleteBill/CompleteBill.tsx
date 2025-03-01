@@ -6,7 +6,7 @@ import LottieView from 'lottie-react-native';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { NewButton, Text } from '../../../../core';
+import { Button, Text } from '../../../../core';
 import type {
   Bill,
   BillDiscount,
@@ -95,9 +95,9 @@ const CompleteBillInner: React.FC<CompleteBillOuterProps & CompleteBillInnerProp
         ref={animation}
       />
       <Text style={styles.text}>{`Change due: ${formatNumber(Math.abs(changePayment), currency)}`}</Text>
-      <NewButton style={styles.button} size="lg" variant='outline' colorScheme='success' onPress={onCloseBill}>
+      <Button style={styles.button} size="lg" variant='outline' colorScheme='success' onPress={onCloseBill}>
         Close
-      </NewButton>
+      </Button>
     </View>
   );
 };

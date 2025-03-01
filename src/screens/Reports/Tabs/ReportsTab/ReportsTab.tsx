@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
 import {
-  NewButton,
+  Button,
   Container,
   Divider,
   HStack,
@@ -121,41 +121,41 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
                       <HStack w="200px" justifyContent="flex-end">
                         {!billPeriod.closedAt && (
                           <View>
-                            <NewButton
+                            <Button
                               size='sm'
                               {...resolveButtonState(isLoading, 'info')}
                               style={{ marginBottom: 2 }}
                               onPress={() => onPrintPeriodReport(billPeriod)}
                             >
                               Print Status Report
-                            </NewButton>
-                            <NewButton
+                            </Button>
+                            <Button
                               size='sm'
                               {...resolveButtonState(isLoading, 'danger')}
                               onPress={() => confirmClosePeriod(billPeriod, organization)}
                             >
                               Close Period
-                            </NewButton>
+                            </Button>
                           </View>
                         )}
                         {billPeriod.closedAt && (
                           <View>
-                            <NewButton
+                            <Button
                               size='sm'
                               {...resolveButtonState(isLoading, 'primary')}
                               onPress={() => onPrintPeriodReport(billPeriod)}
                               style={{ marginBottom: 2 }}
                             >
                               Print End Period Report
-                            </NewButton>
-                            <NewButton
+                            </Button>
+                            <Button
                               size='sm'
                               {...resolveButtonState(isLoading, 'info')}
                               style={{ marginRight: 2 }}
                               onPress={() => onPrintCorrectionReport(billPeriod)}
                             >
                               Print Correction Report
-                            </NewButton>
+                            </Button>
                           </View>
                         )}
                       </HStack>

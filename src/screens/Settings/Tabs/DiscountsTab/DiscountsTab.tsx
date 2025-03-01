@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Box, NewButton, Divider, HStack, Icon, Spinner, Text, useDisclose, VStack } from '../../../../core';
+import { Box, Button, Divider, HStack, Icon, Spinner, Text, useDisclose, VStack } from '../../../../core';
 import type { Discount } from '../../../../models';
 import { formatNumber } from '../../../../utils';
 import { resolveButtonState } from '../../../../utils/helpers';
@@ -53,14 +53,14 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
         <HStack flex={1} alignItems="center" justifyContent="space-between">
           <Text>Discount</Text>
           <HStack justifyContent="flex-end">
-            <NewButton
+            <Button
               {...resolveButtonState(isCreateDisabled, 'success')}
               leftIcon={<Icon name="add-circle-outline" size={24} color="white"/>}
               size='sm'
               onPress={() => setIsModalOpen(true)}
             >
               Create
-            </NewButton>
+            </Button>
           </HStack>
         </HStack>
         <Divider/>
@@ -81,7 +81,7 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
                     </VStack>
                   </HStack>
                   <HStack justifyContent="flex-end">
-                    <NewButton
+                    <Button
                       style={{ marginRight: 10 }}
                       variant="outline"
                       colorScheme="danger"
@@ -93,7 +93,7 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
                       }}
                     >
                       <Text>Delete</Text>
-                    </NewButton>
+                    </Button>
                   </HStack>
                 </HStack>
             );

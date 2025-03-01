@@ -13,7 +13,7 @@ import { ConfirmationActionsheet } from '../../../../components/ConfirmationActi
 import { AuthContext } from '../../../../contexts/AuthContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Box, NewButton, Container, FormControl, Icon, Input, Select, Text, VStack, View, useDisclose } from '../../../../core';
+import { Box, Button, Container, FormControl, Icon, Input, Select, Text, VStack, View, useDisclose } from '../../../../core';
 import type { Bill, BillPeriod, PriceGroup, Printer } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import { moderateScale } from '../../../../utils/scaling';
@@ -282,12 +282,12 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
       </Formik>
       <Box>
         <View style={{ display: 'flex', flexDirection: 'row', padding: 5 }}>
-          <NewButton style={{ marginRight: 10 }} onPress={onLogoutOpen}>
+          <Button style={{ marginRight: 10 }} onPress={onLogoutOpen}>
             Sign out
-          </NewButton>
-          <NewButton colorScheme="danger" variant="outline" onPress={onUnlinkOpen}>
+          </Button>
+          <Button colorScheme="danger" variant="outline" onPress={onUnlinkOpen}>
             Delete local account
-          </NewButton>
+          </Button>
         </View>
       </Box>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NewButton, Text, View } from '../../core';
+import { Button, Text, View } from '../../core';
 
 export type HeaderButtonBarProps = {
   onPressPrimary: () => void;
@@ -17,9 +17,9 @@ export const HeaderButtonBar: React.FC<HeaderButtonBarProps> = ({ onPressPrimary
         flexDirection: 'row',
       }}
     >
-      <NewButton style={{ width: 'auto' }} size='sm' colorScheme='success' onPress={onPressPrimary}>
+      <Button style={{ width: 'auto' }} size='sm' colorScheme='success' onPress={onPressPrimary}>
         <Text>{primaryText}</Text>
-      </NewButton>
+      </Button>
     </View>
   );
 };

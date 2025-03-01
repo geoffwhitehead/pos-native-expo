@@ -7,7 +7,7 @@ import { ConfirmationActionsheet } from '../../../../components/ConfirmationActi
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { NewButton, Container, Divider, HStack, Icon, Text, useDisclose, VStack } from '../../../../core';
+import { Button, Container, Divider, HStack, Icon, Text, useDisclose, VStack } from '../../../../core';
 import type { PrinterGroup } from '../../../../models';
 import { ModalPrinterGroupDetails } from './ModalPrinterGroupDetails';
 import { PrinterGroupRow } from './PrinterGroupRow';
@@ -49,9 +49,9 @@ const PrinterGroupsTabInner: React.FC<PrinterGroupsTabOuterProps & PrinterGroups
         <HStack flex={1} alignItems="center" justifyContent="space-between">
           <Text>Printer Groups</Text>
           <HStack justifyContent="flex-end">
-            <NewButton leftIcon={<Icon name="add-circle-outline" size={24} color="white"/>} colorScheme="success" size="sm" onPress={() => setIsModalOpen(true)}>
+            <Button leftIcon={<Icon name="add-circle-outline" size={24} color="white"/>} colorScheme="success" size="sm" onPress={() => setIsModalOpen(true)}>
               Create
-            </NewButton>
+            </Button>
           </HStack>
         </HStack>
         <Divider/>

@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native';
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { NewButton, Container, Divider, HStack, Icon, Text, useDisclose, VStack } from '../../../../core';
+import { Button, Container, Divider, HStack, Icon, Text, useDisclose, VStack } from '../../../../core';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import type { Category, Item, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
@@ -77,9 +77,9 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
           <HStack flex={1} alignItems="center" justifyContent="space-between">
             <Text>Price Groups</Text>
             <HStack justifyContent="flex-end">
-              <NewButton colorScheme="success" size="sm" onPress={() => setIsModalOpen(true)} leftIcon={<Icon name="add-circle-outline" size={24} color="white" />}>
+              <Button colorScheme="success" size="sm" onPress={() => setIsModalOpen(true)} leftIcon={<Icon name="add-circle-outline" size={24} color="white" />}>
                 Create
-              </NewButton>
+              </Button>
             </HStack>
           </HStack>
           <Divider/>  
@@ -90,7 +90,7 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
                   <Text>{priceGroup.name}</Text>
                 </HStack>
                 <HStack flex={1} justifyContent="flex-end">
-                  <NewButton
+                  <Button
                     style={{ marginRight: 10 }}
                     variant='outline'
                     colorScheme='info'
@@ -98,8 +98,8 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
                     onPress={() => onSelectPrices(priceGroup)}
                   >
                     Bulk Edit Prices
-                  </NewButton>
-                  <NewButton
+                  </Button>
+                  <Button
                     style={{ marginRight: 10 }}
                     variant="outline"
                     colorScheme='danger'
@@ -111,10 +111,10 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
                     }}
                   >
                     Delete
-                  </NewButton>
-                  <NewButton variant='outline' colorScheme='info' size='sm' onPress={() => onSelect(priceGroup)}>
+                  </Button>
+                  <Button variant='outline' colorScheme='info' size='sm' onPress={() => onSelect(priceGroup)}>
                     Edit
-                  </NewButton>
+                  </Button>
                 </HStack>
               </HStack>
           ))}

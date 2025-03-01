@@ -11,7 +11,7 @@ import { SearchHeader } from '../../../../components/SearchHeader/SearchHeader';
 import { ItemsContext } from '../../../../contexts/ItemsContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { PriceGroupContext } from '../../../../contexts/PriceGroupContext';
-import { Box, NewButton, Container, Divider, HStack, Icon, Text, VStack } from '../../../../core';
+import { Box, Button, Container, Divider, HStack, Icon, Text, VStack } from '../../../../core';
 import type { Category, PriceGroup } from '../../../../models';
 import { CategoryViewTypeEnum } from '../../../../models/Organization';
 import type { CheckoutItemStackParamList } from '../../../../navigators/CheckoutItemNavigator';
@@ -87,7 +87,7 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
       <HStack style={styles.itemHeader}>
         <Text style={{ fontWeight: 'bold' }}>Categories</Text>
         {isGridView && (
-          <NewButton
+          <Button
             style={styles.editButton}
             colorScheme={isEditing ? 'success' : 'info'}
             size="sm"
@@ -128,7 +128,7 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
                   return (
                     <Box key={`${row}-${column}`} style={styles.col}>
                       {category && (
-                        <NewButton
+                        <Button
                           style={{ ...styles.button, backgroundColor: category.backgroundColor }}
                           colorScheme="info"
                           onPress={onPressCategoryFactory({ priceGroup, category })}
@@ -142,10 +142,10 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
                           >
                             {category.name}
                           </Text>
-                        </NewButton>
+                        </Button>
                       )}
                       {isEditing && !category && (
-                        <NewButton
+                        <Button
                           style={{ ...styles.button, backgroundColor: 'lightgrey' }}
                           colorScheme="info"
                           onPress={() => handleEmptyPosition(position)}
@@ -156,7 +156,7 @@ export const CategoriesInner: React.FC<CategoriesOuterProps & CategoriesInnerPro
                               fontSize: gridSize > 4 ? fontSizes[4] : fontSizes[5],
                             }}
                           ></Text>
-                        </NewButton>
+                        </Button>
                       )}
                     </Box>
                   );

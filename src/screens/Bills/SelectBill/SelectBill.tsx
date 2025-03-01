@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { SwitchSelector } from '../../../components/SwitchSelector/SwitchSelector';
 import { CurrentBillContext } from '../../../contexts/CurrentBillContext';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
-import { Box, NewButton, HStack, Icon, Text, VStack } from '../../../core';
+import { Box, Button, HStack, Icon, Text, VStack } from '../../../core';
 import { database } from '../../../database';
 import type { Bill, BillPeriod, TablePlanElement } from '../../../models';
 import { BillViewTypeEnum } from '../../../models/Organization';
@@ -122,7 +122,7 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
           />
         )}
         {shouldRenderPlanView && (
-          <NewButton
+          <Button
             style={styles.editPlanButton}
             variant={!isEditing ? 'info' : 'success'}
             size='small'

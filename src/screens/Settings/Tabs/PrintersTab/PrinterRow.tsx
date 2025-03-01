@@ -1,5 +1,5 @@
 import withObservables from '@nozbe/with-observables';
-import { HStack, NewButton, Text, Icon } from '../../../../core';
+import { HStack, Button, Text, Icon } from '../../../../core';
 import React from 'react';
 import type { Printer } from '../../../../models';
 import { commonStyles } from '../styles';
@@ -30,8 +30,8 @@ const PrinterRowInner: React.FC<PrinterRowOuterProps & PrinterRowInnerProps> = (
         <Text sub>{printer.macAddress}</Text>
       </HStack>
       <HStack w="40px" justifyContent="flex-end">
-        <NewButton size="sm" variant="ghost" onPress={() => onDelete(printer)} leftIcon={<Icon name="trash-outline" size={24} />}/>
-        <NewButton size="sm" variant="ghost" onPress={() => onSelect(printer)} leftIcon={<Icon name="pencil-outline" size={24} />}/>
+        <Button size="sm" variant="ghost" onPress={() => onDelete(printer)} leftIcon={<Icon name="trash-outline" size={24} />}/>
+        <Button size="sm" variant="ghost" onPress={() => onSelect(printer)} leftIcon={<Icon name="pencil-outline" size={24} />}/>
       </HStack>
     </HStack>
   );

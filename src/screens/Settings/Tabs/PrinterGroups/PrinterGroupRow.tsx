@@ -1,6 +1,6 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
-import { NewButton, HStack, Text } from '../../../../core';
+import { Button, HStack, Text } from '../../../../core';
 import type { Printer, PrinterGroup } from '../../../../models';
 import { commonStyles } from '../styles';
 
@@ -30,12 +30,12 @@ const PrinterGroupRowInner: React.FC<PrinterGroupRowOuterProps & PrinterGroupRow
         <Text sub>{printers.map(p => p.name).join(', ')}</Text>
       </HStack>
       <HStack w="120px" justifyContent="flex-end">
-        <NewButton style={{ marginRight: 10 }} variant="outline" colorScheme="danger" size="sm" onPress={() => onDelete(printerGroup)}>
+        <Button style={{ marginRight: 10 }} variant="outline" colorScheme="danger" size="sm" onPress={() => onDelete(printerGroup)}>
           Delete
-        </NewButton>
-        <NewButton variant="outline" colorScheme="info" size="sm" onPress={() => onSelect(printerGroup)}>
+        </Button>
+        <Button variant="outline" colorScheme="info" size="sm" onPress={() => onSelect(printerGroup)}>
           Edit
-        </NewButton>
+        </Button>
       </HStack>
     </HStack>
   );

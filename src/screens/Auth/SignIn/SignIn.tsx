@@ -9,7 +9,7 @@ import { KeyboardAvoidingView, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import envKey from '../../../../build.env';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { NewButton, Container, FormControl, HStack, Input, Spinner, Text, useDisclose } from '../../../core';
+import { Button, Container, FormControl, HStack, Input, Spinner, Text, useDisclose } from '../../../core';
 import type { Organization } from '../../../models';
 import type { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
@@ -83,7 +83,7 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
             <FormControl.Label style={styles.text}>Password</FormControl.Label>
 
             <Input style={styles.text} value={password} onChangeText={setPassword} secureTextEntry />
-            <NewButton
+            <Button
               {...resolveButtonState(isSignInLoading, 'info')}
               isDisabled={isSignInLoading}
               style={styles.button}
@@ -91,24 +91,24 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
             >
               {!isSignInLoading && <Text>Sign in</Text>}
               {isSignInLoading && <Spinner color="white" />}
-            </NewButton>
+            </Button>
             {!organization && (
-              <NewButton
+              <Button
                 style={{ ...styles.button, backgroundColor: 'white' }}
                 variant='light'
                 onPress={() => navigation.navigate('SignUp')}
               >
                 <Text>Register</Text>
-              </NewButton>
+              </Button>
             )}
             {organization && (
-              <NewButton
+              <Button
                 style={{ ...styles.button, backgroundColor: 'white' }}
                 variant='light'
                 onPress={onOpen}
               >
                 <Text>Unlink</Text>
-              </NewButton>
+              </Button>
             )}
             {organization && (
               <Text style={{ padding: 20 }} sub>

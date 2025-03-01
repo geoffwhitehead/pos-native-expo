@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { NewButton, HStack, Icon, Input, Text } from '../../core';
+import { Button, HStack, Icon, Input, Text } from '../../core';
 import { resolveButtonState } from '../../utils/helpers';
 import { moderateScale } from '../../utils/scaling';
 
@@ -31,11 +31,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       <Input placeholder="Search" onChangeText={onSearch} value={value} />
       {children}
       {onPressSecondary && (
-        <NewButton leftIcon={<Icon color="white" name={secondaryIconName} size={24}/>} size="small" colorScheme="info" onPress={onPressSecondary}>
+        <Button leftIcon={<Icon color="white" name={secondaryIconName} size={24}/>} size="small" colorScheme="info" onPress={onPressSecondary}>
           {secondaryText}
-        </NewButton>
+        </Button>
       )}
-      <NewButton
+      <Button
         size='small'
         {...resolveButtonState(isCreateDisabled, 'success')}
         onPress={onPressCreate}
@@ -43,7 +43,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         style={{ marginLeft: 5, alignSelf: 'center' }}
       >
         Create
-      </NewButton>
+      </Button>
     </HStack>
   );
 };

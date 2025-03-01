@@ -12,7 +12,7 @@ import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Box, HStack, useDisclose, NewButton, Icon, Spinner, Text, View, VStack } from '../../../../core';
+import { Box, HStack, useDisclose, Button, Icon, Spinner, Text, View, VStack } from '../../../../core';
 import type {
   Bill,
   BillCallLog,
@@ -307,30 +307,30 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
         {!(isComplete || hideFunctionButtons) && (
           <Box style={styles.columnMainButtons}>
             <Box style={{ height: buttons.large }}>
-              <NewButton style={styles.buttonLeft} colorScheme='info' onPress={onStore} leftIcon={<Icon name="layers" size={24} color="white" />}>
+              <Button style={styles.buttonLeft} colorScheme='info' onPress={onStore} leftIcon={<Icon name="layers" size={24} color="white" />}>
                 Bills
-              </NewButton>
+              </Button>
             </Box>
             <Box style={{ height: buttons.large }}>
-              <NewButton
+              <Button
                 {...resolveButtonState(isCallButtonDisabled, 'warning')}
                 onPress={onConfirmActionOpen}
                 style={styles.buttonLeft}
                 leftIcon={<Icon name="notifications" size={24} color="white" />}
               >
                 Call
-              </NewButton>
+              </Button>
             </Box>
             <Box />
             <Box>
-              <NewButton colorScheme='success' onPress={onCheckout} style={styles.buttonLeft} leftIcon={<Icon name="cart" size={24}  color="white"/>}>
+              <Button colorScheme='success' onPress={onCheckout} style={styles.buttonLeft} leftIcon={<Icon name="cart" size={24}  color="white"/>}>
                 Pay
-              </NewButton>
+              </Button>
             </Box>
             <Box style={{}}>
-              <NewButton onPress={handleOnStore} style={styles.buttonLeft} leftIcon={<Icon name="download" size={24}  color="white"/>}>
+              <Button onPress={handleOnStore} style={styles.buttonLeft} leftIcon={<Icon name="download" size={24}  color="white"/>}>
                 Store
-              </NewButton>
+              </Button>
             </Box>
           </Box>
         )}
@@ -383,7 +383,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
             <Text style={fonts.h2}>{`Balance: ${formatNumber(balance, currency)}`}</Text>
           </Box>
           <Box style={styles.printRow}>
-            <NewButton
+            <Button
               isDisabled={!receiptPrinter}
               {...resolveButtonState(!receiptPrinter || isPrinting, 'info')}
               leftIcon={<Icon name="receipt" color="white" size={24} />}
@@ -391,7 +391,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
               onPress={onPrint}
               isLoading={isPrinting}
             >Print
-            </NewButton>
+            </Button>
           </Box>
 
           <TimePicker

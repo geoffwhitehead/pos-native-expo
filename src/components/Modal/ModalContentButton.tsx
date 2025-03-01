@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { NewButton, Container, Icon, Text } from '../../core';
+import { Button, Container, Icon, Text } from '../../core';
 import { colors } from '../../theme';
 import { resolveButtonState } from '../../utils/helpers';
 import { moderateScale } from '../../utils/scaling';
@@ -47,23 +47,23 @@ export const ModalContentButton: React.FC<ModalContentButtonProps> = ({
       <View style={styles.heading}>
         <Text style={{ color: 'white' }}>{title}</Text>
         <View style={styles.buttons}>
-          <NewButton
+          <Button
             {...resolveButtonState(isSecondaryDisabled, 'light')}
             isDisabled={isSecondaryDisabled}
             onPress={onPressSecondaryButton}
           >
             {secondaryButtonText}
-          </NewButton>
-          <NewButton
+          </Button>
+          <Button
             style={styles.buttonSpacingLeft}
             {...resolveButtonState(isPrimaryDisabled, 'success')}
             isDisabled={isPrimaryDisabled}
             onPress={onPressPrimaryButton}
           >
             {primaryButtonText}
-          </NewButton>
+          </Button>
           {onPressDelete && (
-            <NewButton
+            <Button
               style={styles.buttonSpacingLeft}
               {...resolveButtonState(isDeleteDisabled, 'danger')}
               isDisabled={isDeleteDisabled}
@@ -71,7 +71,7 @@ export const ModalContentButton: React.FC<ModalContentButtonProps> = ({
               leftIcon={<Icon name="trash" size={24} color="white"/>}
             >
               {secondaryButtonText}
-            </NewButton>
+            </Button>
           )}
         </View>
       </View>

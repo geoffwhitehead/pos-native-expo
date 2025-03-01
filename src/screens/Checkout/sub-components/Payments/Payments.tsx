@@ -5,7 +5,7 @@ import { capitalize } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Box, NewButton, FormControl, HStack, Input, Text, VStack } from '../../../../core';
+import { Box, Button, FormControl, HStack, Input, Text, VStack } from '../../../../core';
 import type { Bill, BillDiscount, BillItem, BillPayment, Discount, PaymentType } from '../../../../models';
 import type { MinimalBillSummary } from '../../../../utils';
 import { formatNumber, getDefaultCashDenominations, minimalBillSummary } from '../../../../utils';
@@ -93,9 +93,9 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
     <HStack>
       <Box style={styles.leftPanel} />
       <VStack style={styles.rightPanel}>
-        <NewButton size="sm" variant='outline' colorScheme='info' onPress={onBack} style={styles.backRow}>
+        <Button size="sm" variant='outline' colorScheme='info' onPress={onBack} style={styles.backRow}>
           <Text style={{ fontWeight: 'bold' }}>Back</Text>
-        </NewButton>
+        </Button>
         <Box style={styles.rowCustomAmount}>
           <Box style={{ width: '100%', height: moderateScale(120) }}>
             <FormControl.Label>Custom amount</FormControl.Label>
@@ -112,35 +112,35 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
             <FormControl.Label style={styles.columnLabel}>Discounts</FormControl.Label>
             {discounts.map(discount => {
               return (
-                <NewButton
+                <Button
                   key={discount.id}
                   onPress={() => addDiscount(discount)}
                   style={{ ...styles.discountButton, backgroundColor: 'goldenrod' }}
                 >
                   <Text style={styles.buttonText}>{discount.name}</Text>
-                </NewButton>
+                </Button>
               );
             })}
           </Box>
           <Box style={styles.denomButtonColumn}>
             {denominations.map(amt => {
               return (
-                <NewButton key={amt} colorScheme='info' style={styles.button} onPress={() => addPayment(cashType, amt)}>
+                <Button key={amt} colorScheme='info' style={styles.button} onPress={() => addPayment(cashType, amt)}>
                   <Text style={styles.buttonText}>{`${formatNumber(amt, currency)}`}</Text>
-                </NewButton>
+                </Button>
               );
             })}
           </Box>
           <Box style={styles.buttonColumn}>
             {paymentTypes.map(paymentType => {
               return (
-                <NewButton
+                <Button
                   key={paymentType.id}
                   style={{ ...styles.button, backgroundColor: 'seagreen' }}
                   onPress={() => addPayment(paymentType, parseFloat(value))}
                 >
                   <Text style={styles.buttonText}>{capitalize(paymentType.name)}</Text>
-                </NewButton>
+                </Button>
               );
             })}
           </Box>

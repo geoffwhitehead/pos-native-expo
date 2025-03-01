@@ -8,7 +8,7 @@ import { Bar } from 'react-native-progress';
 import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { NewButton, Container, FormControl, Icon, Input, Text } from '../../../core';
+import { Button, Container, FormControl, Icon, Input, Text } from '../../../core';
 import type { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
 import { resolveButtonState } from '../../../utils/helpers';
@@ -353,7 +353,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation, route }) => {
                 </FormControl>
                 <KeyboardAvoidingView style={styles.navButtons}>
                   {page > 1 && (
-                    <NewButton
+                    <Button
                       isDisabled={isSignUpLoading}
                       {...resolveButtonState(isSignUpLoading, 'info')}
                       onPress={handlePrevious}
@@ -362,19 +362,19 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation, route }) => {
                     />
                   )}
                   {page !== 3 && (
-                    <NewButton variant='info' onPress={handleNext} style={{ flexGrow: 3, marginLeft: 5 }}>
+                    <Button variant='info' onPress={handleNext} style={{ flexGrow: 3, marginLeft: 5 }}>
                       Continue
-                    </NewButton>
+                    </Button>
                   )}
                   {page === 3 && (
-                    <NewButton
+                    <Button
                       isDisabled={isSignUpLoading}
                       {...resolveButtonState(isSignUpLoading, 'info')}
                       onPress={handleSubmit}
                       style={{ flexGrow: 3, marginLeft: 5 }}
                     >
                       Sign Up
-                    </NewButton>
+                    </Button>
                   )}
                 </KeyboardAvoidingView>
               </KeyboardAvoidingView>

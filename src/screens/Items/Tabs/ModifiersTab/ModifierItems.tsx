@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React, { useState } from 'react';
 import { Modal } from '../../../../components/Modal/Modal';
-import { NewButton, HStack, Icon, Text } from '../../../../core';
+import { Button, HStack, Icon, Text } from '../../../../core';
 import type { Modifier, ModifierItem } from '../../../../models';
 import { ModalModifierItemDetails } from './ModalModifierItemDetails';
 
@@ -50,16 +50,16 @@ const ModifierItemsInner: React.FC<ModifierItemsOuterProps & ModifierItemsInnerP
           <HStack flex={1} alignItems="center" justifyContent="space-between" key={modifierItem.id} {...props} onTouchEnd={() => onSelect(modifierItem)}>
             <Text>{`${index + 1}: ${modifierItem.name}`}</Text>
             <HStack w="80px" justifyContent="flex-end">
-              <NewButton variant='outline' colorScheme='info' size='sm' onPress={() => onView(modifierItem)}>
+              <Button variant='outline' colorScheme='info' size='sm' onPress={() => onView(modifierItem)}>
                 Edit
-              </NewButton>
+              </Button>
             </HStack>
           </HStack>
         );
       })}
-      <NewButton colorScheme='info' onPress={handleAdd} leftIcon={<Icon name="add-circle-outline" size={24}  color="white"/>}>
+      <Button colorScheme='info' onPress={handleAdd} leftIcon={<Icon name="add-circle-outline" size={24}  color="white"/>}>
         Add
-      </NewButton>
+      </Button>
       <Modal isOpen={modalOpen} onClose={onCloseHandler}>
         <ModalModifierItemDetails modifier={modifier} modifierItem={selectedModifierItem} onClose={onCloseHandler} />
       </Modal>

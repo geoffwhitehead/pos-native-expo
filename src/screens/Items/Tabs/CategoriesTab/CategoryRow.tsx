@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { NewButton, HStack, VStack, Text, View } from '../../../../core';
+import { Button, HStack, VStack, Text, View } from '../../../../core';
 import type { Category, PrintCategory } from '../../../../models';
 
 type CategoryRowOuterProps = {
@@ -38,9 +38,9 @@ const CategoryRowInner: React.FC<CategoryRowOuterProps & CategoryRowInnerProps> 
         <Text style={styles.text} sub>{`Print Category: ${printCategory?.shortName || 'None'}`}</Text>
       </VStack>
       <HStack w="80px" justifyContent="flex-end">
-        <NewButton variant='outline' colorScheme='info' size='sm' onPress={() => onSelect(category)}>
+        <Button variant='outline' colorScheme='info' size='sm' onPress={() => onSelect(category)}>
           Edit
-        </NewButton>
+        </Button>
       </HStack>
     </HStack>
   );
