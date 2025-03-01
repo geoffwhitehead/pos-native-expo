@@ -25,9 +25,9 @@ const PrinterRowInner: React.FC<PrinterRowOuterProps & PrinterRowInnerProps> = (
         <Text>{printer.name}</Text>
       </HStack>
       <HStack flex={1} justifyContent="flex-start">
-        <Text note>{'Lan'}</Text>
-        <Text note>{printer.address}</Text>
-        <Text note>{printer.macAddress}</Text>
+        <Text sub>{'Lan'}</Text>
+        <Text sub>{printer.address}</Text>
+        <Text sub>{printer.macAddress}</Text>
       </HStack>
       <HStack w="40px" justifyContent="flex-end">
         <Button small transparent onPress={() => onDelete(printer)}>

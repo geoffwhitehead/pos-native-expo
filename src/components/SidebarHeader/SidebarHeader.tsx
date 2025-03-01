@@ -1,7 +1,7 @@
 import LottieView from 'lottie-react-native';
 import React, { useContext, useEffect, useRef } from 'react';
 import { LastSyncedAtContext } from '../../contexts/LastSyncedAtContext';
-import { Button, HStack, Text, Title } from '../../core';
+import { Button, Heading, HStack, Text, Title } from '../../core';
 import { useSync } from '../../hooks/useSync';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -37,11 +37,11 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ title, onOpen, dis
         </HStack>
         
         <HStack flex={1} justifyContent="center">
-          <Title>{title}</Title>
+          <Heading>{title}</Heading>
         </HStack>
         
         <HStack w="200px" alignItems="center" justifyContent="flex-end">
-          <Text style={{ lineHeight: 40 }} note>{`Last Sync: ${lastSyncedAtText}`}</Text>
+          <Text style={{ lineHeight: 40 }} sub>{`Last Sync: ${lastSyncedAtText}`}</Text>
           <Button transparent onPress={doSync}>
             <LottieView
               style={{ height: 40, width: 40 }}

@@ -16,6 +16,7 @@ import {
   Spinner,
   Text,
   Toast,
+  useToast,
   View,
   VStack,
 } from '../../../../core';
@@ -53,6 +54,8 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
   const { isOpen, onOpen, onClose } = useDisclose();
   const [billPeriodToClose, setBillPeriodToClose] = useState<BillPeriod | null>(null);
 
+  const toast = useToast();
+
   navigation.addListener('focus', () => setSelectedBillPeriod(null));
 
   const onPrintPeriodReport = async (billPeriod: BillPeriod) => {
@@ -84,10 +87,11 @@ export const ReportsTabInner: React.FC<ReportsTabOuterProps & ReportsTabInnerPro
   const confirmClosePeriod = async (billPeriod: BillPeriod, organization: Organization) => {
     const openBills = await billPeriod.openBills.fetch();
     if (openBills.length > 0) {
-      Toast.show({
-        text: `There are currently ${openBills.length} open bills, please close these first.`,
-        buttonText: 'Okay',
+      toast.show({
+        title: `There are currently ${openBills.length} open bills, please close these first.`,
         duration: 5000,
+        placement: 'bottom',
+        variant: 'solid',
       });
     } else {
       setBillPeriodToClose(billPeriod);

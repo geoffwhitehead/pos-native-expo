@@ -17,12 +17,12 @@ export {
   Select,
   Spinner,
   Text,
-  Textarea,
-  Title,
+  Heading,
   Toast,
   View,
   Divider,
-  Box
+  Box,
+  useToast
 } from 'native-base';
 
 Tabs

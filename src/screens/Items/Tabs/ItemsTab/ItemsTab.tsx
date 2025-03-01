@@ -60,7 +60,7 @@ const ItemsTabInner: React.FC<ItemsTabOuterProps & ItemsTabInnerProps> = ({ item
       </VStack>
 
       <Box>
-        <Text style={{ padding: 5 }} note>{`${items.length} Items`}</Text>
+        <Text style={{ padding: 5 }} sub>{`${items.length} Items`}</Text>
       </Box>
       <Modal isOpen={modalOpen} onClose={onCloseHandler}>
         <ItemDetails item={selectedItem} category={category} onClose={onCloseHandler} />

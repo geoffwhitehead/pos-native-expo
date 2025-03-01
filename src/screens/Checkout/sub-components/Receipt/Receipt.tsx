@@ -341,7 +341,7 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
         <Box style={styles.colummMain}>
           <Box style={styles.rowDetails}>
             <View style={styles.billDetail}>
-              <Text style={styles.detailLabel} note>
+              <Text style={styles.detailLabel} sub>
                 Open
               </Text>
               <Text style={styles.textTimes}>
@@ -351,13 +351,13 @@ export const ReceiptInner: React.FC<ReceiptOuterProps & ReceiptInnerProps> = ({
               </Text>
             </View>
             <View style={styles.billDetail}>
-              <Text style={styles.detailLabel} note>
+              <Text style={styles.detailLabel} sub>
                 Prep
               </Text>
               <Text style={styles.textTimes}>{dateString}</Text>
             </View>
             <View style={styles.billDetail}>
-              <Text style={styles.detailLabel} note>
+              <Text style={styles.detailLabel} sub>
                 Bill
               </Text>
               <Text style={styles.textTimes}>{bill.reference}</Text>

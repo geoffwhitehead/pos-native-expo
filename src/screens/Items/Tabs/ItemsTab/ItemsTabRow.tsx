@@ -30,7 +30,7 @@ const ItemsTabRowInner: React.FC<ItemsTabRowOuterProps & ItemsTabRowInnerProps> 
       <HStack flex={1} style={styles.item}>
         <Text>{`${index + 1}: ${title}`}</Text>
         {!!subtitle && (
-          <Text note>{subtitle}</Text>
+          <Text sub>{subtitle}</Text>
         )}
       </HStack>
       <HStack w="80px" justifyContent="flex-end">

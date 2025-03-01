@@ -78,7 +78,7 @@ const ModifierTabInner: React.FC<ModifiersTabOuterProps & ModifiersTabInnerProps
             <Text>Modifier Items</Text>
             <Divider style={styles.separator}/>
             {!selectedModifier && (
-              <Text note style={{ padding: 15 }}>
+              <Text sub style={{ padding: 15 }}>
                 Select a modifier to view the assigned items...{' '}
               </Text>
             )}

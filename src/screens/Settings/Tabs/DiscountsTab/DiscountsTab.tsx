@@ -76,7 +76,7 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
                   <HStack flex={1} style={selectedDiscount === discount ? commonStyles.selectedRow : {}}>
                     <VStack>
                       <Text>{discount.name}</Text>
-                      <Text note>
+                      <Text sub>
                         {amountString}
                       </Text>
                     </VStack>

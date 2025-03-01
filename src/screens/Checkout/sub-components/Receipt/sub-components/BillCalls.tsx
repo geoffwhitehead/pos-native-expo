@@ -56,7 +56,7 @@ export const BillCallsInner: React.FC<BillCallOuterProps & BillCallInnerProps> =
                 <Text style={{ paddingRight: 10 }}>{dayjs(billCallLog.createdAt).format('HH:mm')}</Text>
               </HStack>
               <HStack flex={1} justifyContent="flex-end">
-                <Text note>{`Msg: ${billCallLog.printMessage || 'none'}`}</Text>
+                <Text sub>{`Msg: ${billCallLog.printMessage || 'none'}`}</Text>
               </HStack>
             </HStack>
           </ListItem>

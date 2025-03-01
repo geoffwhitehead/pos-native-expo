@@ -27,7 +27,7 @@ const PrinterGroupRowInner: React.FC<PrinterGroupRowOuterProps & PrinterGroupRow
     <HStack flex={1} alignItems="center" justifyContent="space-between" style={isSelected ? commonStyles.selectedRow : {}} {...props}>
       <HStack flex={1} space={4}>
         <Text>{printerGroup.name}</Text>
-        <Text note>{printers.map(p => p.name).join(', ')}</Text>
+        <Text sub>{printers.map(p => p.name).join(', ')}</Text>
       </HStack>
       <HStack w="120px" justifyContent="flex-end">
         <Button style={{ marginRight: 10 }} bordered danger small onPress={() => onDelete(printerGroup)}>

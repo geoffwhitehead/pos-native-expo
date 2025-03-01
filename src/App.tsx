@@ -2,7 +2,7 @@ import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import decode from 'jwt-decode';
-import { extendTheme, NativeBaseProvider } from 'native-base';
+import { extendTheme, NativeBaseProvider, useToast } from 'native-base';
 import React from 'react';
 import { api } from './api';
 import type { SignInParams, SignUpParams } from './api/auth';
@@ -13,7 +13,6 @@ import { database, resetDatabase } from './database';
 import { SidebarNavigator } from './navigators/SidebarNavigator';
 import { Main } from './screens/Main/Main';
 import { SplashScreen } from './screens/SplashScreen/SplashScreen';
-import { toast } from './utils/toast';
 
 type ReducerState = {
   isSignout: boolean;
@@ -48,6 +47,7 @@ const theme = extendTheme({
 });
 
 export default function App() {
+  const toast = useToast();
   // if (env === 'local') {
   //   const whyDidYouRender = require('@welldone-software/why-did-you-render');
   //   whyDidYouRender(React, {
@@ -224,14 +224,18 @@ export default function App() {
           }
         } catch (err) {
           dispatch({ type: 'SIGN_IN_FAILED' });
-          toast({ message: 'Failed to sign in' });
+          toast.show({ title: 'Failed to sign in' , 
+            placement: 'bottom',
+            variant: 'solid',});
         }
       },
       signOut: async () => {
         try {
           await unsetAuth();
         } catch (err) {
-          toast({ message: 'Failed to sign out' });
+          toast.show({ title: 'Failed to sign out' , 
+            placement: 'bottom',
+            variant: 'solid',});
         }
       },
       signUp: async (bodyData: SignUpParams) => {
@@ -249,7 +253,9 @@ export default function App() {
               organizationId: response.data.data.organizationId,
               userId: response.data.data.userId,
             });
-            toast({ message: 'Successfully signed up, please login.', type: 'success' });
+            toast.show({ title: 'Successfully signed up, please login.', 
+              placement: 'bottom',
+              variant: 'solid',});
             dispatch({ type: 'SIGN_UP_SUCCESS' });
 
             return { success: true };
@@ -258,7 +264,9 @@ export default function App() {
           }
         } catch (err) {
           dispatch({ type: 'SIGN_UP_FAILED' });
-          toast({ message: `Sign up failed` });
+          toast.show({ title: `Sign up failed` , 
+            placement: 'bottom',
+            variant: 'solid',});
           return { success: false };
         }
       },
@@ -266,9 +274,13 @@ export default function App() {
         try {
           await resetDatabase();
           await unsetAuth();
-          toast({ message: 'Sucessfully unlinked', type: 'success' });
+          toast.show({ title: 'Sucessfully unlinked', 
+            placement: 'bottom',
+            variant: 'solid',});
         } catch (err) {
-          toast({ message: 'Failed to sign out' });
+          toast.show({ title: 'Failed to sign out' , 
+            placement: 'bottom',
+            variant: 'solid',});
         }
       },
     }),

@@ -130,15 +130,15 @@ export const WrappedBillRow: React.FC<BillRowInnerProps & BillRowOuterProps> = (
             <Text style={styles.rowText}>{rowText}</Text>
             {badgeType && (
               <Badge {...{ [badgeType]: true }} style={{ marginBottom: 5 }}>
-                <Text note style={{ color: 'white' }}>
+                <Text sub style={{ color: 'white' }}>
                   {text}
                 </Text>
               </Badge>
             )}
           </HStack>
           <HStack flex={1} justifyContent="flex-end" space={2}>
-            <Text note>{`Opened: ${dayjs(bill.createdAt).format('h:mm a')}`}</Text>
-            <Text note>{`Last Called: ${lastCalledAt ? lastCalledAt.format('h:mm a') : ''}`}</Text>
+            <Text sub>{`Opened: ${dayjs(bill.createdAt).format('h:mm a')}`}</Text>
+            <Text sub>{`Last Called: ${lastCalledAt ? lastCalledAt.format('h:mm a') : ''}`}</Text>
             <Text style={styles.totalText}>{totalText}</Text>
           </HStack>
         </HStack>

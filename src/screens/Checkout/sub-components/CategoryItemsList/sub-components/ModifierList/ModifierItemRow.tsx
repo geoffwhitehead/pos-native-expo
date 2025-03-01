@@ -35,7 +35,7 @@ const ModifierItemRowInner: React.FC<ModifierItemRowOuterProps & ModifierItemRow
       </HStack>
       <HStack flex={1} justifyContent="flex-end">
         {hasPriceSet && <Text style={{ color: 'grey' }}>{formatNumber(modifierItemPrice.price, currency)}</Text>}
-        {!hasPriceSet && <Text note>No price set</Text>}
+        {!hasPriceSet && <Text sub>No price set</Text>}
       </HStack>
     </HStack>
   );

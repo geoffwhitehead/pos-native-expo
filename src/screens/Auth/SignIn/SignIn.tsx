@@ -114,7 +114,7 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
               </Button>
             )}
             {organization && (
-              <Text style={{ padding: 20 }} note>
+              <Text style={{ padding: 20 }} sub>
                 * This terminal is currently linked with {organization.name}.
               </Text>
             )}

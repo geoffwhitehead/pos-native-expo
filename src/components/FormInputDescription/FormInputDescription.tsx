@@ -11,7 +11,7 @@ type FormInputDescriptionProps = {
 
 export const FormInputDescription: React.FC<FormInputDescriptionProps> = ({ style, description, children, ...props }) => {
   return (
-    <Text note style={{ ...styles.text, ...(style || {}) }} {...props}>
+    <Text sub style={{ ...styles.text, ...(style || {}) }} {...props}>
       {children || description}
     </Text>
   );

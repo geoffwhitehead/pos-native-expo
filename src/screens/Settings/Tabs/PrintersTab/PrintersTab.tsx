@@ -230,9 +230,9 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
                 <HStack flex={1} alignItems="center" justifyContent="space-between" key={discoveredPrinter.connectionSettings.identifier}>
                   <Text>{discoveredPrinter.information?._model}</Text>
                   <VStack flex={1} justifyContent="flex-end">
-                    <Text note>{discoveredPrinter.connectionSettings.interfaceType}</Text>
-                    <Text note>{discoveredPrinter.information?._detail?._lan?._ipAddress}</Text>
-                    <Text note>{discoveredPrinter.information?._detail?._lan?._macAddress}</Text>
+                    <Text sub>{discoveredPrinter.connectionSettings.interfaceType}</Text>
+                    <Text sub>{discoveredPrinter.information?._detail?._lan?._ipAddress}</Text>
+                    <Text sub>{discoveredPrinter.information?._detail?._lan?._macAddress}</Text>
                   </VStack>
                   <VStack flex={1} justifyContent="flex-end">
                     {isInstalled ? (

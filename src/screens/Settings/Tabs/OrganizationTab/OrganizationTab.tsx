@@ -125,7 +125,7 @@ export const OrganizationTab: React.FC<OrganizationTabProps> = () => {
                     <Input onChangeText={handleChange('vat')} onBlur={handleBlur('vat')} value={vat} />
                   </ItemField>
 
-                  <Text style={commonStyles.text} note>
+                  <Text style={commonStyles.text} sub>
                     Address
                   </Text>
 

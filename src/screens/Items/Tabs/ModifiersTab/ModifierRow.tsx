@@ -28,7 +28,7 @@ const ModifierRowInner: React.FC<ModifierRowOuterProps & ModifierRowInnerProps> 
     <HStack flex={1} alignItems="center" justifyContent="space-between" onTouchEnd={() => onSelect(modifier)} {...props}>
       <VStack flex={1}>
         <Text style={{ alignSelf: 'flex-start' }}>{`${index + 1}: ${modifier.name}`}</Text>
-        <Text style={{ alignSelf: 'flex-start' }} note>{`Assigned: ${itemsCount} Items`}</Text>
+        <Text style={{ alignSelf: 'flex-start' }} sub>{`Assigned: ${itemsCount} Items`}</Text>
       </VStack>
       <HStack w="80px" justifyContent="flex-end">
         <Button bordered info small onPress={() => onView(modifier)} transparent>

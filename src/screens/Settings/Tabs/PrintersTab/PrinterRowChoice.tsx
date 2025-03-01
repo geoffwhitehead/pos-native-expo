@@ -24,7 +24,7 @@ const PrinterRowChoiceInner: React.FC<PrinterRowChoiceOuterProps & PrinterRowCho
           <Text>{printer.name}</Text>
         </HStack>
         <HStack flex={1} justifyContent="flex-start">
-          <Text note>{printer.address}</Text>
+          <Text sub>{printer.address}</Text>
         </HStack>
         <HStack w="40px" justifyContent="flex-end">
           <Icon name="arrow-forward" color="grey" size={24}/>
@@ -41,7 +41,7 @@ const PrinterRowChoiceInner: React.FC<PrinterRowChoiceOuterProps & PrinterRowCho
           <Text>{printer.name}</Text>
         </HStack>
         <HStack flex={1} justifyContent="flex-start">
-          <Text note>{printer.address}</Text>
+          <Text sub>{printer.address}</Text>
         </HStack>
       </HStack>
     );

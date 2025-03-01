@@ -108,7 +108,7 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
       </ScrollView>
       <Box>
         <Text
-          note
+          sub
           style={{ color: categories.length === maxCategories ? 'red' : 'grey' }}
         >{`Categories: ${categories.length} / ${maxCategories}`}</Text>
       </Box>

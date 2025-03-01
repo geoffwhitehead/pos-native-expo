@@ -34,8 +34,8 @@ const CategoryRowInner: React.FC<CategoryRowOuterProps & CategoryRowInnerProps> 
             }}
           >{`${index + 1}: ${category.name}`}</Text>
         </View>
-        <Text style={styles.text} note>{`Assigned: ${itemsCount} Items`}</Text>
-        <Text style={styles.text} note>{`Print Category: ${printCategory?.shortName || 'None'}`}</Text>
+        <Text style={styles.text} sub>{`Assigned: ${itemsCount} Items`}</Text>
+        <Text style={styles.text} sub>{`Print Category: ${printCategory?.shortName || 'None'}`}</Text>
       </VStack>
       <HStack w="80px" justifyContent="flex-end">
         <Button bordered info small onPress={() => onSelect(category)} transparent>

@@ -39,7 +39,7 @@ const PaymentsBreakdown: React.FC<PaymentsBreakdownProps> = ({ payments, readonl
                 <Text>{`Payment: ${capitalize(paymentType.name)}`}</Text>
               </HStack>
               <HStack flex={1} justifyContent="flex-end">
-                <Text note>{`${formatNumber(payment.amount, currency)}`}</Text>
+                <Text sub>{`${formatNumber(payment.amount, currency)}`}</Text>
               </HStack>
             </HStack>
           );

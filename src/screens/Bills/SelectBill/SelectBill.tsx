@@ -170,7 +170,7 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
         </VStack>
       </HStack>
       <Box>
-        <Text style={{ padding: 10 }} note>{`Open bills: ${openBills.length} / ${bills.length}`}</Text>
+        <Text style={{ padding: 10 }} sub>{`Open bills: ${openBills.length} / ${bills.length}`}</Text>
       </Box>
     </>
   );

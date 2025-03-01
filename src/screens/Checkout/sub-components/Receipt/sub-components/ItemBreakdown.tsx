@@ -92,12 +92,12 @@ const ItemBreakdownInner: React.FC<ItemBreakdownOuterProps & ItemBreakdownInnerP
             {billItemModifierItems.length > 0 && (
               <View style={{ paddingTop: 5 }}>
                 {billItemModifierItems.map(m => (
-                  <Text note style={style} key={`${m.id}-name`}>{`- ${m.modifierItemName}`}</Text>
+                  <Text sub style={style} key={`${m.id}-name`}>{`- ${m.modifierItemName}`}</Text>
                 ))}
               </View>
             )}
             {billItem.printMessage ? (
-              <Text note style={{ ...style, fontWeight: 'bold' }}>{`msg: ${billItem.printMessage}`}</Text>
+              <Text sub style={{ ...style, fontWeight: 'bold' }}>{`msg: ${billItem.printMessage}`}</Text>
             ) : null}
           </View>
         </HStack>
@@ -108,7 +108,7 @@ const ItemBreakdownInner: React.FC<ItemBreakdownOuterProps & ItemBreakdownInnerP
               {billItemModifierItems.map(m => {
                 const modifierItemDisplayPrice = formatNumber(isChargable ? m.modifierItemPrice : 0, currency);
                 return (
-                  <Text note style={style} key={`${m.id}-price`}>
+                  <Text sub style={style} key={`${m.id}-price`}>
                     {modifierItemDisplayPrice}
                   </Text>
                 );

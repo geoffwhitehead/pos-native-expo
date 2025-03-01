@@ -39,7 +39,7 @@ export const PriceGroupItemsInner: React.FC<PriceGroupItemsOuterProps & PriceGro
   //           <Text>Price Groups</Text>
   //         </HStack>
   // <Divider/>
-  //       <Text note style={{ padding: 15 }}>
+  //       <Text sub style={{ padding: 15 }}>
   //         Select a price group to bulk edit item prices...
   //       </Text>
   //     </>
@@ -83,7 +83,7 @@ export const PriceGroupItemsInner: React.FC<PriceGroupItemsOuterProps & PriceGro
                 </Button>
               </HStack>
             {!priceGroup && (
-              <Text note style={{ padding: 15 }}>
+              <Text sub style={{ padding: 15 }}>
                 Select a price group to bulk edit item prices...
               </Text>
             )}

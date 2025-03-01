@@ -1,6 +1,5 @@
 import type { PrinterBuilder } from 'react-native-star-io10/src/StarXpandCommand/PrinterBuilder';
 import type { Printer } from '../../models';
-import { toast } from '../../utils/toast';
 
 import type {
   InterfaceType} from 'react-native-star-io10';
@@ -9,11 +8,13 @@ import {
   StarXpandCommand,
   StarPrinter
 } from 'react-native-star-io10';
+import { useToast } from 'native-base';
 
 type PrintProps = { printerBuilder: PrinterBuilder; printer: Printer; openDrawer?: boolean; onFinished?: (success: boolean) => void };
 
 
 export async function print({ printerBuilder, printer, openDrawer = false, onFinished }: PrintProps) {
+  const toast = useToast();
   try {
 
     var connectionSettings = new StarConnectionSettings();
@@ -47,8 +48,10 @@ export async function print({ printerBuilder, printer, openDrawer = false, onFin
   } catch (e) {
 
 
-    toast({
-          message: `Failed to print. Check paper has not ran out and printer is connected and try again. Error details: ${e}`,
+    toast.show({
+          title: `Failed to print. Check paper has not ran out and printer is connected and try again. Error details: ${e}`,
+          placement: 'bottom',
+          variant: 'solid',
         });
         return { success: false, error: e }
   } finally {

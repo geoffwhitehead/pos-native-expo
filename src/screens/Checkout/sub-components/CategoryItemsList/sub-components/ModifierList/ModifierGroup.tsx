@@ -55,7 +55,7 @@ const WrappedModifierGroup: React.FC<ModifierGroupInnerProps & ModifierGroupOute
       <Text>{name}</Text>
       <Divider />
       {hasNoPricesSet && (
-        <Text style={{ paddingTop: 15, paddingBottom: 15 }} note>
+        <Text style={{ paddingTop: 15, paddingBottom: 15 }} sub>
           No prices have been set for this modifier in this price group. You can set modifier item prices by navigating
           to the items sidebar menu - modifiers tab.
         </Text>
@@ -76,7 +76,7 @@ const WrappedModifierGroup: React.FC<ModifierGroupInnerProps & ModifierGroupOute
           />
         );
       })}
-      <Text style={{ padding: 15 }} note>
+      <Text style={{ padding: 15 }} sub>
         {message}
       </Text>
     </>
