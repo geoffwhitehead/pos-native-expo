@@ -12,7 +12,7 @@ import { CurrentBillContext } from '../../../../contexts/CurrentBillContext';
 import { ItemPricesContext } from '../../../../contexts/ItemPricesContext';
 import { ItemsContext } from '../../../../contexts/ItemsContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, HStack, Text, View, VStack } from '../../../../core';
+import { NewButton, HStack, Text, View, VStack } from '../../../../core';
 import type { Item, ItemPrice, Modifier, PriceGroup } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import type { CheckoutItemStackParamList } from '../../../../navigators/CheckoutItemNavigator';
@@ -118,9 +118,9 @@ const CategoryItemsInner: React.FC<CategoryItemsListOuterProps & CategoryItemsLi
   return (
     <>
       <HStack flex={1} alignItems="center" justifyContent="flex-start">
-        <Button small bordered info onPress={goBack} iconLeft>
+        <NewButton colorScheme="info" size="sm" variant='outline' onPress={goBack}>
           <Text style={{ fontWeight: 'bold' }}>Back</Text>
-        </Button>
+        </NewButton>
       </HStack>
       <SearchHeader onChangeText={onSearchHandler} value={searchValue} />
       <ScrollView>

@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native';
 import { Loading } from '../../../../components/Loading/Loading';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Button, Container, Divider, HStack, Icon, Text, useDisclose, VStack } from '../../../../core';
+import { NewButton, Container, Divider, HStack, Icon, Text, useDisclose, VStack } from '../../../../core';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import type { Category, Item, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
@@ -77,10 +77,9 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
           <HStack flex={1} alignItems="center" justifyContent="space-between">
             <Text>Price Groups</Text>
             <HStack justifyContent="flex-end">
-              <Button iconLeft success small onPress={() => setIsModalOpen(true)}>
-                <Icon name="add-circle-outline" size={24} color="white"/>
-                <Text>Create</Text>
-              </Button>
+              <NewButton colorScheme="success" size="sm" onPress={() => setIsModalOpen(true)} leftIcon={<Icon name="add-circle-outline" size={24} color="white" />}>
+                Create
+              </NewButton>
             </HStack>
           </HStack>
           <Divider/>  
@@ -91,31 +90,31 @@ const PriceGroupsTabInner: React.FC<PriceGroupsTabOuterProps & PriceGroupsTabInn
                   <Text>{priceGroup.name}</Text>
                 </HStack>
                 <HStack flex={1} justifyContent="flex-end">
-                  <Button
+                  <NewButton
                     style={{ marginRight: 10 }}
-                    bordered
-                    info
-                    small
+                    variant='outline'
+                    colorScheme='info'
+                    size='sm'
                     onPress={() => onSelectPrices(priceGroup)}
                   >
-                    <Text>Bulk Edit Prices</Text>
-                  </Button>
-                  <Button
+                    Bulk Edit Prices
+                  </NewButton>
+                  <NewButton
                     style={{ marginRight: 10 }}
-                    bordered
-                    danger
-                    small
-                    disabled={priceGroups.length === 1}
+                    variant="outline"
+                    colorScheme='danger'
+                    size="sm"
+                    isDisabled={priceGroups.length === 1}
                     onPress={() => {
                       setPriceGroupToDelete(priceGroup);
                       onOpen();
                     }}
                   >
-                    <Text>Delete</Text>
-                  </Button>
-                  <Button bordered info small onPress={() => onSelect(priceGroup)}>
-                    <Text>Edit</Text>
-                  </Button>
+                    Delete
+                  </NewButton>
+                  <NewButton variant='outline' colorScheme='info' size='sm' onPress={() => onSelect(priceGroup)}>
+                    Edit
+                  </NewButton>
                 </HStack>
               </HStack>
           ))}

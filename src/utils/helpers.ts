@@ -1,6 +1,6 @@
 
 export const resolveButtonState = (isDisabled: boolean, stdState: string) =>
-  isDisabled ? { disabled: true } : { [stdState]: true };
+  isDisabled ? { isDisabled: true } : { colorScheme: stdState };
 
 const getShortHand = (style: string, ...values) => {
   if (values.length === 1) {

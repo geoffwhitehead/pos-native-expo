@@ -1,6 +1,6 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
-import { HStack, VStack, Text, Button } from '../../../../core';
+import { HStack, VStack, Text, NewButton } from '../../../../core';
 import type { Modifier } from '../../../../models';
 
 type ModifierRowOuterProps = {
@@ -31,9 +31,9 @@ const ModifierRowInner: React.FC<ModifierRowOuterProps & ModifierRowInnerProps> 
         <Text style={{ alignSelf: 'flex-start' }} sub>{`Assigned: ${itemsCount} Items`}</Text>
       </VStack>
       <HStack w="80px" justifyContent="flex-end">
-        <Button bordered info small onPress={() => onView(modifier)} transparent>
-          <Text>Edit</Text>
-        </Button>
+        <NewButton variant='outline' colorScheme='info' size='sm' onPress={() => onView(modifier)}>
+          Edit
+        </NewButton>
       </HStack>
     </HStack>
   );

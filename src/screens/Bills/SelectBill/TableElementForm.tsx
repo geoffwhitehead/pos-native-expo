@@ -4,7 +4,7 @@ import { inRange } from 'lodash';
 import React from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
-import { Button, FormControl, Icon, Input, HStack, Text, View, Select } from '../../../core';
+import { NewButton, FormControl, Icon, Input, HStack, Text, View, Select } from '../../../core';
 import type { TablePlanElement } from '../../../models';
 import type {
   TablePlanElementProps} from '../../../models/TablePlanElement';
@@ -93,14 +93,13 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
         return (
           <View style={{ borderColor: 'lightgrey', borderLeftWidth: 1, height: '100%' }}>
             <HStack flex={1} justifyContent="flex-end" style={{ backgroundColor: 'whitesmoke', padding: 5 }}>
-              <Button success small iconLeft onPress={handleSubmit}>
-                <Icon name="add-circle-outline" size={24} color="white"/>
-                <Text>Save</Text>
-              </Button>
+              <NewButton colorScheme="success" size="sm" iconLeft={<Icon name="add-circle-outline" size={24} color="white" />} onPress={handleSubmit}>
+                Save
+              </NewButton>
               {tablePlanElement && (
-                <Button danger small onPress={onDelete} style={{ marginLeft: 5 }}>
-                  <Icon name="trash" size={24} color="white"/>
-                </Button>
+                <NewButton colorScheme="danger" size="sm" leftIcon={<Icon name="trash" size={24} color="white" />} onPress={onDelete} style={{ marginLeft: 5 }}>
+                  Delete
+                </NewButton>
               )}
             </HStack>
             <FormControl style={commonStyles.form}>

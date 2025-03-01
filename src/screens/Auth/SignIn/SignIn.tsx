@@ -9,7 +9,7 @@ import { KeyboardAvoidingView, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import envKey from '../../../../build.env';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { Button, Container, FormControl, HStack, Input, Spinner, Text, useDisclose } from '../../../core';
+import { NewButton, Container, FormControl, HStack, Input, Spinner, Text, useDisclose } from '../../../core';
 import type { Organization } from '../../../models';
 import type { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
@@ -83,35 +83,32 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
             <FormControl.Label style={styles.text}>Password</FormControl.Label>
 
             <Input style={styles.text} value={password} onChangeText={setPassword} secureTextEntry />
-            <Button
+            <NewButton
               {...resolveButtonState(isSignInLoading, 'info')}
-              full
-              disabled={isSignInLoading}
+              isDisabled={isSignInLoading}
               style={styles.button}
               onPress={() => signIn({ email, password })}
             >
               {!isSignInLoading && <Text>Sign in</Text>}
               {isSignInLoading && <Spinner color="white" />}
-            </Button>
+            </NewButton>
             {!organization && (
-              <Button
-                full
+              <NewButton
                 style={{ ...styles.button, backgroundColor: 'white' }}
-                light
+                variant='light'
                 onPress={() => navigation.navigate('SignUp')}
               >
                 <Text>Register</Text>
-              </Button>
+              </NewButton>
             )}
             {organization && (
-              <Button
-                full
+              <NewButton
                 style={{ ...styles.button, backgroundColor: 'white' }}
-                light
+                variant='light'
                 onPress={onOpen}
               >
                 <Text>Unlink</Text>
-              </Button>
+              </NewButton>
             )}
             {organization && (
               <Text style={{ padding: 20 }} sub>

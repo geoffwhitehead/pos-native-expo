@@ -13,7 +13,7 @@ import { ConfirmationActionsheet } from '../../../../components/ConfirmationActi
 import { AuthContext } from '../../../../contexts/AuthContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Box, Button, Container, FormControl, Icon, Input, Select, Text, VStack, View, useDisclose } from '../../../../core';
+import { Box, NewButton, Container, FormControl, Icon, Input, Select, Text, VStack, View, useDisclose } from '../../../../core';
 import type { Bill, BillPeriod, PriceGroup, Printer } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import { moderateScale } from '../../../../utils/scaling';
@@ -262,7 +262,7 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                       placeholder="Select list view type"
                       selectedValue={itemListViewType}
                       onValueChange={handleChange('itemListViewType')}
-                      enabled={!hasOpenBills}
+                      isDisabled={hasOpenBills}
                       style={{
                         paddingLeft: 0,
                         paddingRight: 0,
@@ -282,12 +282,12 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
       </Formik>
       <Box>
         <View style={{ display: 'flex', flexDirection: 'row', padding: 5 }}>
-          <Button style={{ marginRight: 10 }} onPress={onLogoutOpen}>
-            <Text>Sign out</Text>
-          </Button>
-          <Button danger bordered onPress={onUnlinkOpen}>
-            <Text>Delete local account</Text>
-          </Button>
+          <NewButton style={{ marginRight: 10 }} onPress={onLogoutOpen}>
+            Sign out
+          </NewButton>
+          <NewButton colorScheme="danger" variant="outline" onPress={onUnlinkOpen}>
+            Delete local account
+          </NewButton>
         </View>
       </Box>
 

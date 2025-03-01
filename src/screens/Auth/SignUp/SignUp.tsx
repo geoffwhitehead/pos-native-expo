@@ -8,7 +8,7 @@ import { Bar } from 'react-native-progress';
 import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { Button, Container, FormControl, Icon, Input, Text } from '../../../core';
+import { NewButton, Container, FormControl, Icon, Input, Text } from '../../../core';
 import type { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
 import { resolveButtonState } from '../../../utils/helpers';
@@ -353,31 +353,28 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation, route }) => {
                 </FormControl>
                 <KeyboardAvoidingView style={styles.navButtons}>
                   {page > 1 && (
-                    <Button
-                      full
-                      disabled={isSignUpLoading}
+                    <NewButton
+                      isDisabled={isSignUpLoading}
                       {...resolveButtonState(isSignUpLoading, 'info')}
                       onPress={handlePrevious}
                       style={{ flexGrow: 1 }}
-                    >
-                      <Icon name="arrow-back-outline"  color="white"/>
-                    </Button>
+                      startIcon={<Icon name="arrow-back-outline"  color="white"/>}
+                    />
                   )}
                   {page !== 3 && (
-                    <Button full info onPress={handleNext} style={{ flexGrow: 3, marginLeft: 5 }}>
-                      <Text>Continue</Text>
-                    </Button>
+                    <NewButton variant='info' onPress={handleNext} style={{ flexGrow: 3, marginLeft: 5 }}>
+                      Continue
+                    </NewButton>
                   )}
                   {page === 3 && (
-                    <Button
-                      disabled={isSignUpLoading}
+                    <NewButton
+                      isDisabled={isSignUpLoading}
                       {...resolveButtonState(isSignUpLoading, 'info')}
-                      full
                       onPress={handleSubmit}
                       style={{ flexGrow: 3, marginLeft: 5 }}
                     >
-                      <Text>Sign Up</Text>
-                    </Button>
+                      Sign Up
+                    </NewButton>
                   )}
                 </KeyboardAvoidingView>
               </KeyboardAvoidingView>

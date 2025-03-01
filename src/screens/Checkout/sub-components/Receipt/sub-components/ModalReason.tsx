@@ -58,8 +58,8 @@ export const ModalReason: React.FC<ModalReasonProps> = ({ onComplete, onClose, m
                 <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
               </ItemField>
 
-              <ItemField label="Reason" touched={!!touched.reason} name="reason" errors={errors.reason}/>
-                {/* <Input onChangeText={handleChange('reason')} onBlur={handleBlur('reason')} value={reason} />
+              <ItemField label="Reason" touched={!!touched.reason} name="reason" errors={errors.reason}>
+                <Input onChangeText={handleChange('reason')} onBlur={handleBlur('reason')} value={reason} />
                 <Textarea
                   style={{ width: '100%' }}
                   underline
@@ -68,8 +68,8 @@ export const ModalReason: React.FC<ModalReasonProps> = ({ onComplete, onClose, m
                   value={reason}
                   rowSpan={5}
                   bordered
-                /> */}
-              {/* </ItemField> */}
+                />
+              </ItemField>
             </FormControl>
           </ModalContentButton>
         );

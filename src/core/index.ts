@@ -8,6 +8,7 @@ export {
   useDisclose,
   Badge,
   Button,
+  Button as NewButton,
   Checkbox,
   Container,
   Drawer,
@@ -24,7 +25,4 @@ export {
   Box,
   useToast
 } from 'native-base';
-
-Tabs
-export { Ionicons as Icon} from '@expo/vector-icons';
 

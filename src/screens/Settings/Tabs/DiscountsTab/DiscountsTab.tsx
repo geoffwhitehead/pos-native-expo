@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import { Modal } from '../../../../components/Modal/Modal';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Box, Button, Divider, HStack, Icon, Spinner, Text, useDisclose, VStack } from '../../../../core';
+import { Box, NewButton, Divider, HStack, Icon, Spinner, Text, useDisclose, VStack } from '../../../../core';
 import type { Discount } from '../../../../models';
 import { formatNumber } from '../../../../utils';
 import { resolveButtonState } from '../../../../utils/helpers';
@@ -53,15 +53,14 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
         <HStack flex={1} alignItems="center" justifyContent="space-between">
           <Text>Discount</Text>
           <HStack justifyContent="flex-end">
-            <Button
+            <NewButton
               {...resolveButtonState(isCreateDisabled, 'success')}
-              iconLeft
-              small
+              leftIcon={<Icon name="add-circle-outline" size={24} color="white"/>}
+              size='sm'
               onPress={() => setIsModalOpen(true)}
             >
-              <Icon name="add-circle-outline" size={24} color="white"/>
-              <Text>Create</Text>
-            </Button>
+              Create
+            </NewButton>
           </HStack>
         </HStack>
         <Divider/>
@@ -82,19 +81,19 @@ const DiscountTabInner: React.FC<DiscountTabOuterProps & DiscountTabInnerProps> 
                     </VStack>
                   </HStack>
                   <HStack justifyContent="flex-end">
-                    <Button
+                    <NewButton
                       style={{ marginRight: 10 }}
-                      bordered
-                      danger
-                      small
-                      disabled={discounts.length === 1}
+                      variant="outline"
+                      colorScheme="danger"
+                      size="sm"
+                      isDisabled={discounts.length === 1}
                       onPress={() => {
                         setDiscountToDelete(discount);
                         onOpen();
                       }}
                     >
                       <Text>Delete</Text>
-                    </Button>
+                    </NewButton>
                   </HStack>
                 </HStack>
             );

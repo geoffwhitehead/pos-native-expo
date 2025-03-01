@@ -9,7 +9,7 @@ import { FlatList, ScrollView } from 'react-native';
 import { Modal } from '../../../../components/Modal/Modal';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import {
-  Button,
+  NewButton,
   Container,
   Divider,
   HStack,
@@ -213,9 +213,9 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
         <HStack flex={1} alignItems="center" justifyContent="space-between">
           <Text>Discover Printers</Text>
           <HStack justifyContent="flex-end">
-            <Button small disabled={isLoading} onPress={discoverPrinters}>
-              <Text>Discover Printers</Text>
-            </Button>
+            <NewButton size='sm' isDisabled={isLoading} onPress={discoverPrinters}>
+              Discover Printers
+            </NewButton>
           </HStack>
         </HStack>
         <Divider/>
@@ -236,13 +236,13 @@ const PrintersTabInner: React.FC<PrintersTabOuterProps & PrintersTabInnerProps> 
                   </VStack>
                   <VStack flex={1} justifyContent="flex-end">
                     {isInstalled ? (
-                      <Button small onPress={() => updatePrinter(discoveredPrinter)}>
-                        <Text>Update</Text>
-                      </Button>
+                      <NewButton size='sm' onPress={() => updatePrinter(discoveredPrinter)}>
+                        Update
+                      </NewButton>
                     ) : (
-                      <Button small onPress={() => addPrinter(discoveredPrinter)}>
-                        <Text>Add</Text>
-                      </Button>
+                      <NewButton size='sm' onPress={() => addPrinter(discoveredPrinter)}>
+                        Add
+                      </NewButton>
                     )}
                   </VStack>
                 </HStack>

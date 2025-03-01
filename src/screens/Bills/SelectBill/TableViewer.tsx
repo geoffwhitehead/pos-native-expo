@@ -26,7 +26,7 @@ import BlockWallCorner from '../../../assets/wall-corner.svg';
 import BlockWallSquare from '../../../assets/wall-square.svg';
 import BlockWall from '../../../assets/wall.svg';
 import BlockWindow from '../../../assets/window.svg';
-import { Button, HStack, Text, VStack } from '../../../core';
+import { NewButton, HStack, Text, VStack } from '../../../core';
 import type { Bill, TablePlanElement } from '../../../models';
 import type { TablePlanElementTypes } from '../../../models/TablePlanElement';
 import { fontSizes } from '../../../theme';
@@ -132,14 +132,14 @@ export const TableViewerInner: React.FC<TableViewerProps> = ({
                         {el.billReference && <Text style={styles.referenceText}>{el.billReference}</Text>}
                       </Animated.View>
                     )}
-                    {shouldRenderButton && <Button light style={{ ...styles.button, backgroundColor: 'white' }} />}
+                    {shouldRenderButton && <NewButton colorScheme="light" style={{ ...styles.button, backgroundColor: 'white' }} />}
                   </TouchableOpacity>
                 </VStack>
               );
             })}
           </HStack>
         );
-      })}
+      }}
     </VStack>
   );
 };

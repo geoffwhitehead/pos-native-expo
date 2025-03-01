@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import type { Item, ItemPrice, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
+import { NewButton } from '../../../../core';
 
 type PriceGroupItemsOuterProps = {
   priceGroup: PriceGroup;
@@ -77,10 +78,9 @@ export const PriceGroupItemsInner: React.FC<PriceGroupItemsOuterProps & PriceGro
 
               <HStack justifyContent="space-between">
                 <Text>Price Groups</Text>
-                <Button iconLeft success small onPress={() => {}}>
-                  <Icon name="add-circle-outline" size={24} color="white" />
-                  <Text>Save</Text>
-                </Button>
+                <NewButton colorScheme="success" size="sm" onPress={handleSubmit} leftIcon={<Icon name="add-circle-outline" size={24} color="white" />}>
+                  Save
+                </NewButton>
               </HStack>
             {!priceGroup && (
               <Text sub style={{ padding: 15 }}>
