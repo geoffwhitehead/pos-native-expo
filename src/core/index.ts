@@ -7,7 +7,6 @@ export {
   Button,
   Checkbox,
   Container,
-  Content,
   Drawer,
   Footer,
   Form,

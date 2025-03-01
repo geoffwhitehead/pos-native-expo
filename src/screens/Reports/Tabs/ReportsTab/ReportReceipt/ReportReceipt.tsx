@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Loading } from '../../../../../components/Loading/Loading';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
-import { Content, Divider, HStack, Separator, Text, VStack, Box } from '../../../../../core';
+import { Divider, HStack, Separator, Text, VStack, Box } from '../../../../../core';
 import type { BillPeriod } from '../../../../../models';
 import type { PeriodReportData} from '../../../../../services/printer/periodReport';
 import { periodReportData } from '../../../../../services/printer/periodReport';
@@ -65,7 +65,7 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
   } = reportData;
 
   return (
-        <Content style={styles.rightColumn}>
+        <Box style={styles.rightColumn}>
           <VStack>
             <Separator bordered>
               <Text>Category Totals</Text>
@@ -194,7 +194,7 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
                 <Text style={styles.listItemRight}>{formatNumber(salesTotal, currency)}</Text>
               </HStack>
           </VStack>
-        </Content>
+        </Box>
   );
 };
 

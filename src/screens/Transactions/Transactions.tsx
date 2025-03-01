@@ -2,13 +2,12 @@ import withObservables from '@nozbe/with-observables';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import React, { useState } from 'react';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
-import { Container, Content, View, VStack } from '../../core';
+import { Box, Container, View, VStack } from '../../core';
 import { withBillPeriod } from '../../hocs/withBillPeriod';
 import type { Bill, BillPeriod } from '../../models';
 import type { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { Receipt } from '../Checkout/sub-components/Receipt/Receipt';
 import { TransactionList } from './sub-components/TransactionList';
-import { Box } from '@shopify/react-native-skia';
 
 interface TransactionsOuterProps {
   navigation: DrawerNavigationProp<SidebarDrawerStackParamList, 'Transactions'>;
@@ -35,13 +34,11 @@ const TransactionsInner: React.FC<TransactionsOuterProps & TransactionsInnerProp
     <Container>
       <SidebarHeader title="Transactions" onOpen={handleOnOpen} />
       <VStack>
-        <Content>
-          <TransactionList bills={closedBills} selectedBill={selectedBill} onSelectBill={setSelectedBill} />
-        </Content>
+        <TransactionList bills={closedBills} selectedBill={selectedBill} onSelectBill={setSelectedBill} />
         {selectedBill && (
-        <View width={350}>
+        <Box width={350}>
           <Receipt bill={selectedBill} isComplete={true} />
-        </View>
+        </Box>
         )}
       </VStack>
     </Container>

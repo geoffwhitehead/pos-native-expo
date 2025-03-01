@@ -2,7 +2,7 @@ import withObservables from '@nozbe/with-observables';
 import React, { useState } from 'react';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
-import { Container, Content, Footer, List, Text } from '../../../../core';
+import { Container, Footer, List, Text, VStack } from '../../../../core';
 import type { Category, Item, Modifier, PrinterGroup } from '../../../../models';
 import { ItemsTabRow } from './ItemsTabRow';
 import { ItemDetails } from './ModalItemDetails';
@@ -41,24 +41,22 @@ const ItemsTabInner: React.FC<ItemsTabOuterProps & ItemsTabInnerProps> = ({ item
         onPressCreate={() => setModalOpen(true)}
         onSearch={value => setSearchValue(value)}
       />
-      <Content>
-        <List>
-          {items
-            .filter(item => searchFilter(item, searchValue))
-            .map((item, index) => {
-              return (
-                <ItemsTabRow
-                  index={index}
-                  key={item.id}
-                  item={item}
-                  isActive={selectedItem === item}
-                  onPressItem={onSelectItem}
-                  title={item.name}
-                />
-              );
-            })}
-        </List>
-      </Content>
+      <VStack>
+        {items
+          .filter(item => searchFilter(item, searchValue))
+          .map((item, index) => {
+            return (
+              <ItemsTabRow
+                index={index}
+                key={item.id}
+                item={item}
+                isActive={selectedItem === item}
+                onPressItem={onSelectItem}
+                title={item.name}
+              />
+            );
+          })}
+      </VStack>
 
       <Footer>
         <Text style={{ padding: 5 }} note>{`${items.length} Items`}</Text>
