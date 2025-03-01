@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import {  Checkbox, FormControl, HStack, Icon, Input, Picker, Text } from '../../../../core';
+import {  Checkbox, FormControl, HStack, Icon, Input, Select, Text } from '../../../../core';
 import type { Printer } from '../../../../models';
 import type { PrinterProps } from '../../../../models/Printer';
 import { StarPrinterEmulation } from 'react-native-star-io10';
@@ -139,7 +139,6 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
                 </ItemField>
 
                 <ItemField
-                  picker
                   label="Emulation"
                   touched={!!touched.emulation}
                   name="emulation"
@@ -148,21 +147,20 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
                     alignItems: 'flex-start',
                   }}
                 >
-                  <Picker
-                    mode="dropdown"
-                    iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+                  <Select
+                    dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                     placeholder="Select emulation"
                     selectedValue={emulation}
                     onValueChange={handleChange('emulation')}
-                    textStyle={{
+                    style={{
                       paddingLeft: 0,
                       paddingRight: 0,
                     }}
                   >
                     {Object.keys(StarPrinterEmulation).map(emulation => (
-                      <Picker.Item key={emulation} label={emulation} value={emulation} />
+                      <Select.Item key={emulation} label={emulation} value={emulation} />
                     ))}
-                  </Picker>
+                  </Select>
                 </ItemField>
 
                 <HStack>

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Loading } from '../../components/Loading/Loading';
 import { SidebarHeader } from '../../components/SidebarHeader/SidebarHeader';
-import { Container, Divider, FormControl, HStack, Icon, Picker, Tab, Tabs, Text } from '../../core';
+import { Container, Divider, FormControl, HStack, Icon, Select, Tab, Tabs, Text } from '../../core';
 import type { Category } from '../../models';
 import type { SidebarDrawerStackParamList } from '../../navigators/SidebarNavigator';
 import { CategoriesTab } from './Tabs/CategoriesTab/CategoriesTab';
@@ -40,10 +40,8 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
             <FormControl.Label>
               <Text style={styles.categoryPickerText}>Category: </Text>
             </FormControl.Label>
-            <Picker
-              mode="dropdown"
-              iosHeader="Select a category"
-              iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+            <Select
+              dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
               placeholder="Select a category"
               selectedValue={selectedCategory}
               onValueChange={c => setSelectedCategory(c)}
@@ -53,9 +51,9 @@ const ItemsInner: React.FC<ItemsInnerProps & ItemsOuterProps> = ({ navigation, c
               }}
             >
               {categories.map(category => {
-                return <Picker.Item key={category.id} label={category.name} value={category} />;
+                return <Select.Item key={category.id} label={category.name} value={category} />;
               })}
-            </Picker>
+            </Select>
             <Divider/>
           </HStack>
           {selectedCategory && <ItemsTab category={selectedCategory} />}

@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { FormControl, HStack, Icon, Input, Picker, Text, View, VStack } from '../../../../core';
+import { FormControl, HStack, Icon, Input, Select, Text, View, VStack } from '../../../../core';
 import { database } from '../../../../database';
 import type { Category, Item, ItemPrice, PriceGroup } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
@@ -119,10 +119,8 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
                 <FormControl.Label>
                   <Text style={styles.categoryPickerText}>Category: </Text>
                 </FormControl.Label>
-                <Picker
-                  mode="dropdown"
-                  iosHeader="Select a category"
-                  iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+                <Select
+                  dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                   placeholder="Select a category"
                   selectedValue={selectedCategory}
                   onValueChange={handleCategoryChange}
@@ -130,9 +128,9 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
                   
                 >
                   {categories.map(category => {
-                    return <Picker.Item key={category.id} label={category.name} value={category} iosIcon={<Icon name="chevron-forward-outline" color="white" size={24} />} />;
+                    return <Select.Item key={category.id} label={category.name} value={category} iosIcon={<Icon name="chevron-forward-outline" color="white" size={24} />} />;
                   })}
-                </Picker>
+                </Select>
               </HStack>
               {!selectedCategory && <Text>Select a category to show items...</Text>}
               {selectedCategory && (

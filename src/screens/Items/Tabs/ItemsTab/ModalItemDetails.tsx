@@ -11,7 +11,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { useDisclose, FormControl, Icon, Input, Picker, Text, HStack, VStack, Divider } from '../../../../core';
+import { useDisclose, FormControl, Icon, Input, Select, Text, HStack, VStack, Divider } from '../../../../core';
 import type {
   Category,
   Item as ItemModel,
@@ -231,7 +231,6 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                     </ItemField>
 
                     <ItemField
-                      picker
                       label="Category"
                       touched={!!touched.categoryId}
                       name="categoryId"
@@ -240,25 +239,23 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                         alignItems: 'flex-start',
                       }}
                     >
-                      <Picker
-                        mode="dropdown"
-                        iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
+                      <Select
+                        dropdownIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
                         placeholder="Select category"
                         selectedValue={categoryId}
                         onValueChange={handleChange('categoryId')}
-                        textStyle={{
+                        style={{
                           paddingLeft: 0,
                           paddingRight: 0,
                         }}
                       >
                         {categories.map(({ id, name }) => (
-                          <Picker.Item key={id} label={name} value={id} />
+                          <Select.Item key={id} label={name} value={id} />
                         ))}
-                      </Picker>
+                      </Select>
                     </ItemField>
 
                     <ItemField
-                      picker
                       label="Printer Group"
                       touched={!!touched.printerGroupId}
                       name="printerGroupId"
@@ -267,21 +264,20 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                         alignItems: 'flex-start',
                       }}
                     >
-                      <Picker
-                        mode="dropdown"
-                        iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+                      <Select
+                        dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                         placeholder="Select printer group"
                         selectedValue={printerGroupId}
                         onValueChange={handleChange('printerGroupId')}
-                        textStyle={{
+                        style={{
                           paddingLeft: 0,
                           paddingRight: 0,
                         }}
                       >
                         {[...printerGroups, { id: '', name: 'No Selection' }].map(({ id, name }) => (
-                          <Picker.Item key={id} label={name} value={id} />
+                          <Select.Item key={id} label={name} value={id} />
                         ))}
-                      </Picker>
+                      </Select>
                     </ItemField>
                   </FormControl>
                 </ScrollView>

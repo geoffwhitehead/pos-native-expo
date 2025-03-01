@@ -11,7 +11,7 @@ export {
   FormControl,
   Stack,
   Input,
-  Picker,
+  Select,
   Right,
   Row,
   Segment,

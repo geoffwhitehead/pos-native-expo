@@ -4,7 +4,7 @@ import { inRange } from 'lodash';
 import React from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
-import { Button, FormControl, Icon, Input, Picker, HStack, Text, View } from '../../../core';
+import { Button, FormControl, Icon, Input, HStack, Text, View, Select } from '../../../core';
 import type { TablePlanElement } from '../../../models';
 import type {
   TablePlanElementProps} from '../../../models/TablePlanElement';
@@ -118,7 +118,6 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
               </ItemField>
 
               <ItemField
-                picker
                 label="Type"
                 touched={touched.type}
                 name="type"
@@ -127,25 +126,23 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
                   alignItems: 'flex-start',
                 }}
               >
-                <Picker
-                  mode="dropdown"
-                  iosIcon={<Icon name="chevron-down-outline" color="white" size={24}/>}
+                <Select
+                  dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24}/>}
                   placeholder="Select type"
                   selectedValue={type}
                   onValueChange={handleChange('type')}
-                  textStyle={{
+                  style={{
                     paddingLeft: 0,
                     paddingRight: 0,
                   }}
                 >
                   {Object.keys(TablePlanElementTypes).map(type => (
-                    <Picker.Item key={type} label={TablePlanElementTypes[type]} value={type} />
+                    <Select.Item key={type} label={TablePlanElementTypes[type]} value={type} />
                   ))}
-                </Picker>
+                </Select>
               </ItemField>
 
               <ItemField
-                picker
                 label="Rotation"
                 touched={touched.rotation}
                 name="rotation"
@@ -154,21 +151,20 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
                   alignItems: 'flex-start',
                 }}
               >
-                <Picker
-                  mode="dropdown"
-                  iosIcon={<Icon name="chevron-down-outline" color="white" size={24}/>}
+                <Select
+                  dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24}/>}
                   placeholder="Select rotation"
                   selectedValue={rotation}
                   onValueChange={handleChange('rotation')}
-                  textStyle={{
+                  style={{
                     paddingLeft: 0,
                     paddingRight: 0,
                   }}
                 >
                   {Object.keys(TablePlanElementRotations).map(rotation => (
-                    <Picker.Item key={rotation} label={rotation} value={TablePlanElementRotations[rotation]} />
+                    <Select.Item key={rotation} label={rotation} value={TablePlanElementRotations[rotation]} />
                   ))}
-                </Picker>
+                </Select>
               </ItemField>
             </FormControl>
           </View>

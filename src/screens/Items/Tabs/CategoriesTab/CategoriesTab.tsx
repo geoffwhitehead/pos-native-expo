@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Box, Container, FormControl, Icon, Picker, Text, VStack } from '../../../../core';
+import { Box, Container, FormControl, Icon, Select, Text, VStack } from '../../../../core';
 import type { Category, PrintCategory } from '../../../../models';
 import { MAX_GRID_SIZE } from '../../../../utils/consts';
 import { moderateScale } from '../../../../utils/scaling';
@@ -74,10 +74,8 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
         <FormControl.Label>
           <Text style={{ color: 'grey' }}>Category Grid Size: </Text>
         </FormControl.Label>
-        <Picker
-          mode="dropdown"
-          iosHeader="Select a grid size"
-          iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
+        <Select
+          dropdownIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
           placeholder="Select a grid size"
           selectedValue={organization.categoryGridSize}
           onValueChange={handleUpdateGridSize}
@@ -87,9 +85,9 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
           }}
         >
           {options.map(({ label, value }) => {
-            return <Picker.Item key={value} label={label} value={value} />;
+            return <Select.Item key={value} label={label} value={value} />;
           })}
-        </Picker>
+        </Select>
       </SearchBar>
       <ScrollView>
         <VStack>

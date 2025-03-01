@@ -11,7 +11,7 @@ import { ModalContentButton } from '../../../../components/Modal/ModalContentBut
 import { ModalColorPickerContent } from '../../../../components/ModalColorPicker/ModalColorPicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { RecentColorsContext } from '../../../../contexts/RecentColorsContext';
-import { FormControl, Icon, Input, Picker } from '../../../../core';
+import { FormControl, Icon, Input, Select } from '../../../../core';
 import type { Category, PrintCategory } from '../../../../models';
 import { colors } from '../../../../theme';
 import { moderateScale } from '../../../../utils/scaling';
@@ -172,7 +172,6 @@ export const ModalCategoryDetailsInner: React.FC<ModalCategoryDetailsOuterProps 
               </ItemField>
 
               <ItemField
-                picker
                 label="Print Category"
                 touched={touched.printCategoryId}
                 name="printCategoryId"
@@ -182,21 +181,20 @@ export const ModalCategoryDetailsInner: React.FC<ModalCategoryDetailsOuterProps 
                 }}
                 description="Optional category to group by when sending to printers."
               >
-                <Picker
-                  mode="dropdown"
-                  iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
+                <Select
+                  dropdownIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
                   placeholder="Select print category (optional)"
                   selectedValue={printCategoryId}
                   onValueChange={handleChange('printCategoryId')}
-                  textStyle={{
+                  style={{
                     paddingLeft: 0,
                     paddingRight: 0,
                   }}
                 >
                   {printCategories.map(printCategory => (
-                    <Picker.Item key={printCategory.id} label={printCategory.name} value={printCategory.id} />
+                    <Select.Item key={printCategory.id} label={printCategory.name} value={printCategory.id} />
                   ))}
-                </Picker>
+                </Select>
               </ItemField>
             </FormControl>
           </ModalContentButton>

@@ -6,7 +6,7 @@ import { ItemField } from '../../../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../../../components/Modal/ModalContentButton';
 import { ModalColorPickerContent } from '../../../../../../components/ModalColorPicker/ModalColorPicker';
 import { RecentColorsContext } from '../../../../../../contexts/RecentColorsContext';
-import { FormControl, Icon, Picker } from '../../../../../../core';
+import { FormControl, Icon, Select } from '../../../../../../core';
 import { database } from '../../../../../../database';
 import type { Category } from '../../../../../../models';
 import { colors } from '../../../../../../theme';
@@ -136,7 +136,6 @@ export const EditDisplayModal: React.FC<EditDisplayModalProps> = ({
               </ItemField>
 
               <ItemField
-                picker
                 label="Category"
                 touched={touched.categoryId}
                 name="categoryId"
@@ -146,21 +145,20 @@ export const EditDisplayModal: React.FC<EditDisplayModalProps> = ({
                 }}
                 description="Select a category for this position."
               >
-                <Picker
-                  mode="dropdown"
-                  iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
+                <Select
+                  dropdownIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
                   placeholder="Select category"
                   selectedValue={categoryId}
                   onValueChange={onCategoryChange}
-                  textStyle={{
+                  style={{
                     paddingLeft: 0,
                     paddingRight: 0,
                   }}
                 >
                   {categories.map(category => (
-                    <Picker.Item key={category.id} label={category.name} value={category.id} />
+                    <Select.Item key={category.id} label={category.name} value={category.id} />
                   ))}
-                </Picker>
+                </Select>
               </ItemField>
             </FormControl>
           </ModalContentButton>

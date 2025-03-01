@@ -13,7 +13,7 @@ import { ConfirmationActionsheet } from '../../../../components/ConfirmationActi
 import { AuthContext } from '../../../../contexts/AuthContext';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Box, Button, Container, FormControl, Icon, Input, Picker, Text, VStack, View, useDisclose } from '../../../../core';
+import { Box, Button, Container, FormControl, Icon, Input, Select, Text, VStack, View, useDisclose } from '../../../../core';
 import type { Bill, BillPeriod, PriceGroup, Printer } from '../../../../models';
 import { ItemListViewType } from '../../../../models/Organization';
 import { moderateScale } from '../../../../utils/scaling';
@@ -156,7 +156,6 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
               <ScrollView style={commonStyles.content}>
                 <FormControl>
                   <ItemField
-                    picker
                     label="Receipt Printer"
                     touched={touched.receiptPrinterId}
                     name="receiptPrinterId"
@@ -165,25 +164,23 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                       alignItems: 'flex-start',
                     }}
                   >
-                    <Picker
-                      mode="dropdown"
-                      iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+                    <Select
+                      dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                       placeholder="Select receipt printer"
                       selectedValue={receiptPrinterId}
                       onValueChange={handleChange('receiptPrinterId')}
-                      textStyle={{
+                      style={{
                         paddingLeft: 0,
                         paddingRight: 0,
                       }}
                     >
                       {printers.map(printer => (
-                        <Picker.Item key={printer.id} label={printer.name} value={printer.id} />
+                        <Select.Item key={printer.id} label={printer.name} value={printer.id} />
                       ))}
-                    </Picker>
+                    </Select>
                   </ItemField>
 
                   <ItemField
-                    picker
                     label="Default Price Group"
                     touched={touched.defaultPriceGroupId}
                     name="defaultPriceGroupId"
@@ -192,21 +189,20 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                       alignItems: 'flex-start',
                     }}
                   >
-                    <Picker
-                      mode="dropdown"
-                      iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+                    <Select
+                      dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                       placeholder="Select default price group"
                       selectedValue={defaultPriceGroupId}
                       onValueChange={handleChange('defaultPriceGroupId')}
-                      textStyle={{
+                      style={{
                         paddingLeft: 0,
                         paddingRight: 0,
                       }}
                     >
                       {priceGroups.map(priceGroup => (
-                        <Picker.Item key={priceGroup.id} label={priceGroup.name} value={priceGroup.id} />
+                        <Select.Item key={priceGroup.id} label={priceGroup.name} value={priceGroup.id} />
                       ))}
-                    </Picker>
+                    </Select>
                   </ItemField>
 
                   <ItemField label="Max open bills" touched={touched.maxBills} name="maxBills" errors={errors.maxBills}>
@@ -227,7 +223,6 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                   </ItemField>
 
                   <ItemField
-                    picker
                     label="Currency"
                     touched={touched.currency}
                     name="currency"
@@ -236,26 +231,24 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                       alignItems: 'flex-start',
                     }}
                   >
-                    <Picker
-                      mode="dropdown"
-                      iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+                    <Select
+                      dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                       placeholder="Select currency"
                       selectedValue={currency}
                       onValueChange={handleChange('currency')}
                       enabled={!hasOpenBills}
-                      textStyle={{
+                      style={{
                         paddingLeft: 0,
                         paddingRight: 0,
                       }}
                     >
                       {currencies.map(currency => (
-                        <Picker.Item key={currency.id} label={currency.name} value={currency.id} />
+                        <Select.Item key={currency.id} label={currency.name} value={currency.id} />
                       ))}
-                    </Picker>
+                    </Select>
                   </ItemField>
 
                   <ItemField
-                    picker
                     label="Item List View Type"
                     touched={touched.itemListViewType}
                     name="itemListViewType"
@@ -264,21 +257,21 @@ const SettingsTabInner: React.FC<SettingsTabOuterProps & SettingsTabInnerProps> 
                       alignItems: 'flex-start',
                     }}
                   >
-                    <Picker
-                      mode="dropdown"
-                      iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+                    <Select
+                      dropdownIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
                       placeholder="Select list view type"
                       selectedValue={itemListViewType}
                       onValueChange={handleChange('itemListViewType')}
-                      textStyle={{
+                      enabled={!hasOpenBills}
+                      style={{
                         paddingLeft: 0,
                         paddingRight: 0,
                       }}
                     >
                       {Object.values(ItemListViewType).map(listType => (
-                        <Picker.Item key={listType} label={listType} value={listType} /> // TODO update label to be readable
+                        <Select.Item key={listType} label={listType} value={listType} /> // TODO update label to be readable
                       ))}
-                    </Picker>
+                    </Select>
                   </ItemField>
                 </FormControl>
               </ScrollView>
