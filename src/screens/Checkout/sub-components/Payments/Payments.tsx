@@ -5,7 +5,7 @@ import { capitalize } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Box, Button, HStack, Input, Item, Label, Text, VStack } from '../../../../core';
+import { Box, Button, HStack, Input, Label, Text, VStack } from '../../../../core';
 import type { Bill, BillDiscount, BillItem, BillPayment, Discount, PaymentType } from '../../../../models';
 import type { MinimalBillSummary } from '../../../../utils';
 import { formatNumber, getDefaultCashDenominations, minimalBillSummary } from '../../../../utils';
@@ -97,7 +97,7 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
           <Text style={{ fontWeight: 'bold' }}>Back</Text>
         </Button>
         <Box style={styles.rowCustomAmount}>
-          <Item stackedLabel style={{ width: '100%', height: moderateScale(120) }}>
+          <Box style={{ width: '100%', height: moderateScale(120) }}>
             <Label>Custom amount</Label>
             <Input
               value={value}
@@ -105,7 +105,7 @@ const PaymentsInner: React.FC<PaymentOuterProps & PaymentInnerProps> = ({
               keyboardType="number-pad"
               style={{ lineHeight: moderateScale(100), fontSize: moderateScale(80) }}
             />
-          </Item>
+          </Box>
         </Box>
         <HStack style={styles.row}>
           <Box style={styles.buttonColumn}>

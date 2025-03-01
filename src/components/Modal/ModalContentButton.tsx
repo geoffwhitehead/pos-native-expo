@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button, Container, H3, Icon, Text } from '../../core';
+import { Button, Container, Icon, Text } from '../../core';
 import { colors } from '../../theme';
 import { resolveButtonState } from '../../utils/helpers';
 import { moderateScale } from '../../utils/scaling';
@@ -45,7 +45,7 @@ export const ModalContentButton: React.FC<ModalContentButtonProps> = ({
   return (
     <View {...props} style={{ ...styles.modal, ...style, width }}>
       <View style={styles.heading}>
-        <H3 style={{ color: 'white' }}>{title}</H3>
+        <Text style={{ color: 'white' }}>{title}</Text>
         <View style={styles.buttons}>
           <Button
             {...resolveButtonState(isSecondaryDisabled, 'light')}

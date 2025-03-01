@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Icon, Input, Item, Text } from '../../core';
+import { Button, HStack, Icon, Input, Text } from '../../core';
 import { resolveButtonState } from '../../utils/helpers';
 import { moderateScale } from '../../utils/scaling';
 
@@ -26,7 +26,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   ...props
 }) => {
   return (
-    <Item {...props} style={styles.searchBar}>
+    <HStack {...props} style={styles.searchBar}>
       <Icon name="search" size={24} color="white"/>
       <Input placeholder="Search" onChangeText={onSearch} value={value} />
       {children}
@@ -46,7 +46,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       >
         <Text>Create</Text>
       </Button>
-    </Item>
+    </HStack>
   );
 };
 

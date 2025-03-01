@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { SwitchSelector } from '../../../components/SwitchSelector/SwitchSelector';
 import { CurrentBillContext } from '../../../contexts/CurrentBillContext';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
-import { Box, Button, HStack, Icon, Item, Text, VStack } from '../../../core';
+import { Box, Button, HStack, Icon, Text, VStack } from '../../../core';
 import { database } from '../../../database';
 import type { Bill, BillPeriod, TablePlanElement } from '../../../models';
 import { BillViewTypeEnum } from '../../../models/Organization';
@@ -98,7 +98,7 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
 
   return (
     <>
-      <Item style={styles.controlsItem}>
+      <HStack style={styles.controlsItem}>
         {!isEditing && (
           <SwitchSelector
             options={[
@@ -127,7 +127,7 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
             {isEditing && <Icon name="checkmark"  color="white" size={24}/>}
           </Button>
         )}
-      </Item>
+      </HStack>
       <HStack>
         {shouldRenderPlanView && (
             <TableViewer

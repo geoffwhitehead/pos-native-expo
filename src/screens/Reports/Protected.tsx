@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Input, Item, Label } from '../../core';
+import { Box, HStack, Input, Label } from '../../core';
 import { moderateScale } from '../../utils/scaling';
 
 const InputPasscode: React.FC<{ value: string; onChange: any }> = ({ value, onChange }) => {
   return (
-    <View style={styles.content}>
-      <Item floatingLabel style={styles.item}>
+    <Box style={styles.content}>
+      <HStack style={styles.item}>
         <Label>Enter passcode</Label>
         <Input value={value} onChangeText={onChange} secureTextEntry />
-      </Item>
-    </View>
+      </HStack>
+    </Box>
   );
 };
 

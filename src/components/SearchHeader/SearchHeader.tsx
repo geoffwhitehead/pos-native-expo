@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { PriceGroupContext } from '../../contexts/PriceGroupContext';
-import { Icon, Input, Item, Label, Picker, Text } from '../../core';
+import { HStack, Icon, Input, Label, Picker, Text } from '../../core';
 import type { PriceGroup } from '../../models';
 import { moderateScale } from '../../utils/scaling';
 import { tableNames } from '../../models/tableNames';
@@ -64,7 +64,7 @@ export const WrappedSearchHeader: React.FC<SearchHeaderOuterProps & SearchHeader
   };
 
   return (
-    <Item {...props} style={styles.searchBar}>
+    <HStack {...props} style={styles.searchBar}>
       <Icon name="search" size={24}  color="white"/>
       <Input placeholder="Search" onChangeText={onChangeText} value={value} />
       {showPriceGroup && (
@@ -90,7 +90,7 @@ export const WrappedSearchHeader: React.FC<SearchHeaderOuterProps & SearchHeader
           })}
         </Picker>
       )}
-    </Item>
+    </HStack>
   );
 };
 

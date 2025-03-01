@@ -11,7 +11,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { useDisclose, FormControl, Grid, H3, Icon, Input, Picker, Text, HStack, VStack, Divider } from '../../../../core';
+import { useDisclose, FormControl, Icon, Input, Picker, Text, HStack, VStack, Divider } from '../../../../core';
 import type {
   Category,
   Item as ItemModel,
@@ -206,151 +206,149 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
             secondaryButtonText="Cancel"
             onPressDelete={onOpen}
           >
-            <Grid>
-              <HStack>
-                <VStack style={styles.column}>
-                  <ScrollView>
-                    <FormControl>
-                      <H3 style={styles.heading}>Details</H3>
-
-                      <ItemField label="Name" touched={!!touched.name} name="name" errors={errors.name}>
-                        <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
-                      </ItemField>
-
-                      <ItemField
-                        label="Short Name"
-                        touched={!!touched.shortName}
-                        name="shortName"
-                        errors={errors.shortName}
-                        description="Used on printers where space is restricted"
-                      >
-                        <Input
-                          onChangeText={handleChange('shortName')}
-                          onBlur={handleBlur('shortName')}
-                          value={shortName}
-                        />
-                      </ItemField>
-
-                      <ItemField
-                        picker
-                        label="Category"
-                        touched={!!touched.categoryId}
-                        name="categoryId"
-                        errors={errors.categoryId}
-                        style={{
-                          alignItems: 'flex-start',
-                        }}
-                      >
-                        <Picker
-                          mode="dropdown"
-                          iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
-                          placeholder="Select category"
-                          selectedValue={categoryId}
-                          onValueChange={handleChange('categoryId')}
-                          textStyle={{
-                            paddingLeft: 0,
-                            paddingRight: 0,
-                          }}
-                        >
-                          {categories.map(({ id, name }) => (
-                            <Picker.Item key={id} label={name} value={id} />
-                          ))}
-                        </Picker>
-                      </ItemField>
-
-                      <ItemField
-                        picker
-                        label="Printer Group"
-                        touched={!!touched.printerGroupId}
-                        name="printerGroupId"
-                        errors={errors.printerGroupId}
-                        style={{
-                          alignItems: 'flex-start',
-                        }}
-                      >
-                        <Picker
-                          mode="dropdown"
-                          iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
-                          placeholder="Select printer group"
-                          selectedValue={printerGroupId}
-                          onValueChange={handleChange('printerGroupId')}
-                          textStyle={{
-                            paddingLeft: 0,
-                            paddingRight: 0,
-                          }}
-                        >
-                          {[...printerGroups, { id: '', name: 'No Selection' }].map(({ id, name }) => (
-                            <Picker.Item key={id} label={name} value={id} />
-                          ))}
-                        </Picker>
-                      </ItemField>
-                    </FormControl>
-                  </ScrollView>
-                </VStack>
-                <VStack style={styles.column}>
+            <HStack>
+              <VStack style={styles.column}>
+                <ScrollView>
                   <FormControl>
-                    <H3 style={styles.heading}>Prices</H3>
-                    <ScrollView>
-                      <FieldArray
-                        name="prices"
-                        render={() => {
-                          return priceGroups.map((priceGroup, index) => {
-                            return (
-                              <ItemField
-                                key={priceGroup.id}
-                                label={capitalize(priceGroup.name)}
-                                touched={!!touched.prices && !!touched.prices[index]?.price}
-                                name={`prices[${index}].price`}
-                                errors={errors.prices && errors.prices[index]}
-                              >
-                                <Input
-                                  onChangeText={handleChange(`prices[${index}].price`)}
-                                  onBlur={handleBlur(`prices[${index}]`)}
-                                  value={prices[index].price}
-                                />
-                              </ItemField>
-                            );
-                          });
-                        }}
+                    <Text style={styles.heading}>Details</Text>
+
+                    <ItemField label="Name" touched={!!touched.name} name="name" errors={errors.name}>
+                      <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
+                    </ItemField>
+
+                    <ItemField
+                      label="Short Name"
+                      touched={!!touched.shortName}
+                      name="shortName"
+                      errors={errors.shortName}
+                      description="Used on printers where space is restricted"
+                    >
+                      <Input
+                        onChangeText={handleChange('shortName')}
+                        onBlur={handleBlur('shortName')}
+                        value={shortName}
                       />
-                    </ScrollView>
+                    </ItemField>
+
+                    <ItemField
+                      picker
+                      label="Category"
+                      touched={!!touched.categoryId}
+                      name="categoryId"
+                      errors={errors.categoryId}
+                      style={{
+                        alignItems: 'flex-start',
+                      }}
+                    >
+                      <Picker
+                        mode="dropdown"
+                        iosIcon={<Icon name="chevron-down-outline"  color="white" size={24} />}
+                        placeholder="Select category"
+                        selectedValue={categoryId}
+                        onValueChange={handleChange('categoryId')}
+                        textStyle={{
+                          paddingLeft: 0,
+                          paddingRight: 0,
+                        }}
+                      >
+                        {categories.map(({ id, name }) => (
+                          <Picker.Item key={id} label={name} value={id} />
+                        ))}
+                      </Picker>
+                    </ItemField>
+
+                    <ItemField
+                      picker
+                      label="Printer Group"
+                      touched={!!touched.printerGroupId}
+                      name="printerGroupId"
+                      errors={errors.printerGroupId}
+                      style={{
+                        alignItems: 'flex-start',
+                      }}
+                    >
+                      <Picker
+                        mode="dropdown"
+                        iosIcon={<Icon name="chevron-down-outline" color="white" size={24} />}
+                        placeholder="Select printer group"
+                        selectedValue={printerGroupId}
+                        onValueChange={handleChange('printerGroupId')}
+                        textStyle={{
+                          paddingLeft: 0,
+                          paddingRight: 0,
+                        }}
+                      >
+                        {[...printerGroups, { id: '', name: 'No Selection' }].map(({ id, name }) => (
+                          <Picker.Item key={id} label={name} value={id} />
+                        ))}
+                      </Picker>
+                    </ItemField>
                   </FormControl>
-                </VStack>
-                <VStack style={{ ...styles.column, ...styles.modifierRow }}>
-                  <H3 style={styles.heading}>Modifiers</H3>
-                  <HStack style={commonStyles.row}>
-                    <VStack>
-                      <Text>Assigned</Text>
-                      <Divider />
-                      <ScrollView>
-                        <List>
-                          {selectedModifiers.map(m => (
-                            <ModifierRow isLeft key={m.id} modifier={m} onSelect={m => setAssignedModifiers(m)} />
-                          ))}
-                        </List>
-                      </ScrollView>
-                    </VStack>
-                    <VStack>
-                      <Text>Available</Text>
-                      <Divider />
-                      <ScrollView>
-                        <List>
-                          {modifiers
-                            .filter(m => !selectedModifiers.includes(m))
-                            .map(m => (
-                              <ModifierRow
-                                key={m.id}
-                                modifier={m}
-                                onSelect={m => setSelectedModifiers([...selectedModifiers, m])}
+                </ScrollView>
+              </VStack>
+              <VStack style={styles.column}>
+                <FormControl>
+                  <Text style={styles.heading}>Prices</Text>
+                  <ScrollView>
+                    <FieldArray
+                      name="prices"
+                      render={() => {
+                        return priceGroups.map((priceGroup, index) => {
+                          return (
+                            <ItemField
+                              key={priceGroup.id}
+                              label={capitalize(priceGroup.name)}
+                              touched={!!touched.prices && !!touched.prices[index]?.price}
+                              name={`prices[${index}].price`}
+                              errors={errors.prices && errors.prices[index]}
+                            >
+                              <Input
+                                onChangeText={handleChange(`prices[${index}].price`)}
+                                onBlur={handleBlur(`prices[${index}]`)}
+                                value={prices[index].price}
                               />
-                            ))}
-                        </List>
-                      </ScrollView>
-                    </VStack>
-                  </HStack>
-                </VStack>
-              </HStack>
-            </Grid>
+                            </ItemField>
+                          );
+                        });
+                      }}
+                    />
+                  </ScrollView>
+                </FormControl>
+              </VStack>
+              <VStack style={{ ...styles.column, ...styles.modifierRow }}>
+                <Text style={styles.heading}>Modifiers</Text>
+                <HStack style={commonStyles.row}>
+                  <VStack>
+                    <Text>Assigned</Text>
+                    <Divider />
+                    <ScrollView>
+                      <VStack>
+                        {selectedModifiers.map(m => (
+                          <ModifierRow isLeft key={m.id} modifier={m} onSelect={m => setAssignedModifiers(m)} />
+                        ))}
+                      </VStack>
+                    </ScrollView>
+                  </VStack>
+                  <VStack>
+                    <Text>Available</Text>
+                    <Divider />
+                    <ScrollView>
+                      <VStack>
+                        {modifiers
+                          .filter(m => !selectedModifiers.includes(m))
+                          .map(m => (
+                            <ModifierRow
+                              key={m.id}
+                              modifier={m}
+                              onSelect={m => setSelectedModifiers([...selectedModifiers, m])}
+                            />
+                          ))}
+                      </VStack>
+                    </ScrollView>
+                  </VStack>
+                </HStack>
+              </VStack>
+            </HStack>
             {/* Delete Confirmation Actionsheet */}
             <ConfirmationActionsheet
               isOpen={isOpen}
