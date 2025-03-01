@@ -6,7 +6,7 @@ import SwitchSelector from 'react-native-switch-selector';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { Form, Input, View } from '../../../../core';
+import { FormControl, Input, View } from '../../../../core';
 import type { Discount } from '../../../../models';
 import { commonStyles } from '../styles';
 import { tableNames } from '../../../../models/tableNames';
@@ -89,7 +89,7 @@ export const ModalDiscountDetails: React.FC<ModalDiscountDetailsProps> = ({ disc
             size="small"
           >
             <View>
-              <Form style={commonStyles.form}>
+              <FormControl style={commonStyles.form}>
                 <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
                   <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
                 </ItemField>
@@ -107,7 +107,7 @@ export const ModalDiscountDetails: React.FC<ModalDiscountDetailsProps> = ({ disc
                   onPress={value => setFieldValue('isPercent', !!value)}
                   style={{ paddingRight: 10 }}
                 />
-              </Form>
+              </FormControl>
             </View>
           </ModalContentButton>
         );

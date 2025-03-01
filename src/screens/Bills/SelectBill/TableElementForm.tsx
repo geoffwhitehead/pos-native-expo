@@ -4,7 +4,7 @@ import { inRange } from 'lodash';
 import React from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
-import { Button, Form, Icon, Input, Item, Picker, HStack, Text, View } from '../../../core';
+import { Button, FormControl, Icon, Input, Item, Picker, HStack, Text, View } from '../../../core';
 import type { TablePlanElement } from '../../../models';
 import type {
   TablePlanElementProps} from '../../../models/TablePlanElement';
@@ -105,7 +105,7 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
                 )}
               </HStack>
             </Item>
-            <Form style={commonStyles.form}>
+            <FormControl style={commonStyles.form}>
               <ItemField
                 label="Table / Bill Number"
                 touched={touched.billReference}
@@ -172,7 +172,7 @@ export const TableElementForm: React.FC<TableElementFormInnerProps & TableElemen
                   ))}
                 </Picker>
               </ItemField>
-            </Form>
+            </FormControl>
           </View>
         );
       }}

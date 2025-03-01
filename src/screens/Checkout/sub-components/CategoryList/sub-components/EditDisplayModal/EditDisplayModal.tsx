@@ -6,7 +6,7 @@ import { ItemField } from '../../../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../../../components/Modal/ModalContentButton';
 import { ModalColorPickerContent } from '../../../../../../components/ModalColorPicker/ModalColorPicker';
 import { RecentColorsContext } from '../../../../../../contexts/RecentColorsContext';
-import { Form, Icon, Picker } from '../../../../../../core';
+import { FormControl, Icon, Picker } from '../../../../../../core';
 import { database } from '../../../../../../database';
 import type { Category } from '../../../../../../models';
 import { colors } from '../../../../../../theme';
@@ -102,7 +102,7 @@ export const EditDisplayModal: React.FC<EditDisplayModalProps> = ({
             title={title}
             size="small"
           >
-            <Form>
+            <FormControl>
               <ItemField
                 style={styles.colorPickerItem}
                 label="Background Color"
@@ -162,7 +162,7 @@ export const EditDisplayModal: React.FC<EditDisplayModalProps> = ({
                   ))}
                 </Picker>
               </ItemField>
-            </Form>
+            </FormControl>
           </ModalContentButton>
         );
       }}

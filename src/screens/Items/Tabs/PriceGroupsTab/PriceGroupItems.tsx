@@ -1,7 +1,7 @@
 import withObservables from '@nozbe/with-observables';
 import { FieldArray, Formik } from 'formik';
 import { capitalize, keyBy } from 'lodash';
-import { Button, Form, Icon, Input, HStack, List, Text, VStack } from 'native-base';
+import { Button, FormControl, Icon, Input, HStack, Text, VStack } from 'native-base';
 import React, { useMemo } from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
@@ -89,7 +89,7 @@ export const PriceGroupItemsInner: React.FC<PriceGroupItemsOuterProps & PriceGro
             )}
 
             {priceGroup && (
-              <Form style={commonStyles.form}>
+              <FormControl style={commonStyles.form}>
                 <VStack>
                   <FieldArray
                     name="prices"
@@ -118,7 +118,7 @@ export const PriceGroupItemsInner: React.FC<PriceGroupItemsOuterProps & PriceGro
                     }}
                   />
                 </VStack>
-              </Form>
+              </FormControl>
             )}
           </>
         );

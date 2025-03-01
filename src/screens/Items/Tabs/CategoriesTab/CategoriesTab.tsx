@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Container, Footer, Icon, Label, List, Picker, Text } from '../../../../core';
+import { Box, Container, Icon, Label, Picker, Text, VStack } from '../../../../core';
 import type { Category, PrintCategory } from '../../../../models';
 import { MAX_GRID_SIZE } from '../../../../utils/consts';
 import { moderateScale } from '../../../../utils/scaling';
@@ -92,7 +92,7 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
         </Picker>
       </SearchBar>
       <ScrollView>
-        <List>
+        <VStack>
           {categories
             .filter(category => searchFilter(category, searchValue))
             .map((category, index) => {
@@ -106,14 +106,14 @@ const CategoriesTabInner: React.FC<CategoriesTabOuterProps & CategoriesTabInnerP
                 />
               );
             })}
-        </List>
+        </VStack>
       </ScrollView>
-      <Footer>
+      <Box>
         <Text
           note
           style={{ color: categories.length === maxCategories ? 'red' : 'grey' }}
         >{`Categories: ${categories.length} / ${maxCategories}`}</Text>
-      </Footer>
+      </Box>
       <Modal isOpen={modalOpen} onClose={onCloseHandler}>
         <ModalCategoryDetails printCategories={printCategories} category={selectedCategory} onClose={onCloseHandler} />
       </Modal>

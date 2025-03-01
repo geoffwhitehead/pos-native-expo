@@ -8,7 +8,7 @@ import { Bar } from 'react-native-progress';
 import * as Yup from 'yup';
 import { ItemField } from '../../../components/ItemField/ItemField';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { Button, Container, Form, Icon, Input, Text } from '../../../core';
+import { Button, Container, FormControl, Icon, Input, Text } from '../../../core';
 import type { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
 import { resolveButtonState } from '../../../utils/helpers';
@@ -163,7 +163,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation, route }) => {
             <ScrollView style={{ padding: 20 }}>
               <Bar progress={page === 1 ? 0.3 : page === 2 ? 0.6 : 1} width={300} color="white" />
               <KeyboardAvoidingView style={styles.content}>
-                <Form style={styles.form}>
+                <FormControl style={styles.form}>
                   {page === 1 && (
                     <>
                       <ItemField
@@ -317,7 +317,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation, route }) => {
                     </>
                   )}
                   {page === 3 && (
-                    <Form>
+                    <FormControl>
                       <ItemField
                         styleLabel={styles.text}
                         label="Password"
@@ -348,9 +348,9 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation, route }) => {
                           secureTextEntry
                         />
                       </ItemField>
-                    </Form>
+                    </FormControl>
                   )}
-                </Form>
+                </FormControl>
                 <KeyboardAvoidingView style={styles.navButtons}>
                   {page > 1 && (
                     <Button

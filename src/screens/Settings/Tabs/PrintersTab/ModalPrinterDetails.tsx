@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import {  Checkbox, Form, HStack, Icon, Input, Picker, Text } from '../../../../core';
+import {  Checkbox, FormControl, HStack, Icon, Input, Picker, Text } from '../../../../core';
 import type { Printer } from '../../../../models';
 import type { PrinterProps } from '../../../../models/Printer';
 import { StarPrinterEmulation } from 'react-native-star-io10';
@@ -82,7 +82,7 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
             size="small"
           >
             <ScrollView>
-              <Form>
+              <FormControl>
                 <ItemField label="Name" touched={!!touched.name} name="name" errors={errors.name}>
                   <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
                 </ItemField>
@@ -176,7 +176,7 @@ export const ModalPrinterDetails: React.FC<ModalPrinterDetailsOuterProps> = ({
                   />
                   <Text>Receive bill calls</Text>
                 </HStack>
-              </Form>
+              </FormControl>
             </ScrollView>
           </ModalContentButton>
         );

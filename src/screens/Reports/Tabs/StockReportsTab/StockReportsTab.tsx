@@ -16,7 +16,7 @@ import { SwitchSelector } from '../../../../components/SwitchSelector/SwitchSele
 import { TimePicker } from '../../../../components/TimePicker/TimePicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { ReceiptPrinterContext } from '../../../../contexts/ReceiptPrinterContext';
-import { Button, Form, HStack, Icon, Item, Label, Picker, Spinner, Text, VStack, Box } from '../../../../core';
+import { Button, FormControl, HStack, Icon, Item, Label, Picker, Spinner, Text, VStack, Box } from '../../../../core';
 import type { BillItem, Category, PriceGroup } from '../../../../models';
 import { print } from '../../../../services/printer/printer';
 import { stockReport } from '../../../../services/printer/stockReport';
@@ -169,7 +169,7 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
   //       <Text style={{ fontWeight: 'bold' }}>Item Sales over range</Text>
   //     </ListItem>
   //     <ListItem style={{ flexDirection: 'row', width: '100%' }}>
-  //       <Form style={{ flexDirection: 'row' }}>
+  //       <FormControl style={{ flexDirection: 'row' }}>
   //         <Item stackedLabel style={{ borderBottomWidth: 0, width: moderateScale(200) }} onPress={handlePressStartDate}>
   //           <Label>Start Date</Label>
   //           <Text style={styles.dateLabel}>{`${dayjs(startDate).format('DD/MM/YYYY')}`}</Text>
@@ -178,7 +178,7 @@ export const StockReportsTabInner: React.FC<StockReportsTabOuterProps & StockRep
   //           <Label>End Date</Label>
   //           <Text style={styles.dateLabel}>{`${dayjs(endDate).format('DD/MM/YYYY')}`}</Text>
   //         </Item>
-  //       </Form>
+  //       </FormControl>
   //       <Button
   //         small
   //         style={{ margin: 10, alignSelf: 'flex-end' }}

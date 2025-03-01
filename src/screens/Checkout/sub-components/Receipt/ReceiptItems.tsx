@@ -12,7 +12,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Modal } from '../../../../components/Modal/Modal';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Actionsheet, Button, Form, Icon, Input, List, Text, useDisclose, VStack } from '../../../../core';
+import { Actionsheet, Button, FormControl, Icon, Input, List, Text, useDisclose, VStack } from '../../../../core';
 import type { Bill, BillDiscount, BillItem, BillPayment, PaymentType } from '../../../../models';
 import type { BillSummary } from '../../../../utils';
 import { moderateScale } from '../../../../utils/scaling';
@@ -160,7 +160,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
                 title={`${selectedBillItem.itemName}: Print Message`}
                 size="small"
               >
-                <Form>
+                <FormControl>
                   <ItemField
                     label="Print Message"
                     touched={!!touched.printMessage}
@@ -173,7 +173,7 @@ export const ReceiptItemsInner: React.FC<ReceiptItemsOuterProps & ReceiptItemsIn
                       value={printMessage}
                     />
                   </ItemField>
-                </Form>
+                </FormControl>
               </ModalContentButton>
             );
           }}

@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { Form, HStack, Icon, Input, Label, Picker, Text, View, VStack } from '../../../../core';
+import { FormControl, HStack, Icon, Input, Label, Picker, Text, View, VStack } from '../../../../core';
 import { database } from '../../../../database';
 import type { Category, Item, ItemPrice, PriceGroup } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
@@ -137,7 +137,7 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
               {!selectedCategory && <Text>Select a category to show items...</Text>}
               {selectedCategory && (
                 <ScrollView>
-                  <Form>
+                  <FormControl>
                     <VStack>
                       <FieldArray
                         name="prices"
@@ -168,7 +168,7 @@ export const PriceGroupItemsModalInner: React.FC<PriceGroupItemsInnerProps & Pri
                         }}
                       />
                     </VStack>
-                  </Form>
+                  </FormControl>
                 </ScrollView>
               )}
             </>

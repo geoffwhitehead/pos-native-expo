@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Item, Label } from '../../core';
+import { FormControl, Stack } from '../../core';
 import { paddingHelper } from '../../utils/helpers';
 import { moderateScale } from '../../utils/scaling';
-import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { FormInputDescription } from '../FormInputDescription/FormInputDescription';
+import { ErrorMessage } from 'formik';
 
 type ItemFieldProps = {
   errors: any; // TODO
@@ -12,7 +12,6 @@ type ItemFieldProps = {
   name: string;
   label: string;
   style?: Record<string, any>;
-  picker?: boolean;
   disabled?: boolean;
   styleLabel?: Object;
   type?: 'fixedLabel' | 'stackedLabel';
@@ -21,7 +20,6 @@ type ItemFieldProps = {
 };
 
 export const ItemField: React.FC<ItemFieldProps> = ({
-  picker = false,
   errors,
   touched,
   name,
@@ -39,23 +37,23 @@ export const ItemField: React.FC<ItemFieldProps> = ({
 
   return (
     <>
-      <Item
-        disabled={disabled}
-        picker={picker}
+      <Stack
+        isDisabled={disabled}
         style={{ ...(description ? styles.itemField : styles.itemFieldNoDesc), ...style }}
-        error={touched && (errors?.length > 0 || errors)}
         {...props}
         
       >
-        <Label style={styleLabel}>{label}</Label>
+        <FormControl.Label style={styleLabel}>{label}</FormControl.Label>
         {description && (
           <FormInputDescription style={styles.text} description={description}>
             {description}
           </FormInputDescription>
         )}
         {children}
-      </Item>
-      <ErrorMessage name={name} />
+      </Stack>
+      {touched && (errors?.length > 0 || errors) && <FormControl.ErrorMessage style={{ ...styles.error, ...style }} {...props}>
+        <ErrorMessage name={name} />
+      </FormControl.ErrorMessage>}
     </>
   );
 };
@@ -71,4 +69,5 @@ const styles = StyleSheet.create({
   itemFieldNoDesc: {
     alignItems: 'flex-start',
   },
+  error: { paddingLeft: 15, paddingRight: 15, color: 'red' },
 });

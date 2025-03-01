@@ -11,7 +11,7 @@ import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { useDisclose, Form, Grid, H3, Icon, Input, Picker, Text, HStack, VStack, Divider } from '../../../../core';
+import { useDisclose, FormControl, Grid, H3, Icon, Input, Picker, Text, HStack, VStack, Divider } from '../../../../core';
 import type {
   Category,
   Item as ItemModel,
@@ -210,7 +210,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
               <HStack>
                 <VStack style={styles.column}>
                   <ScrollView>
-                    <Form>
+                    <FormControl>
                       <H3 style={styles.heading}>Details</H3>
 
                       <ItemField label="Name" touched={!!touched.name} name="name" errors={errors.name}>
@@ -284,11 +284,11 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                           ))}
                         </Picker>
                       </ItemField>
-                    </Form>
+                    </FormControl>
                   </ScrollView>
                 </VStack>
                 <VStack style={styles.column}>
-                  <Form>
+                  <FormControl>
                     <H3 style={styles.heading}>Prices</H3>
                     <ScrollView>
                       <FieldArray
@@ -314,7 +314,7 @@ const ItemDetailsInner: React.FC<ItemDetailsOuterProps & ItemDetailsInnerProps> 
                         }}
                       />
                     </ScrollView>
-                  </Form>
+                  </FormControl>
                 </VStack>
                 <VStack style={{ ...styles.column, ...styles.modifierRow }}>
                   <H3 style={styles.heading}>Modifiers</H3>

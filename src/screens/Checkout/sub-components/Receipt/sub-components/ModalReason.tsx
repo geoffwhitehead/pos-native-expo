@@ -3,7 +3,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../../components/Modal/ModalContentButton';
-import { Form, Input, Textarea } from '../../../../../core';
+import { FormControl, Input, Textarea } from '../../../../../core';
 import { ReceiptItemAction } from './constants';
 
 const modalReasonSchema = Yup.object().shape({
@@ -53,7 +53,7 @@ export const ModalReason: React.FC<ModalReasonProps> = ({ onComplete, onClose, m
             title={title}
             size="medium"
           >
-            <Form>
+            <FormControl>
               <ItemField label="Name" touched={!!touched.name} name="name" errors={errors.name}>
                 <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
               </ItemField>
@@ -70,7 +70,7 @@ export const ModalReason: React.FC<ModalReasonProps> = ({ onComplete, onClose, m
                   bordered
                 />
               </ItemField>
-            </Form>
+            </FormControl>
           </ModalContentButton>
         );
       }}

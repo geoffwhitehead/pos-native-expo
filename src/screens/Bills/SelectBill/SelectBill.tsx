@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { SwitchSelector } from '../../../components/SwitchSelector/SwitchSelector';
 import { CurrentBillContext } from '../../../contexts/CurrentBillContext';
 import { OrganizationContext } from '../../../contexts/OrganizationContext';
-import { Button, Footer, Grid, HStack, Icon, Item, List, Text, VStack } from '../../../core';
+import { Box, Button, HStack, Icon, Item, Text, VStack } from '../../../core';
 import { database } from '../../../database';
 import type { Bill, BillPeriod, TablePlanElement } from '../../../models';
 import { BillViewTypeEnum } from '../../../models/Organization';
@@ -152,7 +152,7 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
           )}
           {!isEditing && (
             <ScrollView>
-              <List>
+              <VStack>
                 {bills.map((bill, index) => {
                   return bill ? (
                     <BillRow key={bill.id} bill={bill} onSelectBill={_onSelectBill} />
@@ -164,14 +164,14 @@ export const SelectBillInner: React.FC<SelectBillOuterProps & SelectBillInnerPro
                     />
                   );
                 })}
-              </List>
+              </VStack>
             </ScrollView>
           )}
         </VStack>
       </HStack>
-      <Footer>
+      <Box>
         <Text style={{ padding: 10 }} note>{`Open bills: ${openBills.length} / ${bills.length}`}</Text>
-      </Footer>
+      </Box>
     </>
   );
 };

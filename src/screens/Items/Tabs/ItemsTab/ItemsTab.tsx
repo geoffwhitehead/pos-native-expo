@@ -2,10 +2,11 @@ import withObservables from '@nozbe/with-observables';
 import React, { useState } from 'react';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
-import { Container, Footer, List, Text, VStack } from '../../../../core';
+import { Container, Box, Text, VStack } from '../../../../core';
 import type { Category, Item, Modifier, PrinterGroup } from '../../../../models';
 import { ItemsTabRow } from './ItemsTabRow';
 import { ItemDetails } from './ModalItemDetails';
+
 
 interface ItemsTabOuterProps {
   category: Category;
@@ -58,9 +59,9 @@ const ItemsTabInner: React.FC<ItemsTabOuterProps & ItemsTabInnerProps> = ({ item
           })}
       </VStack>
 
-      <Footer>
+      <Box>
         <Text style={{ padding: 5 }} note>{`${items.length} Items`}</Text>
-      </Footer>
+      </Box>
       <Modal isOpen={modalOpen} onClose={onCloseHandler}>
         <ItemDetails item={selectedItem} category={category} onClose={onCloseHandler} />
       </Modal>

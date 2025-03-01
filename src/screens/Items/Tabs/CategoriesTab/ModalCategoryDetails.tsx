@@ -11,7 +11,7 @@ import { ModalContentButton } from '../../../../components/Modal/ModalContentBut
 import { ModalColorPickerContent } from '../../../../components/ModalColorPicker/ModalColorPicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { RecentColorsContext } from '../../../../contexts/RecentColorsContext';
-import { Form, Icon, Input, Picker } from '../../../../core';
+import { FormControl, Icon, Input, Picker } from '../../../../core';
 import type { Category, PrintCategory } from '../../../../models';
 import { colors } from '../../../../theme';
 import { moderateScale } from '../../../../utils/scaling';
@@ -122,7 +122,7 @@ export const ModalCategoryDetailsInner: React.FC<ModalCategoryDetailsOuterProps 
             isDeleteDisabled={!category || itemsCount > 0}
             onPressDelete={onDelete}
           >
-            <Form>
+            <FormControl>
               {!category && (
                 <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
                   <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
@@ -198,7 +198,7 @@ export const ModalCategoryDetailsInner: React.FC<ModalCategoryDetailsOuterProps 
                   ))}
                 </Picker>
               </ItemField>
-            </Form>
+            </FormControl>
           </ModalContentButton>
         );
       }}

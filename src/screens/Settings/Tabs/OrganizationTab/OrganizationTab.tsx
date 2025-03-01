@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { HeaderButtonBar } from '../../../../components/HeaderButtonBar/HeaderButtonBar';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { Container, Form, Input, Text } from '../../../../core';
+import { Container, FormControl, Input, Text } from '../../../../core';
 import { commonStyles } from '../styles';
 
 interface OrganizationTabProps {}
@@ -103,7 +103,7 @@ export const OrganizationTab: React.FC<OrganizationTabProps> = () => {
               <HeaderButtonBar onPressPrimary={handleSubmit} primaryText="Save Changes"></HeaderButtonBar>
 
               <ScrollView style={commonStyles.content}>
-                <Form>
+                <FormControl>
                   <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
                     <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
                   </ItemField>
@@ -185,7 +185,7 @@ export const OrganizationTab: React.FC<OrganizationTabProps> = () => {
                       value={addressPostcode}
                     />
                   </ItemField>
-                </Form>
+                </FormControl>
               </ScrollView>
             </>
           );

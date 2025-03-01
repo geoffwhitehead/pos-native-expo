@@ -9,7 +9,7 @@ import { ModalContentButton } from '../../../../components/Modal/ModalContentBut
 import { ModalColorPickerContent } from '../../../../components/ModalColorPicker/ModalColorPicker';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
 import { RecentColorsContext } from '../../../../contexts/RecentColorsContext';
-import { Box, Checkbox, Form, HStack, Input, Text, View } from '../../../../core';
+import { Box, Checkbox, FormControl, HStack, Input, Text, View } from '../../../../core';
 import type {
   Item as ItemModel,
   ItemPrice,
@@ -129,7 +129,7 @@ export const PriceGroupDetails: React.FC<PriceGroupDetailsProps> = ({ priceGroup
             size="small"
           >
             <View>
-              <Form style={commonStyles.form}>
+              <FormControl style={commonStyles.form}>
                 <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
                   <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
                 </ItemField>
@@ -170,7 +170,7 @@ export const PriceGroupDetails: React.FC<PriceGroupDetailsProps> = ({ priceGroup
                     setGlobalRecentColors={setRecentColors}
                   />
                 </ItemField>
-              </Form>
+              </FormControl>
             </View>
           </ModalContentButton>
         );

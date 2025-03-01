@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { Form, Input, useDisclose } from '../../../../core';
+import { FormControl, Input, useDisclose } from '../../../../core';
 import { ConfirmationActionsheet } from '../../../../components/ConfirmationActionsheet/ConfirmationActionsheet';
 import type { Modifier } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
@@ -106,7 +106,7 @@ const ModalModifierDetailsInner: React.FC<ModalModifierDetailsOuterProps & Modal
               onPressDelete={onOpen}
               size="small"
             >
-              <Form style={commonStyles.form}>
+              <FormControl style={commonStyles.form}>
                 <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
                   <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
                 </ItemField>
@@ -116,7 +116,7 @@ const ModalModifierDetailsInner: React.FC<ModalModifierDetailsOuterProps & Modal
                 <ItemField label="Max Items" touched={touched.maxItems} name="maxItems" errors={errors.maxItems}>
                   <Input onChangeText={handleChange('maxItems')} onBlur={handleBlur('maxItems')} value={maxItems} keyboardType="numeric" />
                 </ItemField>
-              </Form>
+              </FormControl>
             </ModalContentButton>
           );
         }}

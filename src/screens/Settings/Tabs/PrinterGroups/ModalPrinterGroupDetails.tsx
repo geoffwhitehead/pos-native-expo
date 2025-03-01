@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { Loading } from '../../../../components/Loading/Loading';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
-import { Divider, Form, HStack, Input, Text, VStack } from '../../../../core';
+import { Divider, FormControl, HStack, Input, Text, VStack } from '../../../../core';
 import type { PrinterGroup, PrinterGroupPrinter } from '../../../../models';
 import type { Printer } from '../../../../models/Printer';
 import { PrinterRowChoice } from '../PrintersTab/PrinterRowChoice';
@@ -115,11 +115,11 @@ const ModalPrinterGroupDetailsInner: React.FC<ModalPrinterGroupDetailsOuterProps
             size="medium"
           >
             <ScrollView>
-              <Form style={commonStyles.form}>
+              <FormControl style={commonStyles.form}>
                 <ItemField label="Name" touched={touched.name} name="name" errors={errors.name}>
                   <Input onChangeText={handleChange('name')} onBlur={handleBlur('name')} value={name} />
                 </ItemField>
-              </Form>
+              </FormControl>
               <HStack>
                 <VStack style={s.pl}>
                   <Text>Assigned</Text>

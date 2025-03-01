@@ -9,7 +9,7 @@ import { KeyboardAvoidingView, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import envKey from '../../../../build.env';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { Button, Container, Form, Input, Item, Label, Spinner, Text, useDisclose } from '../../../core';
+import { Button, Container, FormControl, HStack, Input, Spinner, Text, useDisclose } from '../../../core';
 import type { Organization } from '../../../models';
 import type { AuthStackParamList } from '../../../navigators/AuthNavigator';
 import { colors } from '../../../theme';
@@ -71,20 +71,18 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
             loop={false}
             ref={animation}
           />
-          <Form style={styles.form}>
-            <Item stackedLabel>
-              <Label style={styles.text}>Email</Label>
+          <FormControl style={styles.form}>
+            <HStack>
+              <FormControl.Label style={styles.text}>Email</FormControl.Label>
               {organization ? (
-                <Label style={styles.text}>{organization.name}</Label>
+                <FormControl.Label style={styles.text}>{organization.name}</FormControl.Label>
               ) : (
                 <Input style={styles.text} autoCapitalize="none" onChangeText={setEmail} value={email} />
               )}
-            </Item>
-            <Item stackedLabel>
-              <Label style={styles.text}>Password</Label>
+            </HStack>
+            <FormControl.Label style={styles.text}>Password</FormControl.Label>
 
-              <Input style={styles.text} value={password} onChangeText={setPassword} secureTextEntry />
-            </Item>
+            <Input style={styles.text} value={password} onChangeText={setPassword} secureTextEntry />
             <Button
               {...resolveButtonState(isSignInLoading, 'info')}
               full
@@ -120,7 +118,7 @@ export const SignInInner: React.FC<SignInOuterProps & SignInInnerProps> = ({ nav
                 * This terminal is currently linked with {organization.name}.
               </Text>
             )}
-          </Form>
+          </FormControl>
         </KeyboardAvoidingView>
       </ScrollView>
 
