@@ -1,6 +1,6 @@
 import withObservables from '@nozbe/with-observables';
 import React from 'react';
-import { Separator, Text, View } from '../../../../../core';
+import { Divider, Text, View } from '../../../../../core';
 import type { Bill, BillItem, PriceGroup } from '../../../../../models';
 import { ItemsBreakdownByPriceGroup } from './ItemsBreakdownByPriceGroup';
 
@@ -23,9 +23,8 @@ export const ItemsBreakdownInner: React.FC<ItemsBreakdownOuterProps & ItemsBreak
 }) => {
   return (
     <View {...props}>
-      <Separator bordered>
-        <Text>Items</Text>
-      </Separator>
+      <Text>Items</Text>
+      <Divider/>
       {priceGroupsInUse.map(priceGroupInUse => {
         return (
           <ItemsBreakdownByPriceGroup

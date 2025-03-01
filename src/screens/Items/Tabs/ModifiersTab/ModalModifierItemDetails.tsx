@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { ItemField } from '../../../../components/ItemField/ItemField';
 import { ModalContentButton } from '../../../../components/Modal/ModalContentButton';
 import { OrganizationContext } from '../../../../contexts/OrganizationContext';
-import { FormControl, Input, Separator, Text, Box } from '../../../../core';
+import { FormControl, Input, Text, Box, Divider } from '../../../../core';
 import type { Modifier, ModifierItem, ModifierItemPrice, PriceGroup } from '../../../../models';
 import { commonStyles } from '../../../Settings/Tabs/styles';
 import { tableNames } from '../../../../models/tableNames';
@@ -173,9 +173,8 @@ export const ModalModifierItemDetailsInner: React.FC<ModalModifierItemDetailsOut
                   <Input onChangeText={handleChange('shortName')} onBlur={handleBlur('shortName')} value={shortName} />
                 </ItemField>
 
-                <Separator bordered style={{ marginTop: 30, padding: 10 }}>
                   <Text>Prices</Text>
-                </Separator>
+                <Divider style={{ marginTop: 30, padding: 10 }}/>
 
                 <FieldArray
                   name="prices"

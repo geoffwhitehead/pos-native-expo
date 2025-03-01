@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Loading } from '../../../../../components/Loading/Loading';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
-import { Divider, HStack, Separator, Text, VStack, Box } from '../../../../../core';
+import { Divider, HStack, Text, VStack, Box } from '../../../../../core';
 import type { BillPeriod } from '../../../../../models';
 import type { PeriodReportData} from '../../../../../services/printer/periodReport';
 import { periodReportData } from '../../../../../services/printer/periodReport';
@@ -67,9 +67,8 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
   return (
         <Box style={styles.rightColumn}>
           <VStack>
-            <Separator bordered>
               <Text>Category Totals</Text>
-            </Separator>
+            <Divider />
             {categoryTotals.breakdown.map(({ categoryId, count, total }) => {
               const category = categories.find(c => c.id === categoryId);
               if (!category) {
@@ -87,9 +86,8 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
               <Text>Total</Text>
               <Text style={styles.listItemRight}>{`${categoryTotals.count} / ${formatNumber(categoryTotals.total, currency)}`}</Text>
             </HStack>
-            <Separator bordered>
-              <Text>Modifier Totals</Text>
-            </Separator>
+            <Text>Modifier Totals</Text>
+            <Divider />
             {modifierTotals.breakdown.map(({ modifierName, breakdown, total, count }) => {
               return (
                 <Box key={modifierName}>
@@ -113,9 +111,8 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
                 <Text>Total</Text>
                 <Text style={styles.listItemRight}>{`${modifierTotals.count} / ${formatNumber(modifierTotals.total, currency)}`}</Text>
               </HStack>
-            <Separator bordered>
-              <Text>Price Group Totals (excl discounts)</Text>
-            </Separator>
+            <Text>Price Group Totals (excl discounts)</Text>
+            <Divider />
             {priceGroupTotals.map(({ name, total, count }) => {
               return (
                   <HStack flex={1} alignItems="center" justifyContent="space-between" key={name}>
@@ -131,9 +128,8 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
                   currency,
                 )}`}</Text>
               </HStack>
-            <Separator bordered>
-              <Text>Discount Totals</Text>
-            </Separator>
+            <Text>Discount Totals</Text>
+            <Divider />
             {discountTotals.breakdown.map(({ name, total, count }) => {
               return (
                   <HStack flex={1} alignItems="center" justifyContent="space-between" key={name}>
@@ -142,9 +138,8 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
                   </HStack>
               );
             })}
-            <Separator bordered>
-              <Text>Complimentary Totals</Text>
-            </Separator>
+            <Text>Complimentary Totals</Text>
+            <Divider />
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Items</Text>
                 <Text style={styles.listItemRight}>{`${compBillItems.length} / ${formatNumber(sumBy(compBillItems, 'itemPrice'), currency)}`}</Text>
@@ -157,9 +152,8 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
                 )}`}</Text>
               </HStack>
 
-            <Separator bordered>
-              <Text>Payment Totals</Text>
-            </Separator>
+            <Text>Payment Totals</Text>
+            <Divider />
             {paymentTotals.breakdown.map(({ name, total, count }) => {
               return (
                   <HStack flex={1} alignItems="center" justifyContent="space-between" key={name}>
@@ -174,9 +168,8 @@ export const ReportReceiptInner: React.FC<ReportReceiptInnerProps & ReportReceip
               </HStack>
 
             {/* BILLS */}
-            <Separator bordered>
               <Text>Total</Text>
-            </Separator>
+            <Divider />
               <HStack flex={1} alignItems="center" justifyContent="space-between">
                 <Text>Number of bills</Text>
                 <Text style={styles.listItemRight}>{bills.length.toString()}</Text>

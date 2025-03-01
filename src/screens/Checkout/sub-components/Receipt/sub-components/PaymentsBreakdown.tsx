@@ -2,7 +2,7 @@ import { capitalize, keyBy } from 'lodash';
 import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { OrganizationContext } from '../../../../../contexts/OrganizationContext';
-import { HStack, Separator, Text } from '../../../../../core';
+import { Divider, HStack, Text } from '../../../../../core';
 import type { BillPayment, PaymentType } from '../../../../../models';
 import { formatNumber } from '../../../../../utils';
 import { ITEM_SPACING } from '../../../../../utils/consts';
@@ -27,9 +27,8 @@ const PaymentsBreakdown: React.FC<PaymentsBreakdownProps> = ({ payments, readonl
 
   return (
     <>
-      <Separator bordered key="payment-separator">
-        <Text>Payments</Text>
-      </Separator>
+      <Text>Payments</Text>
+      <Divider key="payment-separator" />
       {payments
         .filter(payment => !payment.isChange)
         .map(payment => {

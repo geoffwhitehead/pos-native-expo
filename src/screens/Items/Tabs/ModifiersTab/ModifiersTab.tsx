@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Modal } from '../../../../components/Modal/Modal';
 import { SearchBar } from '../../../../components/SearchBar/SearchBar';
-import { Box, Container, HStack, Separator, Text, VStack } from '../../../../core';
+import { Box, Container, HStack, Divider, Text, VStack } from '../../../../core';
 import type { Modifier } from '../../../../models';
 import { moderateScale } from '../../../../utils/scaling';
 import { ModalModifierDetails, ModalModifierDetailsInner } from './ModalModifierDetails';
@@ -51,9 +51,8 @@ const ModifierTabInner: React.FC<ModifiersTabOuterProps & ModifiersTabInnerProps
       <VStack>
         <HStack>
           <Box>
-            <Separator style={styles.separator} bordered>
-              <Text>Modifiers</Text>
-            </Separator>
+            <Text>Modifiers</Text>
+            <Divider style={styles.separator}  />
             <SearchBar value={searchValue} onPressCreate={handleCreate} onSearch={value => setSearchValue(value)} />
             <ScrollView>
               <VStack>
@@ -76,9 +75,8 @@ const ModifierTabInner: React.FC<ModifiersTabOuterProps & ModifiersTabInnerProps
             </ScrollView>
           </Box>
           <Box>
-            <Separator style={styles.separator} bordered>
-              <Text>Modifier Items</Text>
-            </Separator>
+            <Text>Modifier Items</Text>
+            <Divider style={styles.separator}/>
             {!selectedModifier && (
               <Text note style={{ padding: 15 }}>
                 Select a modifier to view the assigned items...{' '}
