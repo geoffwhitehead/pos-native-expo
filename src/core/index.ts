@@ -1,3 +1,6 @@
+export { Tab } from './components/Tab';
+export { Tabs } from './components/Tabs';
+
 export {
   Actionsheet,
   HStack,
@@ -13,8 +16,6 @@ export {
   Input,
   Select,
   Spinner,
-  Tab,
-  Tabs,
   Text,
   Textarea,
   Title,
@@ -24,4 +25,6 @@ export {
   Box
 } from 'native-base';
 
+Tabs
 export { Ionicons as Icon} from '@expo/vector-icons';
+

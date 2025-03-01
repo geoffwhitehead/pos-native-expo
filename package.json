@@ -58,6 +58,7 @@
     "react-native-star-io10": "^1.8.0",
     "react-native-svg": "15.8.0",
     "react-native-switch-selector": "^2.3.0",
+    "react-native-tab-view": "^4.0.5",
     "react-native-vector-icons": "^10.2.0",
     "tinycolor2": "^1.6.0",
     "victory-native": "^41.16.1",
